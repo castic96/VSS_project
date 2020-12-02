@@ -58,7 +58,8 @@ public class HospitalServer extends JSimProcess {
                     if (rand < pICU) {
                         // move to ICU
                         System.out.println("Moving to ICU."); // todo
-
+                        link.out();
+                        link = null;
 
                     } else if (rand < pDeath) {
                         // death
