@@ -7,7 +7,15 @@ import java.util.List;
 
 public class Main {
 
+    private static String DEFAULT_CONFIG_PATH = "config.properties";
+
     public static void main(String[] args) {
+        String configFilePath = DEFAULT_CONFIG_PATH;
+        if (args.length > 0) {
+            configFilePath = args[0];
+        }
+
+        Constants.init(configFilePath);
 
         SimulationParams simulationParams = initialize();
 
@@ -18,22 +26,9 @@ public class Main {
     }
 
     private static SimulationParams initialize() {
-        int numberOfBedsBasicCareUnit = 15;
-        int numberOfBedsIntensiveCareUnit = 8;
-
-        double inputLambda = 0.4;
-
-        double basicCareUnitMu = 1.0;
-        double basicCareUnitSigma = 0.3;
-        double intensiveCareUnitMu = 1.0;
-
-        double pFromBasicToIntensive = 0.2;
-        double pDeathBasicCareUnit = 0.1;
-        double pDeathIntensiveCareUnit = 0.3;
-
-        return new SimulationParams(numberOfBedsBasicCareUnit, numberOfBedsIntensiveCareUnit,
-                                    inputLambda, basicCareUnitMu, basicCareUnitSigma, intensiveCareUnitMu,
-                                    pFromBasicToIntensive, pDeathBasicCareUnit, pDeathIntensiveCareUnit);
+        return new SimulationParams(Constants.NUMBER_OF_BED_BASIC_UNIT, Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT,
+                                    Constants.INPUT_LAMBDA, Constants.BASIC_CARE_UNIT_MU, Constants.BASIC_CARE_UNIT_SIGMA, Constants.INTENSIVE_CARE_UNIT_MU,
+                                    Constants.P_FROM_BASIC_TO_INTENSIVE, Constants.P_DEATH_BASIC_CARE_UNIT, Constants.P_DEATH_INTENSIVE_CARE_UNIT);
     }
 
     private static SimulationResults run(SimulationParams params) {
