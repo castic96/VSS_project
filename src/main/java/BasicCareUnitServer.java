@@ -61,7 +61,7 @@ public class BasicCareUnitServer extends JSimProcess {
                     //System.out.println("gauss = " + gauss);
 
                     hold(gauss); // Gauss
-                    link = queue.first();
+                    link = queue.pop();
 
                     double rand = JSimSystem.uniform(0.0, 1.0);
 

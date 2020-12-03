@@ -24,18 +24,12 @@ public class QueueWithCareUnitServer extends JSimHead
 		this.serverList = serverList;
 	}
 
-	@Override
-	public synchronized JSimLink first() {
+	public synchronized JSimLink pop() throws JSimSecurityException {
 		JSimLink link = super.first();
 
 		if (link == null) return null;
 
-		try {
-			link.out();
-		} catch (JSimSecurityException e) {
-			System.out.println("error"); // todo
-			e.printStackTrace();
-		}
+		link.out();
 		return link;
 	}
 }
