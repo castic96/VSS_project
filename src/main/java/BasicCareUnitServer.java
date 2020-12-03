@@ -10,6 +10,7 @@ public class BasicCareUnitServer extends JSimProcess {
     private double pFromBasicToIntensive;
     private QueueWithCareUnitServer queue;
     private List<JSimProcess> intensiveCareUnitServerList;
+    private double maxTimeInQueue;
 
     private int counter;
     private double transTq;
@@ -27,7 +28,7 @@ public class BasicCareUnitServer extends JSimProcess {
      * @throws JSimTooManyProcessesException            This exception is thrown out if no other process can be added to the simulation specified.
      * @throws JSimKernelPanicException                 This exception is thrown out if the simulation is in a unknown state. Do NOT catch this exception!
      */
-    public BasicCareUnitServer(String name, JSimSimulation parent, double mu, double sigma, double p1, double p2, QueueWithCareUnitServer queue, List<JSimProcess> intensiveCareUnitServerList) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
+    public BasicCareUnitServer(String name, JSimSimulation parent, double mu, double sigma, double p1, double p2, QueueWithCareUnitServer queue, List<JSimProcess> intensiveCareUnitServerList, double maxTimeInQueue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
         super(name, parent);
         this.mu = mu;
         this.sigma = sigma;
@@ -35,6 +36,7 @@ public class BasicCareUnitServer extends JSimProcess {
         this.pFromBasicToIntensive = p2;
         this.queue = queue;
         this.intensiveCareUnitServerList = intensiveCareUnitServerList;
+        this.maxTimeInQueue = maxTimeInQueue;
 
         this.counter = 0;
         this.transTq = 0.0;
@@ -54,58 +56,69 @@ public class BasicCareUnitServer extends JSimProcess {
 
                 if (link == null) {
                     link = queue.pop();
+
+                    if (link != null) {
+                        patient = (Patient)link.getData();
+
+                        if (myParent.getCurrentTime() - patient.getTimeOfCreation() > maxTimeInQueue) {
+                            message("Died in queue.");
+                            link = null;
+                            continue;
+                        }
+
+                    }
+                    else {
+                        passivate();
+                        continue;
+                    }
+
                 }
                 else {
                     message("Moved back to basic care.");
                 }
 
-                if (link == null)
-                {
-                    // If we have nothing to do, we sleep.
-                    passivate();
+                // Simulating hard work here...
+                double gauss = JSimSystem.gauss(mu, sigma);
+                if (gauss < 0) { // todo!! very weird hack...
+                    gauss = Math.abs(gauss);
                 }
-                else
-                {
-                    // Simulating hard work here...
-                    double gauss = JSimSystem.gauss(mu, sigma);
-                    if (gauss < 0) { // todo!! very weird hack...
-                        gauss = Math.abs(gauss);
-                    }
-                    //System.out.println("gauss = " + gauss);
+                //System.out.println("gauss = " + gauss);
 
-                    hold(gauss); // Gauss
-                    //link = queue.pop();
+                hold(gauss); // Gauss
+                //link = queue.pop();
 
-                    double rand = JSimSystem.uniform(0.0, 1.0);
-                    if (rand < pDeath) {
-                        // death
-                        message("Died on basic care.");
+                double rand = JSimSystem.uniform(0.0, 1.0);
+                if (rand < pDeath) {
+                    // death
+                    message("Died on basic care.");
+                    //link.out();
+                    link = null;
+                }
+                else {
+
+                    rand = JSimSystem.uniform(0.0, 1.0);
+                    if (rand < pFromBasicToIntensive) {
+                        // move to ICU
+                        message("Trying to move to intensive care unit...");
+
+                        if (!moveToIntensiveCare(link)) {
+                            message("Patient died... No necessary bed on intensive care unit.");
+                        }
+                        else {
+                            message("Patient moved to intensive care unit successfully.");
+                        }
+                        //link.out();
+                        //link = null;
+
+                    } else {
+                        // healthy - goes home
+                        message("Healthy.");
                         //link.out();
                         link = null;
                     }
-                    else {
+                }
 
-                        rand = JSimSystem.uniform(0.0, 1.0);
-                        if (rand < pFromBasicToIntensive) {
-                            // move to ICU
-                            message("Trying to move to intensive care unit...");
 
-                            if (!moveToIntensiveCare(link)) {
-                                message("Patient died... No necessary bed on intensive care unit.");
-                            }
-                            else {
-                                message("Patient moved to intensive care unit successfully.");
-                            }
-                            //link.out();
-                            //link = null;
-
-                        } else {
-                            // healthy - goes home
-                            message("Healthy.");
-                            //link.out();
-                            link = null;
-                        }
-                    }
 
 
 
@@ -125,7 +138,6 @@ public class BasicCareUnitServer extends JSimProcess {
                         if (queueOut.getServer().isIdle())
                             queueOut.getServer().activate(myParent.getCurrentTime());
                     } // else throw away / insert */
-                } // else queue is empty / not empty
             } // while
         } // try
         catch (JSimException e)

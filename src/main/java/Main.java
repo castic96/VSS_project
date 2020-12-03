@@ -29,7 +29,8 @@ public class Main {
 
         return new SimulationParams(Constants.NUMBER_OF_BED_BASIC_UNIT, Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT,
                                     Constants.INPUT_LAMBDA, Constants.BASIC_CARE_UNIT_MU, Constants.BASIC_CARE_UNIT_SIGMA, Constants.INTENSIVE_CARE_UNIT_MU,
-                                    Constants.P_FROM_BASIC_TO_INTENSIVE, Constants.P_DEATH_BASIC_CARE_UNIT, Constants.P_DEATH_INTENSIVE_CARE_UNIT);
+                                    Constants.P_FROM_BASIC_TO_INTENSIVE, Constants.P_DEATH_BASIC_CARE_UNIT, Constants.P_DEATH_INTENSIVE_CARE_UNIT,
+                                    Constants.MAX_TIME_IN_QUEUE);
     }
 
     private static SimulationResults run(SimulationParams params) {
@@ -54,7 +55,7 @@ public class Main {
             basicCareUnitServerList = createBasicCareUnitServersArray(params.getNumberOfBedsBasicCareUnit(), simulation,
                                             params.getBasicCareUnitMu(), params.getBasicCareUnitSigma(),
                                             params.getpDeathBasicCareUnit(), params.getpFromBasicToIntensive(),
-                                            basicCareUnitQueue, intensiveCareUnitServerList);
+                                            basicCareUnitQueue, intensiveCareUnitServerList, params.getMaxTimeInQueue());
 
             inputGenerator = new InputGenerator("Input generator", simulation, params.getInputLambda(), basicCareUnitQueue);
 
@@ -95,12 +96,13 @@ public class Main {
                                                                              JSimSimulation simulation,
                                                                              double mu, double sigma, double p1, double p2,
                                                                              QueueWithCareUnitServer queue,
-                                                                             List<JSimProcess> intensiveCareUnitServerList) throws JSimException {
+                                                                             List<JSimProcess> intensiveCareUnitServerList,
+                                                                             double maxTimeInQueue) throws JSimException {
 
         List<JSimProcess> servers = new ArrayList<>();
 
         for (int i = 0; i < numberOfServers; i++) {
-            servers.add(new BasicCareUnitServer("Basic Care Unit Server " + i, simulation, mu, sigma, p1, p2, queue, intensiveCareUnitServerList));
+            servers.add(new BasicCareUnitServer("Basic Care Unit Server " + i, simulation, mu, sigma, p1, p2, queue, intensiveCareUnitServerList, maxTimeInQueue));
         }
 
         return servers;

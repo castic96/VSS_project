@@ -18,6 +18,8 @@ public class Constants {
     public static double P_DEATH_BASIC_CARE_UNIT;
     public static double P_DEATH_INTENSIVE_CARE_UNIT;
 
+    public static double MAX_TIME_IN_QUEUE;
+
     // properties
     private static Properties properties;
 
@@ -49,6 +51,8 @@ public class Constants {
         P_FROM_BASIC_TO_INTENSIVE = parseDouble("P_FROM_BASIC_TO_INTENSIVE");
         P_DEATH_BASIC_CARE_UNIT = parseDouble("P_DEATH_BASIC_CARE_UNIT");
         P_DEATH_INTENSIVE_CARE_UNIT = parseDouble("P_DEATH_INTENSIVE_CARE_UNIT");
+
+        MAX_TIME_IN_QUEUE = parseDouble("MAX_TIME_IN_QUEUE");
     }
 
     private static int parseInteger(String name) {
@@ -79,7 +83,5 @@ public class Constants {
 
         return d;
     }
-
-
 
 }

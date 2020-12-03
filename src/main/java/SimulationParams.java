@@ -12,7 +12,9 @@ public class SimulationParams {
     private double pDeathBasicCareUnit;
     private double pDeathIntensiveCareUnit;
 
-    public SimulationParams(int numberOfBedsBasicCareUnit, int numberOfBedsIntensiveCareUnit, double inputLambda, double basicCareUnitMu, double basicCareUnitSigma, double intensiveCareUnitMu, double pFromBasicToIntensive, double pDeathBasicCareUnit, double pDeathIntensiveCareUnit) {
+    private double maxTimeInQueue;
+
+    public SimulationParams(int numberOfBedsBasicCareUnit, int numberOfBedsIntensiveCareUnit, double inputLambda, double basicCareUnitMu, double basicCareUnitSigma, double intensiveCareUnitMu, double pFromBasicToIntensive, double pDeathBasicCareUnit, double pDeathIntensiveCareUnit, double maxTimeInQueue) {
         this.numberOfBedsBasicCareUnit = numberOfBedsBasicCareUnit;
         this.numberOfBedsIntensiveCareUnit = numberOfBedsIntensiveCareUnit;
         this.inputLambda = inputLambda;
@@ -22,6 +24,7 @@ public class SimulationParams {
         this.pFromBasicToIntensive = pFromBasicToIntensive;
         this.pDeathBasicCareUnit = pDeathBasicCareUnit;
         this.pDeathIntensiveCareUnit = pDeathIntensiveCareUnit;
+        this.maxTimeInQueue = maxTimeInQueue;
     }
 
     public int getNumberOfBedsBasicCareUnit() {
@@ -58,5 +61,9 @@ public class SimulationParams {
 
     public double getpDeathIntensiveCareUnit() {
         return pDeathIntensiveCareUnit;
+    }
+
+    public double getMaxTimeInQueue() {
+        return maxTimeInQueue;
     }
 }
