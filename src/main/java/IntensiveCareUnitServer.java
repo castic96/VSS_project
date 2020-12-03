@@ -1,11 +1,9 @@
 import cz.zcu.fav.kiv.jsim.*;
 
-public class HospitalServer extends JSimProcess {
+public class IntensiveCareUnitServer extends JSimProcess {
 
     private double mu;
-    private double pICU;
     private double pDeath;
-    private QueueWithServer queue;
 
     private int counter;
     private double transTq;
@@ -23,12 +21,10 @@ public class HospitalServer extends JSimProcess {
      * @throws JSimTooManyProcessesException            This exception is thrown out if no other process can be added to the simulation specified.
      * @throws JSimKernelPanicException                 This exception is thrown out if the simulation is in a unknown state. Do NOT catch this exception!
      */
-    public HospitalServer(String name, JSimSimulation parent, double mu, double p1, double p2, QueueWithServer queue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
+    public IntensiveCareUnitServer(String name, JSimSimulation parent, double mu, double p) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
         super(name, parent);
         this.mu = mu;
-        this.pICU = p1;
-        this.pDeath = p2;
-        this.queue = queue;
+        this.pDeath = p;
 
         this.counter = 0;
         this.transTq = 0.0;
@@ -43,34 +39,19 @@ public class HospitalServer extends JSimProcess {
         {
             while (true)
             {
-                if (queue.empty())
-                {
-                    // If we have nothing to do, we sleep.
-                    passivate();
-                }
-                else
                 {
                     // Simulating hard work here...
                     hold(JSimSystem.negExp(mu));
-                    link = queue.first();
-
                     double rand = JSimSystem.uniform(0.0, 1.0);
-                    if (rand < pICU) {
-                        // move to ICU
-                        System.out.println("Moving to ICU."); // todo
-                        link.out();
-                        link = null;
 
-                    } else if (rand < pDeath) {
+                    if (rand < pDeath) {
                         // death
                         System.out.println("Died.");
-                        link.out();
                         link = null;
 
                     } else {
                         // healthy - goes home
                         System.out.println("Healthy.");
-                        link.out();
                         link = null;
                     }
 

@@ -1,34 +1,69 @@
 import cz.zcu.fav.kiv.jsim.JSimException;
+import cz.zcu.fav.kiv.jsim.JSimProcess;
 import cz.zcu.fav.kiv.jsim.JSimSimulation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        JSimSimulation simulation = null;
 
-        QueueWithServer hospitalQueue = null;
-        HospitalServer hospitalServer = null;
-        InputGenerator inputGenerator = null;
+        SimulationParams simulationParams = initialize();
 
-        double hospitalMu = 1.0;
+        SimulationResults simulationResults = run(simulationParams);
+
+        printResults(simulationResults);
+
+    }
+
+    private static SimulationParams initialize() {
+        int numberOfBedsBasicCareUnit = 15;
+        int numberOfBedsIntensiveCareUnit = 8;
+
         double inputLambda = 0.4;
 
-        double pICU = 0.2;
-        double pDeath = 0.1;
-        double pICUDeath = 0.3;
+        double basicCareUnitMu = 1.0;
+        double basicCareUnitSigma = 0.3;
+        double intensiveCareUnitMu = 1.0;
 
-        // init
+        double pFromBasicToIntensive = 0.2;
+        double pDeathBasicCareUnit = 0.1;
+        double pDeathIntensiveCareUnit = 0.3;
+
+        return new SimulationParams(numberOfBedsBasicCareUnit, numberOfBedsIntensiveCareUnit,
+                                    inputLambda, basicCareUnitMu, basicCareUnitSigma, intensiveCareUnitMu,
+                                    pFromBasicToIntensive, pDeathBasicCareUnit, pDeathIntensiveCareUnit);
+    }
+
+    private static SimulationResults run(SimulationParams params) {
+        JSimSimulation simulation = null;
+
+        QueueWithCareUnitServer basicCareUnitQueue;
+        List<JSimProcess> basicCareUnitServerList;
+        List<JSimProcess> intensiveCareUnitServerList;
+        InputGenerator inputGenerator;
+
         try {
-            System.out.println("Simulation init.");
+            System.out.println("Initializing the simulation..");
 
             simulation = new JSimSimulation("Hospital");
 
-            hospitalQueue = new QueueWithServer("Hospital Queue", simulation, null);
-            hospitalServer = new HospitalServer("Hospital Server", simulation, hospitalMu, pICU, pDeath, hospitalQueue);
+            basicCareUnitQueue = new QueueWithCareUnitServer("Basic Care Unit Queue", simulation, null);
 
-            inputGenerator = new InputGenerator("Input generator", simulation, inputLambda, hospitalQueue);
+            // Tady jsem schvalne prohodil pravdepodobnosti, ze nejdriv je pravdepodobnost smrti a pak presunu na JIPku
+            basicCareUnitServerList = createBasicCareUnitServersArray(params.getNumberOfBedsBasicCareUnit(), simulation,
+                                            params.getBasicCareUnitMu(), params.getBasicCareUnitSigma(),
+                                            params.getpDeathBasicCareUnit(), params.getpFromBasicToIntensive(),
+                                            basicCareUnitQueue);
 
-            hospitalQueue.setServer(hospitalServer);
+            intensiveCareUnitServerList = createIntensiveCareUnitServersArray(params.getNumberOfBedsIntensiveCareUnit(),
+                                                    simulation, params.getIntensiveCareUnitMu(),
+                                                    params.getpDeathIntensiveCareUnit());
+
+            inputGenerator = new InputGenerator("Input generator", simulation, params.getInputLambda(), basicCareUnitQueue);
+
+            basicCareUnitQueue.setServerList(basicCareUnitServerList);
 
             // activate generators
             simulation.message("Activating generators...");
@@ -44,16 +79,52 @@ public class Main {
             // Now, some boring numbers.
             simulation.message("Simulation interrupted at time " + simulation.getCurrentTime());
             simulation.message("Queues' statistics:");
-            simulation.message("Queue 1: Lw = " + hospitalQueue.getLw() + ", Tw = " + hospitalQueue.getTw() + ", Tw all = " + hospitalQueue.getTwForAllLinks());
+            simulation.message("Queue 1: Lw = " + basicCareUnitQueue.getLw() + ", Tw = " + basicCareUnitQueue.getTw() + ", Tw all = " + basicCareUnitQueue.getTwForAllLinks());
             simulation.message("Servers' statistics:");
-            simulation.message("example02.Server 1: Counter = " + hospitalServer.getCounter() + ", sum of Tq (for transactions thrown away by this server) = " + hospitalServer.getTransTq());
+            //simulation.message("example02.Server 1: Counter = " + careUnitlServer.getCounter() + ", sum of Tq (for transactions thrown away by this server) = " + careUnitlServer.getTransTq());
             //simulation.message("Mean response time = " + ((server1.getTransTq() + server2.getTransTq()) / (server1.getCounter() + server2.getCounter())));
         } catch (JSimException e) {
             e.printStackTrace();
+            e.printComment(System.err);
         }
 
+        finally
+        {
+            simulation.shutdown();
+        }
 
+        return new SimulationResults();
+    }
 
+    private static List<JSimProcess> createBasicCareUnitServersArray(int numberOfServers,
+                                                                             JSimSimulation simulation,
+                                                                             double mu, double sigma, double p1, double p2,
+                                                                             QueueWithCareUnitServer queue) throws JSimException {
+
+        List<JSimProcess> servers = new ArrayList<>();
+
+        for (int i = 0; i < numberOfServers; i++) {
+            servers.add(new BasicCareUnitServer("Basic Care Unit Server " + i, simulation, mu, sigma, p1, p2, queue));
+        }
+
+        return servers;
+    }
+
+    private static List<JSimProcess> createIntensiveCareUnitServersArray(int numberOfServers,
+                                                                             JSimSimulation simulation,
+                                                                             double mu, double p) throws JSimException {
+
+        List<JSimProcess> servers = new ArrayList<>();
+
+        for (int i = 0; i < numberOfServers; i++) {
+            servers.add(new IntensiveCareUnitServer("Intensive Care Unit Server " + i, simulation, mu, p));
+        }
+
+        return servers;
+    }
+
+    private static void printResults(SimulationResults results) {
+        // TODO
     }
 
 
