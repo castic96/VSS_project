@@ -45,7 +45,7 @@ public class IntensiveCareUnitServer extends JSimProcess {
 
                 patient = (Patient) patientOnBed.getData();
 
-                //counter++; // todo - here?
+                counter++;
                 transTq += myParent.getCurrentTime() - patient.getTimeOfCreation();
 
                 double rand = JSimSystem.uniform(0.0, 1.0);

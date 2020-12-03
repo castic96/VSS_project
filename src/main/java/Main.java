@@ -122,9 +122,13 @@ public class Main {
     }
 
     private static void printResults(SimulationResults results) {
-        System.out.println("results.getBasicCareRho() = " + results.getBasicCareRho());
-        System.out.println("results.getIntensiveCareRho() = " + results.getIntensiveCareRho());
-        System.out.println("results.getTotalRho() = " + results.getTotalRho());
+        System.out.println("rho (basic care) = " + results.getBasicCareRho());
+        System.out.println("rho (intensive care) = " + results.getIntensiveCareRho());
+        System.out.println("rho (system) = " + results.getTotalRho());
+
+        System.out.println("Tq (basic care) = " + results.getBasicCareAverage());
+        System.out.println("Tq (intensive care) = " + results.getIntensiveCareAverage());
+        System.out.println("Tq (system) = " + results.getTotalAverage());
     }
 
 
