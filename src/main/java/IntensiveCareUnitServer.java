@@ -5,7 +5,7 @@ public class IntensiveCareUnitServer extends JSimProcess {
     private double mu;
     private double pDeath;
     private JSimLink patientOnBed;
-    private boolean isBussy;
+    private boolean isBusy;
 
     private int counter;
     private double transTq;
@@ -23,11 +23,11 @@ public class IntensiveCareUnitServer extends JSimProcess {
      * @throws JSimTooManyProcessesException            This exception is thrown out if no other process can be added to the simulation specified.
      * @throws JSimKernelPanicException                 This exception is thrown out if the simulation is in a unknown state. Do NOT catch this exception!
      */
-    public IntensiveCareUnitServer(String name, JSimSimulation parent, double mu, double p, boolean isBussy) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
+    public IntensiveCareUnitServer(String name, JSimSimulation parent, double mu, double p, boolean isBusy) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
         super(name, parent);
         this.mu = mu;
         this.pDeath = p;
-        this.isBussy = isBussy;
+        this.isBusy = isBusy;
 
         this.counter = 0;
         this.transTq = 0.0;
@@ -48,7 +48,7 @@ public class IntensiveCareUnitServer extends JSimProcess {
                     // death
                     message("Died on intensive care.");
                     //link.out();
-                    setBussy(false);
+                    setBusy(false);
                     setPatientOnBed(null);
                 }
                 else {
@@ -91,12 +91,12 @@ public class IntensiveCareUnitServer extends JSimProcess {
 
     }
 
-    public boolean isBussy() {
-        return isBussy;
+    public boolean isBusy() {
+        return isBusy;
     }
 
-    public void setBussy(boolean bussy) {
-        isBussy = bussy;
+    public void setBusy(boolean busy) {
+        isBusy = busy;
     }
 
     public JSimLink getPatientOnBed() {

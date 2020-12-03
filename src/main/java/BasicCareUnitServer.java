@@ -149,7 +149,7 @@ public class BasicCareUnitServer extends JSimProcess {
             if (currentProcess instanceof IntensiveCareUnitServer) {
                 currentServer = (IntensiveCareUnitServer)currentProcess;
 
-                if (currentServer.isBussy() && currentServer.isIdle()) {
+                if (currentServer.isBusy() && currentServer.isIdle()) {
                     currentPatient = (Patient)currentServer.getPatientOnBed().getData();
 
                     if (currentPatient.getTimeOfRequestToBasicCare() < firstPatientRequestTime) {
@@ -170,7 +170,7 @@ public class BasicCareUnitServer extends JSimProcess {
         firstRequestPatientLink = firstServerRequest.getPatientOnBed();
 
         firstServerRequest.setPatientOnBed(null);
-        firstServerRequest.setBussy(false);
+        firstServerRequest.setBusy(false);
 
         return firstRequestPatientLink;
     }
@@ -184,9 +184,9 @@ public class BasicCareUnitServer extends JSimProcess {
             if (currentProcess instanceof IntensiveCareUnitServer) {
                 currentServer = (IntensiveCareUnitServer)currentProcess;
 
-                if (!currentServer.isBussy()) {
+                if (!currentServer.isBusy()) {
                     currentServer.setPatientOnBed(link);
-                    currentServer.setBussy(true);
+                    currentServer.setBusy(true);
                     currentServer.activate(myParent.getCurrentTime());
 
                     return true;

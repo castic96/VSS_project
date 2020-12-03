@@ -47,7 +47,6 @@ public class Main {
 
             basicCareUnitQueue = new QueueWithCareUnitServer("Basic Care Unit Queue", simulation, null);
 
-            // Tady jsem schvalne prohodil pravdepodobnosti, ze nejdriv je pravdepodobnost smrti a pak presunu na JIPku
             intensiveCareUnitServerList = createIntensiveCareUnitServersArray(params.getNumberOfBedsIntensiveCareUnit(),
                                                     simulation, params.getIntensiveCareUnitMu(),
                                                     params.getpDeathIntensiveCareUnit());
