@@ -21,7 +21,7 @@ public class InputGenerator extends JSimProcess {
             while (true)
             {
                 // Periodically creating new transactions and putting them into the queue.
-                link = new JSimLink(new Patient());
+                link = new JSimLink(new Patient(myParent.getCurrentTime()));
                 link.into(queue);
 
                 // Je vygenerovan pacient

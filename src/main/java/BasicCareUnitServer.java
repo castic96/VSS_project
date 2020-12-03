@@ -1,5 +1,7 @@
 import cz.zcu.fav.kiv.jsim.*;
 
+import java.util.List;
+
 public class BasicCareUnitServer extends JSimProcess {
 
     private double mu;
@@ -7,6 +9,7 @@ public class BasicCareUnitServer extends JSimProcess {
     private double pDeath;
     private double pFromBasicToIntensive;
     private QueueWithCareUnitServer queue;
+    private List<JSimProcess> intensiveCareUnitServerList;
 
     private int counter;
     private double transTq;
@@ -24,14 +27,14 @@ public class BasicCareUnitServer extends JSimProcess {
      * @throws JSimTooManyProcessesException            This exception is thrown out if no other process can be added to the simulation specified.
      * @throws JSimKernelPanicException                 This exception is thrown out if the simulation is in a unknown state. Do NOT catch this exception!
      */
-    public BasicCareUnitServer(String name, JSimSimulation parent, double mu, double sigma, double p1, double p2, QueueWithCareUnitServer queue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
+    public BasicCareUnitServer(String name, JSimSimulation parent, double mu, double sigma, double p1, double p2, QueueWithCareUnitServer queue, List<JSimProcess> intensiveCareUnitServerList) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
         super(name, parent);
         this.mu = mu;
         this.sigma = sigma;
         this.pDeath = p1;
         this.pFromBasicToIntensive = p2;
-
         this.queue = queue;
+        this.intensiveCareUnitServerList = intensiveCareUnitServerList;
 
         this.counter = 0;
         this.transTq = 0.0;
@@ -46,7 +49,17 @@ public class BasicCareUnitServer extends JSimProcess {
         {
             while (true)
             {
-                if (queue.empty())
+
+                link = waitingForBasicCare();
+
+                if (link == null) {
+                    link = queue.pop();
+                }
+                else {
+                    message("Moved back to basic care.");
+                }
+
+                if (link == null)
                 {
                     // If we have nothing to do, we sleep.
                     passivate();
@@ -61,33 +74,40 @@ public class BasicCareUnitServer extends JSimProcess {
                     //System.out.println("gauss = " + gauss);
 
                     hold(gauss); // Gauss
-                    link = queue.pop();
+                    //link = queue.pop();
 
                     double rand = JSimSystem.uniform(0.0, 1.0);
-
                     if (rand < pDeath) {
                         // death
                         message("Died on basic care.");
                         //link.out();
-                        //link = null;
-                        continue;
+                        link = null;
+                    }
+                    else {
+
+                        rand = JSimSystem.uniform(0.0, 1.0);
+                        if (rand < pFromBasicToIntensive) {
+                            // move to ICU
+                            message("Trying to move to intensive care unit...");
+
+                            if (!moveToIntensiveCare(link)) {
+                                message("Patient died... No necessary bed on intensive care unit.");
+                            }
+                            else {
+                                message("Patient moved to intensive care unit successfully.");
+                            }
+                            //link.out();
+                            //link = null;
+
+                        } else {
+                            // healthy - goes home
+                            message("Healthy.");
+                            //link.out();
+                            link = null;
+                        }
                     }
 
-                    rand = JSimSystem.uniform(0.0, 1.0);
 
-                    if (rand < pFromBasicToIntensive) {
-                        // move to ICU
-                        message("Moving to intensive care unit."); // todo
-                        //link.out();
-                        //link = null;
-                        continue;
-
-                    } else {
-                        // healthy - goes home
-                        message("Healthy.");
-                        //link.out();
-                        //link = null;
-                    }
 
                     // Now we must decide whether to throw the transaction away or to insert it into another queue.
                     /*if (JSimSystem.uniform(0.0, 1.0) > p1)
@@ -114,6 +134,69 @@ public class BasicCareUnitServer extends JSimProcess {
             e.printComment(System.err);
         }
 
+    }
+
+    private synchronized JSimLink waitingForBasicCare() {
+
+        IntensiveCareUnitServer currentServer;
+        Patient currentPatient;
+        IntensiveCareUnitServer firstServerRequest = null;
+        JSimLink firstRequestPatientLink;
+        double firstPatientRequestTime = Long.MAX_VALUE;
+
+        for (JSimProcess currentProcess : intensiveCareUnitServerList) {
+
+            if (currentProcess instanceof IntensiveCareUnitServer) {
+                currentServer = (IntensiveCareUnitServer)currentProcess;
+
+                if (currentServer.isBussy() && currentServer.isIdle()) {
+                    currentPatient = (Patient)currentServer.getPatientOnBed().getData();
+
+                    if (currentPatient.getTimeOfRequestToBasicCare() < firstPatientRequestTime) {
+                        firstPatientRequestTime = currentPatient.getTimeOfRequestToBasicCare();
+                        firstServerRequest = currentServer;
+                    }
+
+                }
+
+            }
+
+        }
+
+        if (firstServerRequest == null) {
+            return null;
+        }
+
+        firstRequestPatientLink = firstServerRequest.getPatientOnBed();
+
+        firstServerRequest.setPatientOnBed(null);
+        firstServerRequest.setBussy(false);
+
+        return firstRequestPatientLink;
+    }
+
+    private synchronized boolean moveToIntensiveCare(JSimLink link) throws JSimInvalidParametersException, JSimSecurityException {
+
+        IntensiveCareUnitServer currentServer;
+
+        for (JSimProcess currentProcess : intensiveCareUnitServerList) {
+
+            if (currentProcess instanceof IntensiveCareUnitServer) {
+                currentServer = (IntensiveCareUnitServer)currentProcess;
+
+                if (!currentServer.isBussy()) {
+                    currentServer.setPatientOnBed(link);
+                    currentServer.setBussy(true);
+                    currentServer.activate(myParent.getCurrentTime());
+
+                    return true;
+                }
+
+            }
+
+        }
+
+        return false;
     }
 
     public int getCounter()

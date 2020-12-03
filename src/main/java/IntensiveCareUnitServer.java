@@ -4,6 +4,8 @@ public class IntensiveCareUnitServer extends JSimProcess {
 
     private double mu;
     private double pDeath;
+    private JSimLink patientOnBed;
+    private boolean isBussy;
 
     private int counter;
     private double transTq;
@@ -21,10 +23,11 @@ public class IntensiveCareUnitServer extends JSimProcess {
      * @throws JSimTooManyProcessesException            This exception is thrown out if no other process can be added to the simulation specified.
      * @throws JSimKernelPanicException                 This exception is thrown out if the simulation is in a unknown state. Do NOT catch this exception!
      */
-    public IntensiveCareUnitServer(String name, JSimSimulation parent, double mu, double p) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
+    public IntensiveCareUnitServer(String name, JSimSimulation parent, double mu, double p, boolean isBussy) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
         super(name, parent);
         this.mu = mu;
         this.pDeath = p;
+        this.isBussy = isBussy;
 
         this.counter = 0;
         this.transTq = 0.0;
@@ -32,47 +35,53 @@ public class IntensiveCareUnitServer extends JSimProcess {
 
     protected void life() {
 
-        Patient t;
-        JSimLink link;
+        Patient patient;
 
         try
         {
-            while (true)
+            while (true) {
+                // Simulating hard work here...
+                hold(JSimSystem.negExp(mu));
+
+                double rand = JSimSystem.uniform(0.0, 1.0);
+                if (rand < pDeath) {
+                    // death
+                    message("Died on intensive care.");
+                    //link.out();
+                    setBussy(false);
+                    setPatientOnBed(null);
+                }
+                else {
+
+                    patient = (Patient) patientOnBed.getData();
+                    patient.setTimeOfRequestToBasicCare(myParent.getCurrentTime());
+
+                    message("Trying to move to basic care unit...");
+
+                }
+
+                passivate();
+
+
+
+                // Now we must decide whether to throw the transaction away or to insert it into another queue.
+            /*if (JSimSystem.uniform(0.0, 1.0) > p1)
             {
-                {
-                    // Simulating hard work here...
-                    hold(JSimSystem.negExp(mu));
-                    double rand = JSimSystem.uniform(0.0, 1.0);
+                t = (Patient) link.getData();
+                counter++;
+                transTq += myParent.getCurrentTime() - t.getCreationTime();
+                link.out();
+                link = null;
+            }
+            else
+            {
+                link.out();
+                link.into(queueOut);
+                if (queueOut.getServer().isIdle())
+                    queueOut.getServer().activate(myParent.getCurrentTime());
+            } // else throw away / insert */
+            }
 
-                    if (rand < pDeath) {
-                        // death
-                        System.out.println("Died.");
-                        link = null;
-
-                    } else {
-                        // healthy - goes home
-                        System.out.println("Healthy.");
-                        link = null;
-                    }
-
-                    // Now we must decide whether to throw the transaction away or to insert it into another queue.
-                    /*if (JSimSystem.uniform(0.0, 1.0) > p1)
-                    {
-                        t = (Patient) link.getData();
-                        counter++;
-                        transTq += myParent.getCurrentTime() - t.getCreationTime();
-                        link.out();
-                        link = null;
-                    }
-                    else
-                    {
-                        link.out();
-                        link.into(queueOut);
-                        if (queueOut.getServer().isIdle())
-                            queueOut.getServer().activate(myParent.getCurrentTime());
-                    } // else throw away / insert */
-                } // else queue is empty / not empty
-            } // while
         } // try
         catch (JSimException e)
         {
@@ -80,6 +89,22 @@ public class IntensiveCareUnitServer extends JSimProcess {
             e.printComment(System.err);
         }
 
+    }
+
+    public boolean isBussy() {
+        return isBussy;
+    }
+
+    public void setBussy(boolean bussy) {
+        isBussy = bussy;
+    }
+
+    public JSimLink getPatientOnBed() {
+        return patientOnBed;
+    }
+
+    public void setPatientOnBed(JSimLink patientOnBed) {
+        this.patientOnBed = patientOnBed;
     }
 
     public int getCounter()
