@@ -18,7 +18,7 @@ public class BasicCareUnitServer extends JSimProcess {
     private final double pFromBasicToIntensive;
 
     /** queue to basic care */
-    private final QueueBasicCare queue;
+    private final BasicCareUnitQueue queue;
     /** list of intensive care servers */
     private final List<IntensiveCareUnitServer> intensiveCareUnitServerList;
     /** maximum time which can be spent in queue (if exceeded -> death) */
@@ -45,7 +45,7 @@ public class BasicCareUnitServer extends JSimProcess {
      * @throws JSimInvalidParametersException parent (simulation) is invalid parameter
      * @throws JSimTooManyProcessesException process cannot be added to simulation
      */
-    public BasicCareUnitServer(String name, JSimSimulation parent, double mu, double sigma, double pDeath, double pFromBasicToIntensive, QueueBasicCare queue, List<IntensiveCareUnitServer> intensiveCareUnitServerList, double maxTimeInQueue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
+    public BasicCareUnitServer(String name, JSimSimulation parent, double mu, double sigma, double pDeath, double pFromBasicToIntensive, BasicCareUnitQueue queue, List<IntensiveCareUnitServer> intensiveCareUnitServerList, double maxTimeInQueue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
         super(name, parent);
         this.mu = mu;
         this.sigma = sigma;

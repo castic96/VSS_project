@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Basic care queue with multiple servers (beds).
  */
-public class QueueBasicCare extends JSimHead
+public class BasicCareUnitQueue extends JSimHead
 {
 	/** list of basic unit servers */
 	private List<BasicCareUnitServer> serverList;
@@ -19,7 +19,7 @@ public class QueueBasicCare extends JSimHead
 	 * @throws JSimInvalidParametersException parent (simulation) is invalid parameter
 	 * @throws JSimTooManyHeadsException queue cannot be added to simulation
 	 */
-	public QueueBasicCare(String name, JSimSimulation simulation, List<BasicCareUnitServer> servers) throws JSimInvalidParametersException, JSimTooManyHeadsException
+	public BasicCareUnitQueue(String name, JSimSimulation simulation, List<BasicCareUnitServer> servers) throws JSimInvalidParametersException, JSimTooManyHeadsException
 	{
 		super(name, simulation);
 		this.serverList = servers;

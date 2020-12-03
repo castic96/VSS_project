@@ -2,7 +2,7 @@ import java.util.List;
 
 public class Statistics {
 
-    public static SimulationResults calculateResults(List<BasicCareUnitServer> basicCareUnitServerList, List<IntensiveCareUnitServer> intensiveCareUnitServerList, double totalTime, QueueBasicCare basicCareUnitQueue) {
+    public static SimulationResults calculateResults(List<BasicCareUnitServer> basicCareUnitServerList, List<IntensiveCareUnitServer> intensiveCareUnitServerList, double totalTime, BasicCareUnitQueue basicCareUnitQueue) {
         // basic care
         double basicCareSum = 0.0;
         int basicCarePatientsSum = 0;

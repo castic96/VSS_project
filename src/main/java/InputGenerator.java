@@ -8,7 +8,7 @@ public class InputGenerator extends JSimProcess {
     /** lambda (Poisson distribution) */
     private double lambda;
     /** queue */
-    private QueueBasicCare queue;
+    private BasicCareUnitQueue queue;
 
     /**
      * Creates new generator.
@@ -21,7 +21,7 @@ public class InputGenerator extends JSimProcess {
      * @throws JSimInvalidParametersException parent (simulation) is invalid parameter
      * @throws JSimTooManyProcessesException process cannot be added to simulation
      */
-    public InputGenerator(String name, JSimSimulation simulation, double lambda, QueueBasicCare queue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException
+    public InputGenerator(String name, JSimSimulation simulation, double lambda, BasicCareUnitQueue queue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException
     {
         super(name, simulation);
         this.lambda = lambda;

@@ -56,7 +56,7 @@ public class Main {
     private static SimulationResults run(SimulationParams params) {
         JSimSimulation simulation = null;
 
-        QueueBasicCare basicCareUnitQueue;
+        BasicCareUnitQueue basicCareUnitQueue;
         List<BasicCareUnitServer> basicCareUnitServerList;
         List<IntensiveCareUnitServer> intensiveCareUnitServerList;
         InputGenerator inputGenerator;
@@ -65,7 +65,7 @@ public class Main {
             // init
             System.out.println("Initializing the simulation..");
             simulation = new JSimSimulation("Hospital simulation");
-            basicCareUnitQueue = new QueueBasicCare("Basic Care Unit Queue", simulation, null);
+            basicCareUnitQueue = new BasicCareUnitQueue("Basic Care Unit Queue", simulation, null);
 
             intensiveCareUnitServerList = createIntensiveCareUnitServersArray(params.getNumberOfBedsIntensiveCareUnit(),
                                                     simulation, params.getIntensiveCareUnitMu(),
@@ -120,7 +120,7 @@ public class Main {
     private static List<BasicCareUnitServer> createBasicCareUnitServersArray(int numberOfServers,
                                                                              JSimSimulation simulation,
                                                                              double mu, double sigma, double pDeath, double pFromBasicToIntensive,
-                                                                             QueueBasicCare queue,
+                                                                             BasicCareUnitQueue queue,
                                                                              List<IntensiveCareUnitServer> intensiveCareUnitServerList,
                                                                              double maxTimeInQueue) throws JSimException {
 
