@@ -8,19 +8,19 @@ import java.util.List;
  */
 public class QueueWithCareUnitServer extends JSimHead
 {
-	private List<JSimProcess> serverList;
+	private List<BasicCareUnitServer> serverList;
 
-	public QueueWithCareUnitServer(String name, JSimSimulation sim, List<JSimProcess> processes) throws JSimInvalidParametersException, JSimTooManyHeadsException
+	public QueueWithCareUnitServer(String name, JSimSimulation sim, List<BasicCareUnitServer> processes) throws JSimInvalidParametersException, JSimTooManyHeadsException
 	{
 		super(name, sim);
 		this.serverList = processes;
 	}
 
-	public List<JSimProcess> getServerList() {
+	public List<BasicCareUnitServer> getServerList() {
 		return serverList;
 	}
 
-	public void setServerList(List<JSimProcess> serverList) {
+	public void setServerList(List<BasicCareUnitServer> serverList) {
 		this.serverList = serverList;
 	}
 

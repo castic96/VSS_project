@@ -4,13 +4,13 @@ import java.util.List;
 
 public class BasicCareUnitServer extends JSimProcess {
 
-    private double mu;
-    private double sigma;
-    private double pDeath;
-    private double pFromBasicToIntensive;
-    private QueueWithCareUnitServer queue;
-    private List<JSimProcess> intensiveCareUnitServerList;
-    private double maxTimeInQueue;
+    private final double mu;
+    private final double sigma;
+    private final double pDeath;
+    private final double pFromBasicToIntensive;
+    private final QueueWithCareUnitServer queue;
+    private final List<IntensiveCareUnitServer> intensiveCareUnitServerList;
+    private final double maxTimeInQueue;
 
     private int counter;
     private double transTq;
@@ -23,12 +23,13 @@ public class BasicCareUnitServer extends JSimProcess {
      *
      * @param name   Name of the process being created.
      * @param parent Parent simulation.
+     * @param intensiveCareUnitServerList
      * @throws JSimSimulationAlreadyTerminatedException This exception is thrown out if the simulation has already been terminated.
      * @throws JSimInvalidParametersException           This exception is thrown out if no parent was specified.
      * @throws JSimTooManyProcessesException            This exception is thrown out if no other process can be added to the simulation specified.
      * @throws JSimKernelPanicException                 This exception is thrown out if the simulation is in a unknown state. Do NOT catch this exception!
      */
-    public BasicCareUnitServer(String name, JSimSimulation parent, double mu, double sigma, double p1, double p2, QueueWithCareUnitServer queue, List<JSimProcess> intensiveCareUnitServerList, double maxTimeInQueue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
+    public BasicCareUnitServer(String name, JSimSimulation parent, double mu, double sigma, double p1, double p2, QueueWithCareUnitServer queue, List<IntensiveCareUnitServer> intensiveCareUnitServerList, double maxTimeInQueue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
         super(name, parent);
         this.mu = mu;
         this.sigma = sigma;
@@ -62,7 +63,6 @@ public class BasicCareUnitServer extends JSimProcess {
 
                         if (myParent.getCurrentTime() - patient.getTimeOfCreation() > maxTimeInQueue) {
                             message("Died in queue.");
-                            link = null;
                             continue;
                         }
 
@@ -77,28 +77,19 @@ public class BasicCareUnitServer extends JSimProcess {
                     message("Moved back to basic care.");
                 }
 
-                // Simulating hard work here...
-                double gauss = JSimSystem.gauss(mu, sigma);
-                if (gauss < 0) { // todo!! very weird hack...
-                    gauss = Math.abs(gauss);
-                }
-                //System.out.println("gauss = " + gauss);
+                patient = (Patient)link.getData();
 
-                hold(gauss); // Gauss
-                //link = queue.pop();
+                // spend time in basic care
+                hold(Utils.gaussPositive(mu, sigma));
 
+                // deciding where to go next
                 double rand = JSimSystem.uniform(0.0, 1.0);
-                if (rand < pDeath) {
-                    // death
+                if (rand < pDeath) { // death
                     message("Died on basic care.");
-                    //link.out();
-                    link = null;
                 }
                 else {
-
                     rand = JSimSystem.uniform(0.0, 1.0);
-                    if (rand < pFromBasicToIntensive) {
-                        // move to ICU
+                    if (rand < pFromBasicToIntensive) { // move to intensive care unit (if not possible -> death)
                         message("Trying to move to intensive care unit...");
 
                         if (!moveToIntensiveCare(link)) {
@@ -107,41 +98,17 @@ public class BasicCareUnitServer extends JSimProcess {
                         else {
                             message("Patient moved to intensive care unit successfully.");
                         }
-                        //link.out();
-                        //link = null;
 
-                    } else {
-                        // healthy - goes home
+                    } else { // healthy -> goes home
                         message("Healthy.");
-                        //link.out();
-                        link = null;
                     }
                 }
 
-
-
-
-
-                    // Now we must decide whether to throw the transaction away or to insert it into another queue.
-                    /*if (JSimSystem.uniform(0.0, 1.0) > p1)
-                    {
-                        t = (Patient) link.getData();
-                        counter++;
-                        transTq += myParent.getCurrentTime() - t.getCreationTime();
-                        link.out();
-                        link = null;
-                    }
-                    else
-                    {
-                        link.out();
-                        link.into(queueOut);
-                        if (queueOut.getServer().isIdle())
-                            queueOut.getServer().activate(myParent.getCurrentTime());
-                    } // else throw away / insert */
-            } // while
-        } // try
-        catch (JSimException e)
-        {
+                counter++;
+                transTq += myParent.getCurrentTime() - patient.getTimeOfCreation();
+            }
+        }
+        catch (JSimException e) {
             e.printStackTrace();
             e.printComment(System.err);
         }
@@ -150,16 +117,12 @@ public class BasicCareUnitServer extends JSimProcess {
 
     private synchronized JSimLink waitingForBasicCare() {
 
-        IntensiveCareUnitServer currentServer;
         Patient currentPatient;
         IntensiveCareUnitServer firstServerRequest = null;
         JSimLink firstRequestPatientLink;
         double firstPatientRequestTime = Long.MAX_VALUE;
 
-        for (JSimProcess currentProcess : intensiveCareUnitServerList) {
-
-            if (currentProcess instanceof IntensiveCareUnitServer) {
-                currentServer = (IntensiveCareUnitServer)currentProcess;
+        for (IntensiveCareUnitServer currentServer : intensiveCareUnitServerList) {
 
                 if (currentServer.isBusy() && currentServer.isIdle()) {
                     currentPatient = (Patient)currentServer.getPatientOnBed().getData();
@@ -170,9 +133,6 @@ public class BasicCareUnitServer extends JSimProcess {
                     }
 
                 }
-
-            }
-
         }
 
         if (firstServerRequest == null) {
@@ -189,12 +149,7 @@ public class BasicCareUnitServer extends JSimProcess {
 
     private synchronized boolean moveToIntensiveCare(JSimLink link) throws JSimInvalidParametersException, JSimSecurityException {
 
-        IntensiveCareUnitServer currentServer;
-
-        for (JSimProcess currentProcess : intensiveCareUnitServerList) {
-
-            if (currentProcess instanceof IntensiveCareUnitServer) {
-                currentServer = (IntensiveCareUnitServer)currentProcess;
+        for (IntensiveCareUnitServer currentServer : intensiveCareUnitServerList) {
 
                 if (!currentServer.isBusy()) {
                     currentServer.setPatientOnBed(link);
@@ -203,9 +158,6 @@ public class BasicCareUnitServer extends JSimProcess {
 
                     return true;
                 }
-
-            }
-
         }
 
         return false;
@@ -214,11 +166,11 @@ public class BasicCareUnitServer extends JSimProcess {
     public int getCounter()
     {
         return counter;
-    } // getCounter
+    }
 
     public double getTransTq()
     {
         return transTq;
-    } // getTransTq
+    }
 
 }

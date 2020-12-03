@@ -40,20 +40,21 @@ public class IntensiveCareUnitServer extends JSimProcess {
         try
         {
             while (true) {
-                // Simulating hard work here...
+                // spend time in intensive care
                 hold(JSimSystem.negExp(mu));
 
+                patient = (Patient) patientOnBed.getData();
+
+                //counter++; // todo - here?
+                transTq += myParent.getCurrentTime() - patient.getTimeOfCreation();
+
                 double rand = JSimSystem.uniform(0.0, 1.0);
-                if (rand < pDeath) {
-                    // death
+                if (rand < pDeath) { // death
                     message("Died on intensive care.");
-                    //link.out();
                     setBusy(false);
                     setPatientOnBed(null);
                 }
                 else {
-
-                    patient = (Patient) patientOnBed.getData();
                     patient.setTimeOfRequestToBasicCare(myParent.getCurrentTime());
 
                     message("Trying to move to basic care unit...");
@@ -61,28 +62,9 @@ public class IntensiveCareUnitServer extends JSimProcess {
                 }
 
                 passivate();
-
-
-
-                // Now we must decide whether to throw the transaction away or to insert it into another queue.
-            /*if (JSimSystem.uniform(0.0, 1.0) > p1)
-            {
-                t = (Patient) link.getData();
-                counter++;
-                transTq += myParent.getCurrentTime() - t.getCreationTime();
-                link.out();
-                link = null;
-            }
-            else
-            {
-                link.out();
-                link.into(queueOut);
-                if (queueOut.getServer().isIdle())
-                    queueOut.getServer().activate(myParent.getCurrentTime());
-            } // else throw away / insert */
             }
 
-        } // try
+        }
         catch (JSimException e)
         {
             e.printStackTrace();
