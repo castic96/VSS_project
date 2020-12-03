@@ -54,7 +54,13 @@ public class BasicCareUnitServer extends JSimProcess {
                 else
                 {
                     // Simulating hard work here...
-                    hold(JSimSystem.gauss(mu, sigma)); // Gauss
+                    double gauss = JSimSystem.gauss(mu, sigma);
+                    if (gauss < 0) { // todo!! very weird hack...
+                        gauss = Math.abs(gauss);
+                    }
+                    //System.out.println("gauss = " + gauss);
+
+                    hold(gauss); // Gauss
                     link = queue.first();
 
                     double rand = JSimSystem.uniform(0.0, 1.0);
@@ -62,8 +68,9 @@ public class BasicCareUnitServer extends JSimProcess {
                     if (rand < pDeath) {
                         // death
                         message("Died on basic care.");
-                        link.out();
-                        link = null;
+                        //link.out();
+                        //link = null;
+                        continue;
                     }
 
                     rand = JSimSystem.uniform(0.0, 1.0);
@@ -71,14 +78,15 @@ public class BasicCareUnitServer extends JSimProcess {
                     if (rand < pFromBasicToIntensive) {
                         // move to ICU
                         message("Moving to intensive care unit."); // todo
-                        link.out();
-                        link = null;
+                        //link.out();
+                        //link = null;
+                        continue;
 
                     } else {
                         // healthy - goes home
                         message("Healthy.");
-                        link.out();
-                        link = null;
+                        //link.out();
+                        //link = null;
                     }
 
                     // Now we must decide whether to throw the transaction away or to insert it into another queue.

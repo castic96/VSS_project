@@ -1,8 +1,4 @@
-import cz.zcu.fav.kiv.jsim.JSimHead;
-import cz.zcu.fav.kiv.jsim.JSimInvalidParametersException;
-import cz.zcu.fav.kiv.jsim.JSimProcess;
-import cz.zcu.fav.kiv.jsim.JSimSimulation;
-import cz.zcu.fav.kiv.jsim.JSimTooManyHeadsException;
+import cz.zcu.fav.kiv.jsim.*;
 
 import java.util.List;
 
@@ -26,5 +22,20 @@ public class QueueWithCareUnitServer extends JSimHead
 
 	public void setServerList(List<JSimProcess> serverList) {
 		this.serverList = serverList;
+	}
+
+	@Override
+	public synchronized JSimLink first() {
+		JSimLink link = super.first();
+
+		if (link == null) return null;
+
+		try {
+			link.out();
+		} catch (JSimSecurityException e) {
+			System.out.println("error"); // todo
+			e.printStackTrace();
+		}
+		return link;
 	}
 }
