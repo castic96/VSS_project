@@ -3,6 +3,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Program constants.
+ */
 public class Constants {
 
     public static int NUMBER_OF_BED_BASIC_UNIT;
@@ -23,6 +26,11 @@ public class Constants {
     // properties
     private static Properties properties;
 
+    /**
+     * Loads all constants from file.
+     *
+     * @param path Path to properties file.
+     */
     public static void init(String path) {
         properties = new Properties();
         try {
@@ -38,6 +46,9 @@ public class Constants {
         loadProperties();
     }
 
+    /**
+     * Loads constants.
+     */
     private static void loadProperties() {
         NUMBER_OF_BED_BASIC_UNIT = parseInteger("NUMBER_OF_BED_BASIC_UNIT");
         NUMBER_OF_BED_INTENSIVE_CARE_UNIT = parseInteger("NUMBER_OF_BED_INTENSIVE_CARE_UNIT");
@@ -55,6 +66,13 @@ public class Constants {
         MAX_TIME_IN_QUEUE = parseDouble("MAX_TIME_IN_QUEUE");
     }
 
+    /**
+     * Gets property and parses its value to integer.
+     * Returns 0 if it couldn't be parsed.
+     *
+     * @param name property name
+     * @return integer value
+     */
     private static int parseInteger(String name) {
         String value = properties.getProperty(name);
 
@@ -70,6 +88,13 @@ public class Constants {
         return i;
     }
 
+    /**
+     * Gets property and parses its value to double.
+     * Returns 0 if it couldn't be parsed.
+     *
+     * @param name property name
+     * @return double value
+     */
     private static double parseDouble(String name) {
         String value = properties.getProperty(name);
 

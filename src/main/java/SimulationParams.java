@@ -1,4 +1,8 @@
+/**
+ * Stores all simulation parameters.
+ */
 public class SimulationParams {
+
     private int numberOfBedsBasicCareUnit;
     private int numberOfBedsIntensiveCareUnit;
 

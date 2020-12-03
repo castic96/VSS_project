@@ -2,7 +2,7 @@ import java.util.List;
 
 public class Statistics {
 
-    public static SimulationResults calculateResults(List<BasicCareUnitServer> basicCareUnitServerList, List<IntensiveCareUnitServer> intensiveCareUnitServerList, double totalTime) {
+    public static SimulationResults calculateResults(List<BasicCareUnitServer> basicCareUnitServerList, List<IntensiveCareUnitServer> intensiveCareUnitServerList, double totalTime, QueueBasicCare basicCareUnitQueue) {
         // basic care
         double basicCareSum = 0.0;
         int basicCarePatientsSum = 0;
@@ -29,7 +29,9 @@ public class Statistics {
         double intensiveCareRho = intensiveCareSum / totalTime;
         double totalRho = (basicCareRho + intensiveCareRho) / 2.0;
 
-        SimulationResults results = new SimulationResults(basicCareRho, intensiveCareRho, totalRho, basicCareAverage, intensiveCareAverage, totalAverage);
+        // init results
+        SimulationResults results = new SimulationResults(basicCareRho, intensiveCareRho, totalRho, basicCareAverage, intensiveCareAverage, totalAverage,
+                basicCareUnitQueue.getLw(), basicCareUnitQueue.getTw(), basicCareUnitQueue.getTwForAllLinks());
         return results;
     }
 }

@@ -1,17 +1,36 @@
 import cz.zcu.fav.kiv.jsim.*;
 
+/**
+ * Input data (patients) generator.
+ */
 public class InputGenerator extends JSimProcess {
 
+    /** lambda (Poisson distribution) */
     private double lambda;
-    private QueueWithCareUnitServer queue;
+    /** queue */
+    private QueueBasicCare queue;
 
-    public InputGenerator(String name, JSimSimulation sim, double l, QueueWithCareUnitServer q) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException
+    /**
+     * Creates new generator.
+     *
+     * @param name generator name
+     * @param simulation simulation
+     * @param lambda lambda (Poisson distribution)
+     * @param queue queue
+     * @throws JSimSimulationAlreadyTerminatedException if simulation is already terminated
+     * @throws JSimInvalidParametersException parent (simulation) is invalid parameter
+     * @throws JSimTooManyProcessesException process cannot be added to simulation
+     */
+    public InputGenerator(String name, JSimSimulation simulation, double lambda, QueueBasicCare queue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException
     {
-        super(name, sim);
-        lambda = l;
-        queue = q;
+        super(name, simulation);
+        this.lambda = lambda;
+        this.queue = queue;
     }
 
+    /**
+     * Generating.
+     */
     protected void life()
     {
         JSimLink link;
@@ -20,13 +39,11 @@ public class InputGenerator extends JSimProcess {
         {
             while (true)
             {
-                // Periodically creating new transactions and putting them into the queue.
+                // generate patient and put him into queue
                 link = new JSimLink(new Patient(myParent.getCurrentTime()));
                 link.into(queue);
 
-                // Je vygenerovan pacient
-                // Projdu vsechny dostupne servery pro tu prvni frontu (vsechna luzka zakladni pece)
-                // Pokud najdu nejaky server (luzko), ktery neni aktivni, tak ho probudim a zastavim foreach (protoze chci aktivovat jen jeden server (luzko))
+                // find free bed in basic care for patient
                 for (JSimProcess currentServer : queue.getServerList()) {
                     if (currentServer.isIdle()) {
                         currentServer.activate(myParent.getCurrentTime());
@@ -34,6 +51,7 @@ public class InputGenerator extends JSimProcess {
                     }
                 }
 
+                // wait before generating another patient
                 hold(JSimSystem.negExp(lambda)); // todo Poisson distribution
             }
         }
