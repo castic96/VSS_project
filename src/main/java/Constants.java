@@ -13,7 +13,7 @@ public class Constants {
     /** Number of beds in intensive care unit. */
     public static int NUMBER_OF_BED_INTENSIVE_CARE_UNIT;
 
-    /** Input parameter - lambda (Poisson distribution). */
+    /** Input parameter - lambda (exponential distribution). */
     public static double INPUT_LAMBDA;
 
     /** Basic care parameter - mu (gauss distribution parameter). */

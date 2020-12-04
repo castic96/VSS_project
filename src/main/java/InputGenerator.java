@@ -5,7 +5,7 @@ import cz.zcu.fav.kiv.jsim.*;
  */
 public class InputGenerator extends JSimProcess {
 
-    /** lambda (Poisson distribution) */
+    /** lambda (exponential distribution) */
     private double lambda;
     /** queue */
     private BasicCareUnitQueue queue;
@@ -15,7 +15,7 @@ public class InputGenerator extends JSimProcess {
      *
      * @param name generator name
      * @param simulation simulation
-     * @param lambda lambda (Poisson distribution)
+     * @param lambda lambda (exponential distribution)
      * @param queue queue
      * @throws JSimSimulationAlreadyTerminatedException if simulation is already terminated
      * @throws JSimInvalidParametersException parent (simulation) is invalid parameter
@@ -52,7 +52,7 @@ public class InputGenerator extends JSimProcess {
                 }
 
                 // wait before generating another patient
-                hold(JSimSystem.negExp(lambda)); // todo Poisson distribution
+                hold(JSimSystem.negExp(lambda));
             }
         }
         catch (JSimException e)
