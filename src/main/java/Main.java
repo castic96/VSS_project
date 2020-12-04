@@ -84,7 +84,7 @@ public class Main {
 
             // run simulation
             simulation.message("Running the simulation, please wait.");
-            while ((simulation.getCurrentTime() < 10000.0) && (simulation.step() == true))
+            while ((simulation.getCurrentTime() < 50000.0) && (simulation.step() == true))
                 ;
 
             // results
