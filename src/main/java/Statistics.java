@@ -5,6 +5,8 @@ import java.util.List;
  */
 public class Statistics {
 
+    private static int NUMBER_OF_SERVERS = 2;
+
     /**
      * Calculates results.
      *
@@ -34,12 +36,12 @@ public class Statistics {
         // Tqs
         double basicCareAverage = basicCareSum /  basicCarePatientsSum;
         double intensiveCareAverage = intensiveCareSum / intensiveCarePatientsSum;
-        double totalAverage = (basicCareAverage + intensiveCareAverage) / 2.0;
+        double totalAverage = (basicCareAverage + intensiveCareAverage) / NUMBER_OF_SERVERS;
 
         // rhos
         double basicCareRho = basicCareSum / totalTime;
         double intensiveCareRho = intensiveCareSum / totalTime;
-        double totalRho = (basicCareRho + intensiveCareRho) / 2.0;
+        double totalRho = (basicCareRho + intensiveCareRho) / NUMBER_OF_SERVERS;
 
         // init results
         SimulationResults results = new SimulationResults(basicCareRho, intensiveCareRho, totalRho, basicCareAverage, intensiveCareAverage, totalAverage,
