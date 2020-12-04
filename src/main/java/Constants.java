@@ -8,22 +8,32 @@ import java.util.Properties;
  */
 public class Constants {
 
+    /** Number of beds in basic care unit. */
     public static int NUMBER_OF_BED_BASIC_UNIT;
+    /** Number of beds in intensive care unit. */
     public static int NUMBER_OF_BED_INTENSIVE_CARE_UNIT;
 
+    /** Input parameter - lambda (Poisson distribution). */
     public static double INPUT_LAMBDA;
 
+    /** Basic care parameter - mu (gauss distribution parameter). */
     public static double BASIC_CARE_UNIT_MU;
+    /** Basic care parameter - sigma (gauss distribution parameter). */
     public static double BASIC_CARE_UNIT_SIGMA;
+    /** Intensive care parameter - mu (exponential distribution parameter). */
     public static double INTENSIVE_CARE_UNIT_MU;
 
+    /** Probability of transfer from basic care to intensive care. */
     public static double P_FROM_BASIC_TO_INTENSIVE;
+    /** Probability of death in basic care. */
     public static double P_DEATH_BASIC_CARE_UNIT;
+    /** Probability of death in intensive care. */
     public static double P_DEATH_INTENSIVE_CARE_UNIT;
 
+    /** Maximum time which can be spent in queue (if exceeded -> death). */
     public static double MAX_TIME_IN_QUEUE;
 
-    // properties
+    /** Properties. */
     private static Properties properties;
 
     /**

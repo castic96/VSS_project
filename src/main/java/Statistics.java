@@ -1,7 +1,19 @@
 import java.util.List;
 
+/**
+ * Class for calculating statistical numbers.
+ */
 public class Statistics {
 
+    /**
+     * Calculates results.
+     *
+     * @param basicCareUnitServerList basic care servers
+     * @param intensiveCareUnitServerList intensive care servers
+     * @param totalTime total simulation time
+     * @param basicCareUnitQueue queue for basic care
+     * @return calculated results
+     */
     public static SimulationResults calculateResults(List<BasicCareUnitServer> basicCareUnitServerList, List<IntensiveCareUnitServer> intensiveCareUnitServerList, double totalTime, BasicCareUnitQueue basicCareUnitQueue) {
         // basic care
         double basicCareSum = 0.0;
