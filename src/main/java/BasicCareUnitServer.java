@@ -16,6 +16,8 @@ public class BasicCareUnitServer extends JSimProcess {
     private final double pDeath;
     /** probability of transfer to intensive care */
     private final double pFromBasicToIntensive;
+    /** patient */
+    private Patient patient;
 
     /** queue to basic care */
     private final BasicCareUnitQueue queue;
@@ -23,6 +25,8 @@ public class BasicCareUnitServer extends JSimProcess {
     private final List<IntensiveCareUnitServer> intensiveCareUnitServerList;
     /** maximum time which can be spent in queue (if exceeded -> death) */
     private final double maxTimeInQueue;
+    /** if server (bed) is occupied */
+    private boolean occupied;
 
     /** counter for patients on this server (bed) */
     private int counter;
@@ -64,7 +68,6 @@ public class BasicCareUnitServer extends JSimProcess {
      */
     protected void life() {
 
-        Patient patient;
         JSimLink link;
 
         try
@@ -98,16 +101,23 @@ public class BasicCareUnitServer extends JSimProcess {
 
                 patient = (Patient)link.getData();
 
+                setOccupied(true);
+
                 // spend time in basic care
                 hold(Utils.gaussPositive(mu, sigma));
 
+                setOccupied(false);
+
                 // deciding where to go next
-                double rand = JSimSystem.uniform(0.0, 1.0);
-                if (rand < pDeath) { // death
+//                double rand = JSimSystem.uniform(0.0, 1.0);
+//                if (rand < pDeath) { // death
+//                    message("Patient died in basic care.");
+//                }
+                if (patient.isDied()) {
                     message("Patient died in basic care.");
                 }
                 else {
-                    rand = JSimSystem.uniform(0.0, 1.0);
+                    double rand = JSimSystem.uniform(0.0, 1.0);
                     if (rand < pFromBasicToIntensive) { // move to intensive care unit (if not possible -> death)
                         message("Trying to move to intensive care unit...");
 
@@ -196,6 +206,24 @@ public class BasicCareUnitServer extends JSimProcess {
     }
 
     /**
+     * Returns if server (bed) is occupied.
+     *
+     * @return is occupied
+     */
+    public boolean isOccupied() {
+        return occupied;
+    }
+
+    /**
+     * Sets if server (bed) is occupied.
+     *
+     * @param occupied true if occupied
+     */
+    public void setOccupied(boolean occupied) {
+        this.occupied = occupied;
+    }
+
+    /**
      * Returns counter for patients on this server (bed).
      *
      * @return counter
@@ -215,4 +243,15 @@ public class BasicCareUnitServer extends JSimProcess {
         return transTq;
     }
 
+    public double getpDeath() {
+        return pDeath;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
 }

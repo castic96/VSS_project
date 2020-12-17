@@ -14,6 +14,9 @@ public class Main {
     /** Default path to configuration file (properties). */
     private static String DEFAULT_CONFIG_PATH = "config.properties";
 
+    /** Max simulation time. */
+    private static double MAX_TIME = 50000.0;
+
     /**
      * Program entry point.
      * Arguments can be either empty or one argument as path to configuration file.
@@ -60,6 +63,7 @@ public class Main {
         List<BasicCareUnitServer> basicCareUnitServerList;
         List<IntensiveCareUnitServer> intensiveCareUnitServerList;
         InputGenerator inputGenerator;
+        Killer killer;
 
         try {
             // init
@@ -78,13 +82,17 @@ public class Main {
             inputGenerator = new InputGenerator("Input generator", simulation, params.getInputLambda(), basicCareUnitQueue);
             basicCareUnitQueue.setServerList(basicCareUnitServerList);
 
+            killer = new Killer("Daily killer", simulation, basicCareUnitServerList, intensiveCareUnitServerList);
+
             // activate generators
             simulation.message("Activating generators...");
             inputGenerator.activate(0.0);
 
+            killer.activate(1.0);
+
             // run simulation
             simulation.message("Running the simulation, please wait.");
-            while ((simulation.getCurrentTime() < 50000.0) && (simulation.step() == true))
+            while ((simulation.getCurrentTime() < MAX_TIME) && (simulation.step() == true))
                 ;
 
             // results

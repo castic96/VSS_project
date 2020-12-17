@@ -8,6 +8,8 @@ public class Patient {
     /** Time when patient requested to transfer back to basic care unit. */
     private double timeOfRequestToBasicCare;
 
+    private boolean died = false;
+
     /**
      * Creates new patient with arrival time.
      *
@@ -42,5 +44,13 @@ public class Patient {
      */
     public double getTimeOfRequestToBasicCare() {
         return timeOfRequestToBasicCare;
+    }
+
+    public boolean isDied() {
+        return died;
+    }
+
+    public void setDied(boolean died) {
+        this.died = died;
     }
 }
