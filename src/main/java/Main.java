@@ -63,7 +63,6 @@ public class Main {
         List<BasicCareUnitServer> basicCareUnitServerList;
         List<IntensiveCareUnitServer> intensiveCareUnitServerList;
         InputGenerator inputGenerator;
-        Killer killer;
 
         try {
             // init
@@ -82,13 +81,15 @@ public class Main {
             inputGenerator = new InputGenerator("Input generator", simulation, params.getInputLambda(), basicCareUnitQueue);
             basicCareUnitQueue.setServerList(basicCareUnitServerList);
 
-            killer = new Killer("Daily killer", simulation, basicCareUnitServerList, intensiveCareUnitServerList);
-
             // activate generators
             simulation.message("Activating generators...");
             inputGenerator.activate(0.0);
 
-            killer.activate(1.0);
+            //killer.activate(1.0);
+
+            for (int i = 1; i < MAX_TIME; i++) {
+                new Killer("Daily killer " + i, simulation, basicCareUnitServerList, intensiveCareUnitServerList).activate(i);
+            }
 
             // run simulation
             simulation.message("Running the simulation, please wait.");

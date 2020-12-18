@@ -114,7 +114,7 @@ public class BasicCareUnitServer extends JSimProcess {
 //                    message("Patient died in basic care.");
 //                }
                 if (patient.isDied()) {
-                    message("Patient died in basic care.");
+                    message("Patient died on basic care.");
                 }
                 else {
                     double rand = JSimSystem.uniform(0.0, 1.0);
@@ -193,7 +193,7 @@ public class BasicCareUnitServer extends JSimProcess {
 
         for (IntensiveCareUnitServer currentServer : intensiveCareUnitServerList) {
 
-                if (!currentServer.isOccupied()) {
+                if (!currentServer.isOccupied() && currentServer.isIdle()) {
                     currentServer.setPatientOnBed(link);
                     currentServer.setOccupied(true);
                     currentServer.activate(myParent.getCurrentTime());

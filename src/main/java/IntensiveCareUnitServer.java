@@ -54,24 +54,29 @@ public class IntensiveCareUnitServer extends JSimProcess {
                 // spend time in intensive care
                 hold(JSimSystem.negExp(mu));
 
+                setOccupied(false);
+
                 patient = (Patient) patientOnBed.getData();
 
-                // deciding where to go next
-                double rand = JSimSystem.uniform(0.0, 1.0);
-                if (rand < pDeath) { // death
-                    message("Died on intensive care.");
-                    setOccupied(false);
+                if (patient.isDied()) {
+                    message("Patient died on intensive care.");
                     setPatientOnBed(null);
+
+                    counter++;
+                    transTq += myParent.getCurrentTime() - patient.getTimeOfCreation();
+
                 }
                 else {
                     patient.setTimeOfRequestToBasicCare(myParent.getCurrentTime());
 
                     message("Trying to move to basic care unit...");
 
+                    counter++;
+                    transTq += myParent.getCurrentTime() - patient.getTimeOfCreation();
+
+                    setOccupied(true);
                 }
 
-                counter++;
-                transTq += myParent.getCurrentTime() - patient.getTimeOfCreation();
                 passivate();
             }
 
@@ -140,4 +145,11 @@ public class IntensiveCareUnitServer extends JSimProcess {
         return transTq;
     }
 
+    public double getpDeath() {
+        return pDeath;
+    }
+
+    public void setpDeath(double pDeath) {
+        this.pDeath = pDeath;
+    }
 }
