@@ -9,6 +9,9 @@ public class Patient {
     private double timeOfRequestToBasicCare;
 
     private boolean died = false;
+    private boolean inMoveToIntensiveCare = false;
+    private int patientNumber;
+    public static int patientsCounter = 0;
 
     /**
      * Creates new patient with arrival time.
@@ -17,6 +20,8 @@ public class Patient {
      */
     public Patient(double timeOfCreation) {
         this.timeOfCreation = timeOfCreation;
+        patientsCounter++;
+        patientNumber = patientsCounter;
     }
 
     /**
@@ -52,5 +57,17 @@ public class Patient {
 
     public void setDied(boolean died) {
         this.died = died;
+    }
+
+    public boolean isInMoveToIntensiveCare() {
+        return inMoveToIntensiveCare;
+    }
+
+    public void setInMoveToIntensiveCare(boolean inMoveToIntensiveCare) {
+        this.inMoveToIntensiveCare = inMoveToIntensiveCare;
+    }
+
+    public int getPatientNumber() {
+        return patientNumber;
     }
 }

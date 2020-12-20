@@ -15,7 +15,7 @@ public class Main {
     private static String DEFAULT_CONFIG_PATH = "config.properties";
 
     /** Max simulation time. */
-    private static double MAX_TIME = 50000.0;
+    private static double MAX_TIME = 10000.0;
 
     /**
      * Program entry point.
@@ -85,10 +85,8 @@ public class Main {
             simulation.message("Activating generators...");
             inputGenerator.activate(0.0);
 
-            //killer.activate(1.0);
-
             for (int i = 1; i < MAX_TIME; i++) {
-                new Killer("Daily killer " + i, simulation, basicCareUnitServerList, intensiveCareUnitServerList).activate(i);
+                new DailyProbability("Daily probability " + i, simulation, basicCareUnitServerList, intensiveCareUnitServerList).activate(i);
             }
 
             // run simulation

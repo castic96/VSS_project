@@ -19,6 +19,8 @@ public class BasicCareUnitServer extends JSimProcess {
     /** patient */
     private Patient patient;
 
+    private JSimLink link;
+
     /** queue to basic care */
     private final BasicCareUnitQueue queue;
     /** list of intensive care servers */
@@ -68,8 +70,6 @@ public class BasicCareUnitServer extends JSimProcess {
      */
     protected void life() {
 
-        JSimLink link;
-
         try
         {
             while (true)
@@ -84,7 +84,7 @@ public class BasicCareUnitServer extends JSimProcess {
                         patient = (Patient)link.getData();
 
                         if (myParent.getCurrentTime() - patient.getTimeOfCreation() > maxTimeInQueue) {
-                            message("Patient died in queue.");
+                            message("Patient died in queue, patient: " + patient.getPatientNumber());
                             continue;
                         }
 
@@ -96,7 +96,7 @@ public class BasicCareUnitServer extends JSimProcess {
 
                 }
                 else {
-                    message("Patient moved back to basic care.");
+                    message("Patient moved back to basic care, patient: " + ((Patient)link.getData()).getPatientNumber());
                 }
 
                 patient = (Patient)link.getData();
@@ -109,27 +109,19 @@ public class BasicCareUnitServer extends JSimProcess {
                 setOccupied(false);
 
                 // deciding where to go next
-//                double rand = JSimSystem.uniform(0.0, 1.0);
-//                if (rand < pDeath) { // death
-//                    message("Patient died in basic care.");
-//                }
                 if (patient.isDied()) {
-                    message("Patient died on basic care.");
+                    if (patient.isInMoveToIntensiveCare()) {
+                        message("Patient died in basic care... (no free bed in intensive care unit), patient: " + patient.getPatientNumber());
+                    }
+                    else {
+                        message("Patient died on basic care, patient: " + patient.getPatientNumber());
+                    }
                 }
                 else {
-                    double rand = JSimSystem.uniform(0.0, 1.0);
-                    if (rand < pFromBasicToIntensive) { // move to intensive care unit (if not possible -> death)
-                        message("Trying to move to intensive care unit...");
-
-                        if (!moveToIntensiveCare(link)) {
-                            message("Patient died in basic care... (no free bed in intensive care unit).");
-                        }
-                        else {
-                            message("Patient moved to intensive care unit successfully.");
-                        }
-
-                    } else { // healthy -> goes home
-                        message("Patient is healthy.");
+                    if (patient.isInMoveToIntensiveCare()) {
+                        message("Patient moved to intensive care unit successfully, patient: " + patient.getPatientNumber());
+                    } else {
+                        message("Patient is healthy, patient: " + patient.getPatientNumber());
                     }
                 }
 
@@ -157,15 +149,15 @@ public class BasicCareUnitServer extends JSimProcess {
 
         for (IntensiveCareUnitServer currentServer : intensiveCareUnitServerList) {
 
-                if (currentServer.isOccupied() && currentServer.isIdle()) {
-                    currentPatient = (Patient)currentServer.getPatientOnBed().getData();
+            if (currentServer.isOccupied() && currentServer.isIdle()) {
+                currentPatient = (Patient)currentServer.getPatientOnBed().getData();
 
-                    if (currentPatient.getTimeOfRequestToBasicCare() < firstPatientRequestTime) {
-                        firstPatientRequestTime = currentPatient.getTimeOfRequestToBasicCare();
-                        firstServerRequest = currentServer;
-                    }
-
+                if (currentPatient.getTimeOfRequestToBasicCare() < firstPatientRequestTime) {
+                    firstPatientRequestTime = currentPatient.getTimeOfRequestToBasicCare();
+                    firstServerRequest = currentServer;
                 }
+
+            }
         }
 
         if (firstServerRequest == null) {
@@ -173,36 +165,12 @@ public class BasicCareUnitServer extends JSimProcess {
         }
 
         firstRequestPatientLink = firstServerRequest.getPatientOnBed();
+        //((Patient)firstRequestPatientLink.getData()).setInMoveToIntensiveCare(false);
 
         firstServerRequest.setPatientOnBed(null);
         firstServerRequest.setOccupied(false);
 
         return firstRequestPatientLink;
-    }
-
-    /**
-     * Tries to move patient to intensive care.
-     * Returns true if transfer has been successful.
-     *
-     * @param link patient
-     * @return true if patient has been successfully transferred to ICU (false otherwise)
-     * @throws JSimInvalidParametersException if problem with process activation occurs
-     * @throws JSimSecurityException if problem with process activation occurs
-     */
-    private synchronized boolean moveToIntensiveCare(JSimLink link) throws JSimInvalidParametersException, JSimSecurityException {
-
-        for (IntensiveCareUnitServer currentServer : intensiveCareUnitServerList) {
-
-                if (!currentServer.isOccupied() && currentServer.isIdle()) {
-                    currentServer.setPatientOnBed(link);
-                    currentServer.setOccupied(true);
-                    currentServer.activate(myParent.getCurrentTime());
-
-                    return true;
-                }
-        }
-
-        return false;
     }
 
     /**
@@ -253,5 +221,13 @@ public class BasicCareUnitServer extends JSimProcess {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public double getpFromBasicToIntensive() {
+        return pFromBasicToIntensive;
+    }
+
+    public JSimLink getLink() {
+        return link;
     }
 }

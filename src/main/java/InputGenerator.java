@@ -42,6 +42,7 @@ public class InputGenerator extends JSimProcess {
                 // generate patient and put him into queue
                 link = new JSimLink(new Patient(myParent.getCurrentTime()));
                 link.into(queue);
+                message("Added patient to queue, patient: " + ((Patient)link.getData()).getPatientNumber());
 
                 // find free bed in basic care for patient
                 for (JSimProcess currentServer : queue.getServerList()) {
