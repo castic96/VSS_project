@@ -72,7 +72,7 @@ public class Main {
 
             intensiveCareUnitServerList = createIntensiveCareUnitServersArray(params.getNumberOfBedsIntensiveCareUnit(),
                                                     simulation, params.getIntensiveCareUnitMu(),
-                                                    params.getpDeathIntensiveCareUnit());
+                                                    params.getpDeathIntensiveCareUnit(), basicCareUnitQueue);
             basicCareUnitServerList = createBasicCareUnitServersArray(params.getNumberOfBedsBasicCareUnit(), simulation,
                                             params.getBasicCareUnitMu(), params.getBasicCareUnitSigma(),
                                             params.getpDeathBasicCareUnit(), params.getpFromBasicToIntensive(),
@@ -152,12 +152,13 @@ public class Main {
      */
     private static List<IntensiveCareUnitServer> createIntensiveCareUnitServersArray(int numberOfServers,
                                                                                      JSimSimulation simulation,
-                                                                                     double mu, double pDeath) throws JSimException {
+                                                                                     double mu, double pDeath,
+                                                                                     BasicCareUnitQueue queue) throws JSimException {
 
         List<IntensiveCareUnitServer> servers = new ArrayList<>();
 
         for (int i = 0; i < numberOfServers; i++) {
-            servers.add(new IntensiveCareUnitServer("Intensive Care Unit Server " + i, simulation, mu, pDeath, false));
+            servers.add(new IntensiveCareUnitServer("Intensive Care Unit Server " + i, simulation, mu, pDeath, false, queue));
         }
 
         return servers;

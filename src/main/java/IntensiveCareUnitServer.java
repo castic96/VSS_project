@@ -18,6 +18,8 @@ public class IntensiveCareUnitServer extends JSimProcess {
     private int counter;
     /** time spent on this server (bed) */
     private double transTq;
+    /** queue to basic care */
+    private final BasicCareUnitQueue queue;
 
     /**
      * Creates new server in intensive care unit.
@@ -31,11 +33,12 @@ public class IntensiveCareUnitServer extends JSimProcess {
      * @throws JSimInvalidParametersException parent (simulation) is invalid parameter
      * @throws JSimTooManyProcessesException process cannot be added to simulation
      */
-    public IntensiveCareUnitServer(String name, JSimSimulation parent, double mu, double pDeath, boolean occupied) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
+    public IntensiveCareUnitServer(String name, JSimSimulation parent, double mu, double pDeath, boolean occupied, BasicCareUnitQueue queue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
         super(name, parent);
         this.mu = mu;
         this.pDeath = pDeath;
         this.occupied = occupied;
+        this.queue = queue;
 
         this.counter = 0;
         this.transTq = 0.0;
@@ -76,6 +79,8 @@ public class IntensiveCareUnitServer extends JSimProcess {
                     counter++;
                     transTq += myParent.getCurrentTime() - patient.getTimeOfCreation();
 
+                    activateBasicCareUnitServer();
+
                     setOccupied(true);
                 }
 
@@ -89,6 +94,16 @@ public class IntensiveCareUnitServer extends JSimProcess {
             e.printComment(System.err);
         }
 
+    }
+
+    private void activateBasicCareUnitServer() throws JSimInvalidParametersException, JSimSecurityException {
+        // find free bed in basic care for patient
+        for (JSimProcess currentServer : queue.getServerList()) {
+            if (currentServer.isIdle()) {
+                currentServer.activate(myParent.getCurrentTime());
+                break;
+            }
+        }
     }
 
     /**
