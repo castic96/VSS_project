@@ -1,7 +1,19 @@
+import javafx.application.Application;
 import cz.zcu.fav.kiv.jsim.JSimException;
 import cz.zcu.fav.kiv.jsim.JSimSimulation;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.*;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +22,7 @@ import java.util.List;
  * initializes simulation parameters, runs simulation
  * and prints results.
  */
-public class Main {
+public class Main extends Application {
 
     /** Default path to configuration file (properties). */
     private static final String DEFAULT_CONFIG_PATH = "config.properties";
@@ -25,9 +37,51 @@ public class Main {
      * @param args arguments (empty or first = path to configuration file)
      */
     public static void main(String[] args) {
-        SimulationParams simulationParams = initialize(args);
-        SimulationResults simulationResults = run(simulationParams);
-        printResults(simulationResults);
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Hospital Simulation 1.0");
+        primaryStage.setScene(getScene());
+        primaryStage.setResizable(false);
+        primaryStage.centerOnScreen();
+        primaryStage.show();
+
+        // creating log file
+        File file = new File("simulation.log");
+        FileOutputStream fos = new FileOutputStream(file);
+        PrintStream ps = new PrintStream(fos);
+        System.setOut(ps);
+
+        // append information about app start
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss yyyy/MM/dd");
+        LocalDateTime start = LocalDateTime.now();
+        System.out.println("Application started: "+ dtf.format(start));
+
+        // exit application by press cross
+        primaryStage.setOnCloseRequest((WindowEvent we) -> {
+            LocalDateTime end = LocalDateTime.now();
+            System.out.println("Application ended: "+ dtf.format(end));
+            System.exit(0);
+        });
+//
+//        SimulationParams simulationParams = initialize(args);
+//        SimulationResults simulationResults = run(simulationParams);
+//        printResults(simulationResults);
+    }
+
+    private Scene getScene() {
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/simulationWindow.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new Scene(root);
     }
 
     /**
