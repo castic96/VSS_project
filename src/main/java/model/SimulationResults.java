@@ -188,4 +188,132 @@ public class SimulationResults {
         return String.format(DOUBLE_FORMAT, p);
     }
 
+    public int getIncomingPatients() {
+        return incomingPatients;
+    }
+
+    public int getPatientsMovedToICU() {
+        return patientsMovedToICU;
+    }
+
+    public int getPatientsMovedBackFromICU() {
+        return patientsMovedBackFromICU;
+    }
+
+    public int getPatientsDiedInQueue() {
+        return patientsDiedInQueue;
+    }
+
+    public int getPatientsDiedInBasicCare() {
+        return patientsDiedInBasicCare;
+    }
+
+    public int getPatientsDiedInBasicCareNoFreeBedInICU() {
+        return patientsDiedInBasicCareNoFreeBedInICU;
+    }
+
+    public int getPatientsDiedInIntensiveCare() {
+        return patientsDiedInIntensiveCare;
+    }
+
+    public int getPatientsStillInBasicCare() {
+        return patientsStillInBasicCare;
+    }
+
+    public int getPatientsStillInIntensiveCare() {
+        return patientsStillInIntensiveCare;
+    }
+
+    public int getHealedPatients() {
+        return healedPatients;
+    }
+
+    public int getDeadPatients() {
+        return deadPatients;
+    }
+
+    public int getLeavingPatients() {
+        return leavingPatients;
+    }
+
+    /**
+     * Returns rho (load) in basic care.
+     *
+     * @return rho (load) in basic care
+     */
+    public double getBasicCareRho() {
+        return basicCareRho;
+    }
+
+    /**
+     * Returns rho (load) in intensive care.
+     *
+     * @return rho (load) in intensive care
+     */
+    public double getIntensiveCareRho() {
+        return intensiveCareRho;
+    }
+
+    /**
+     * Returns rho (load) in whole system.
+     *
+     * @return rho (load) in whole system
+     */
+    public double getTotalRho() {
+        return totalRho;
+    }
+
+    /**
+     * Returns Tq - mean time spent in basic care.
+     *
+     * @return Tq - mean time spent in basic care
+     */
+    public double getBasicCareAverage() {
+        return basicCareAverage;
+    }
+
+    /**
+     * Returns Tq - mean time spent in intensive care.
+     *
+     * @return Tq - mean time spent in intensive care
+     */
+    public double getIntensiveCareAverage() {
+        return intensiveCareAverage;
+    }
+
+    /**
+     * Returns Tq - mean time spent in whole system.
+     *
+     * @return Tq - mean time spent in whole system
+     */
+    public double getTotalAverage() {
+        return totalAverage;
+    }
+
+    /**
+     * Returns Lw - mean length of queue.
+     *
+     * @return Lw - mean length of queue
+     */
+    public double getLw() {
+        return lw;
+    }
+
+    /**
+     * Returns Tw - mean waiting time in queue.
+     *
+     * @return Tw - mean waiting time in queue
+     */
+    public double getTw() {
+        return tw;
+    }
+
+    /**
+     * Returns Tw - mean waiting time in queue for all elements.
+     *
+     * @return Tw - mean waiting time in queue for all elements
+     */
+    public double getTwForAllLinks() {
+        return twForAllLinks;
+    }
 }

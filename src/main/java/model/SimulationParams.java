@@ -146,4 +146,44 @@ public class SimulationParams {
     public double getMaxTimeInQueue() {
         return maxTimeInQueue;
     }
+
+    public void setNumberOfBedsBasicCareUnit(int numberOfBedsBasicCareUnit) {
+        this.numberOfBedsBasicCareUnit = numberOfBedsBasicCareUnit;
+    }
+
+    public void setNumberOfBedsIntensiveCareUnit(int numberOfBedsIntensiveCareUnit) {
+        this.numberOfBedsIntensiveCareUnit = numberOfBedsIntensiveCareUnit;
+    }
+
+    public void setInputLambda(double inputLambda) {
+        this.inputLambda = inputLambda;
+    }
+
+    public void setBasicCareUnitMu(double basicCareUnitMu) {
+        this.basicCareUnitMu = basicCareUnitMu;
+    }
+
+    public void setBasicCareUnitSigma(double basicCareUnitSigma) {
+        this.basicCareUnitSigma = basicCareUnitSigma;
+    }
+
+    public void setIntensiveCareUnitMu(double intensiveCareUnitMu) {
+        this.intensiveCareUnitMu = intensiveCareUnitMu;
+    }
+
+    public void setpFromBasicToIntensive(double pFromBasicToIntensive) {
+        this.pFromBasicToIntensive = pFromBasicToIntensive;
+    }
+
+    public void setpDeathBasicCareUnit(double pDeathBasicCareUnit) {
+        this.pDeathBasicCareUnit = pDeathBasicCareUnit;
+    }
+
+    public void setpDeathIntensiveCareUnit(double pDeathIntensiveCareUnit) {
+        this.pDeathIntensiveCareUnit = pDeathIntensiveCareUnit;
+    }
+
+    public void setMaxTimeInQueue(double maxTimeInQueue) {
+        this.maxTimeInQueue = maxTimeInQueue;
+    }
 }

@@ -1,5 +1,8 @@
 package model;
 
+import model.enums.InputParams;
+import model.enums.OutputParams;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,6 +12,13 @@ import java.util.Properties;
  * Program constants.
  */
 public class Constants {
+
+    public static boolean isScenario = false;
+
+    public static InputParams INPUT_PARAM;
+    public static OutputParams OUTPUT_PARAM;
+    public static double STEP;
+    public static int RUNS_COUNT = -1;
 
     /** Number of beds in basic care unit. */
     public static int NUMBER_OF_BED_BASIC_UNIT;
@@ -62,20 +72,39 @@ public class Constants {
      * Loads constants.
      */
     private static void loadProperties() {
-        NUMBER_OF_BED_BASIC_UNIT = parseInteger("NUMBER_OF_BED_BASIC_UNIT");
-        NUMBER_OF_BED_INTENSIVE_CARE_UNIT = parseInteger("NUMBER_OF_BED_INTENSIVE_CARE_UNIT");
+        RUNS_COUNT = parseInteger(InputParams.RUNS_COUNT.name());
 
-        INPUT_LAMBDA = parseDouble("INPUT_LAMBDA");
+        if (RUNS_COUNT != -1) { // if it is scenario
+            INPUT_PARAM = parseInputParam(InputParams.INPUT_PARAM.name());
+            OUTPUT_PARAM = parseOutputParam(InputParams.OUTPUT_PARAM.name());
+            STEP = parseDouble(InputParams.STEP.name());
+            isScenario = true;
+        }
 
-        BASIC_CARE_UNIT_MU = parseDouble("BASIC_CARE_UNIT_MU");
-        BASIC_CARE_UNIT_SIGMA = parseDouble("BASIC_CARE_UNIT_SIGMA");
-        INTENSIVE_CARE_UNIT_MU = parseDouble("INTENSIVE_CARE_UNIT_MU");
+        NUMBER_OF_BED_BASIC_UNIT = parseInteger(InputParams.NUMBER_OF_BED_BASIC_UNIT.name());
+        NUMBER_OF_BED_INTENSIVE_CARE_UNIT = parseInteger(InputParams.NUMBER_OF_BED_INTENSIVE_CARE_UNIT.name());
 
-        P_FROM_BASIC_TO_INTENSIVE = parseDouble("P_FROM_BASIC_TO_INTENSIVE");
-        P_DEATH_BASIC_CARE_UNIT = parseDouble("P_DEATH_BASIC_CARE_UNIT");
-        P_DEATH_INTENSIVE_CARE_UNIT = parseDouble("P_DEATH_INTENSIVE_CARE_UNIT");
+        INPUT_LAMBDA = parseDouble(InputParams.INPUT_LAMBDA.name());
 
-        MAX_TIME_IN_QUEUE = parseDouble("MAX_TIME_IN_QUEUE");
+        BASIC_CARE_UNIT_MU = parseDouble(InputParams.BASIC_CARE_UNIT_MU.name());
+        BASIC_CARE_UNIT_SIGMA = parseDouble(InputParams.BASIC_CARE_UNIT_SIGMA.name());
+        INTENSIVE_CARE_UNIT_MU = parseDouble(InputParams.INTENSIVE_CARE_UNIT_MU.name());
+
+        P_FROM_BASIC_TO_INTENSIVE = parseDouble(InputParams.P_FROM_BASIC_TO_INTENSIVE.name());
+        P_DEATH_BASIC_CARE_UNIT = parseDouble(InputParams.P_DEATH_BASIC_CARE_UNIT.name());
+        P_DEATH_INTENSIVE_CARE_UNIT = parseDouble(InputParams.P_DEATH_INTENSIVE_CARE_UNIT.name());
+
+        MAX_TIME_IN_QUEUE = parseDouble(InputParams.MAX_TIME_IN_QUEUE.name());
+    }
+
+    private static InputParams parseInputParam(String name) {
+        String value = properties.getProperty(name);
+        return InputParams.valueOf(value);
+    }
+
+    private static OutputParams parseOutputParam(String name) {
+        String value = properties.getProperty(name);
+        return OutputParams.valueOf(value);
     }
 
     /**
@@ -87,6 +116,11 @@ public class Constants {
      */
     private static int parseInteger(String name) {
         String value = properties.getProperty(name);
+
+        if (value == null) {
+            System.out.println("Config file: int value for " + name + " not found!");
+            return -1;
+        }
 
         int i;
 
@@ -109,6 +143,11 @@ public class Constants {
      */
     private static double parseDouble(String name) {
         String value = properties.getProperty(name);
+
+        if (value == null) {
+            System.out.println("Config file: string value for " + name + " not found!");
+            return -1;
+        }
 
         double d;
         try {

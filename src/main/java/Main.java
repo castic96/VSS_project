@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.*;
+import model.enums.InputParams;
+import model.enums.OutputParams;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -66,9 +68,17 @@ public class Main extends Application {
             System.exit(0);
         });
 //
-//        SimulationParams simulationParams = initialize(args);
-//        SimulationResults simulationResults = run(simulationParams);
-//        printResults(simulationResults);
+//        initialize(args);
+//
+//        if (Constants.isScenario) {
+//            ScenarioParams scenarioParams = getScenarioParams();
+//            ScenarioResults results = runScenario(scenarioParams);
+//            printScenarioResults(results);
+//        } else {
+//            SimulationParams simulationParams = getSimulationParams();
+//            SimulationResults simulationResults = run(simulationParams);
+//            printResults(simulationResults);
+//        }
     }
 
     private Scene getScene() {
@@ -91,18 +101,96 @@ public class Main extends Application {
      * @param args arguments (empty or first = path to configuration file)
      * @return initialized simulation parameters
      */
-    private static SimulationParams initialize(String[] args) {
+    private static void initialize(String[] args) {
         String configFilePath = DEFAULT_CONFIG_PATH;
         if (args.length > 0) {
             configFilePath = args[0];
         }
 
         Constants.init(configFilePath);
+    }
 
+    private static SimulationParams getSimulationParams() {
         return new SimulationParams(Constants.NUMBER_OF_BED_BASIC_UNIT, Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT,
-                                    Constants.INPUT_LAMBDA, Constants.BASIC_CARE_UNIT_MU, Constants.BASIC_CARE_UNIT_SIGMA, Constants.INTENSIVE_CARE_UNIT_MU,
-                                    Constants.P_FROM_BASIC_TO_INTENSIVE, Constants.P_DEATH_BASIC_CARE_UNIT, Constants.P_DEATH_INTENSIVE_CARE_UNIT,
-                                    Constants.MAX_TIME_IN_QUEUE);
+                Constants.INPUT_LAMBDA, Constants.BASIC_CARE_UNIT_MU, Constants.BASIC_CARE_UNIT_SIGMA, Constants.INTENSIVE_CARE_UNIT_MU,
+                Constants.P_FROM_BASIC_TO_INTENSIVE, Constants.P_DEATH_BASIC_CARE_UNIT, Constants.P_DEATH_INTENSIVE_CARE_UNIT,
+                Constants.MAX_TIME_IN_QUEUE);
+    }
+
+    private static ScenarioParams getScenarioParams() {
+        return new ScenarioParams(
+                Constants.INPUT_PARAM, Constants.OUTPUT_PARAM, Constants.STEP, Constants.RUNS_COUNT,
+
+                Constants.NUMBER_OF_BED_BASIC_UNIT, Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT,
+                Constants.INPUT_LAMBDA, Constants.BASIC_CARE_UNIT_MU, Constants.BASIC_CARE_UNIT_SIGMA, Constants.INTENSIVE_CARE_UNIT_MU,
+                Constants.P_FROM_BASIC_TO_INTENSIVE, Constants.P_DEATH_BASIC_CARE_UNIT, Constants.P_DEATH_INTENSIVE_CARE_UNIT,
+                Constants.MAX_TIME_IN_QUEUE);
+    }
+
+    private static ScenarioResults runScenario(ScenarioParams scenarioParams) {
+        double step = scenarioParams.getStep();
+        int runsCount = scenarioParams.getRunsCount();
+
+        double[] scenarioResults = new double[runsCount];
+
+        for (int i = 0; i < runsCount; i++) {
+            // run simulation
+            SimulationResults results = run(scenarioParams);
+
+            // save result
+            double result = getResultToSave(scenarioParams.getOutputParam(), results);
+            scenarioResults[i] = result;
+
+            // update simulation parameter
+            updateSimulationParam(scenarioParams.getInputParam(), scenarioParams, step);
+        }
+
+        ScenarioResults results = new ScenarioResults(scenarioParams.getOutputParam(), scenarioResults);
+        return results;
+    }
+
+    private static double getResultToSave(OutputParams outputParam, SimulationResults results) {
+        switch (outputParam) {
+            case HEALED_PATIENTS:
+                return results.getHealedPatients();
+            case DEAD_PATIENTS:
+                return results.getDeadPatients();
+            case TOTAL_RHO:
+                return results.getTotalRho();
+        }
+
+        return 0;
+    }
+
+    private static void updateSimulationParam(InputParams inputParam, SimulationParams params, double step) {
+        switch (inputParam) {
+            case NUMBER_OF_BED_BASIC_UNIT:
+                params.setNumberOfBedsBasicCareUnit((int) (params.getNumberOfBedsBasicCareUnit() + step));
+                break;
+            case NUMBER_OF_BED_INTENSIVE_CARE_UNIT:
+                params.setNumberOfBedsIntensiveCareUnit((int) (params.getNumberOfBedsIntensiveCareUnit() + step));
+                break;
+            case INPUT_LAMBDA:
+                params.setInputLambda(params.getInputLambda() + step);
+                break;
+
+            case BASIC_CARE_UNIT_MU:
+                params.setBasicCareUnitMu(params.getBasicCareUnitMu() + step);
+            case BASIC_CARE_UNIT_SIGMA:
+                params.setBasicCareUnitSigma(params.getBasicCareUnitSigma() + step);
+            case INTENSIVE_CARE_UNIT_MU:
+                params.setIntensiveCareUnitMu(params.getIntensiveCareUnitMu() + step);
+
+            case P_FROM_BASIC_TO_INTENSIVE:
+                params.setpFromBasicToIntensive(params.getpFromBasicToIntensive() + step);
+            case P_DEATH_BASIC_CARE_UNIT:
+                params.setpDeathBasicCareUnit(params.getpDeathBasicCareUnit() + step);
+            case P_DEATH_INTENSIVE_CARE_UNIT:
+                params.setpDeathIntensiveCareUnit(params.getpDeathIntensiveCareUnit() + step);
+
+            case MAX_TIME_IN_QUEUE:
+                params.setMaxTimeInQueue(params.getMaxTimeInQueue() + step);
+        }
     }
 
     /**
@@ -226,6 +314,12 @@ public class Main extends Application {
      * @param results simulation results
      */
     private static void printResults(SimulationResults results) {
+        if (results == null) return;
+
+        System.out.println(results);
+    }
+
+    private static void printScenarioResults(ScenarioResults results) {
         if (results == null) return;
 
         System.out.println(results);
