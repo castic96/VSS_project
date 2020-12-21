@@ -1,3 +1,5 @@
+package model;
+
 import cz.zcu.fav.kiv.jsim.*;
 
 import java.util.List;
@@ -76,7 +78,7 @@ public class DailyProbability extends JSimProcess {
 
             }
 
-            message("DailyProbability time: " + myParent.getCurrentTime());
+            message("model.DailyProbability time: " + myParent.getCurrentTime());
         }
         catch (JSimException e)
         {

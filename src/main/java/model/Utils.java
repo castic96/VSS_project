@@ -1,3 +1,5 @@
+package model;
+
 import cz.zcu.fav.kiv.jsim.JSimSystem;
 
 /**

@@ -1,3 +1,5 @@
+package model;
+
 import cz.zcu.fav.kiv.jsim.*;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -72,7 +74,7 @@ public class IntensiveCareUnitServer extends JSimProcess {
                 setOccupied(false);
 
                 if (patient.isDead()) {
-                    message("Patient died on intensive care, patient: " + patient.getPatientNumber());
+                    message("model.Patient died on intensive care, patient: " + patient.getPatientNumber());
                     deadPatientsCounter.incrementAndGet();
                     setPatientOnBed(null);
 

@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Stores all simulation parameters.
  */

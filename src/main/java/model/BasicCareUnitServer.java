@@ -1,3 +1,5 @@
+package model;
+
 import cz.zcu.fav.kiv.jsim.*;
 
 import java.util.List;
@@ -98,7 +100,7 @@ public class BasicCareUnitServer extends JSimProcess {
                         patient = (Patient)link.getData();
 
                         if (myParent.getCurrentTime() - patient.getTimeOfCreation() > maxTimeInQueue) {
-                            message("Patient died in queue, patient: " + patient.getPatientNumber());
+                            message("model.Patient died in queue, patient: " + patient.getPatientNumber());
                             diedInQueuePatientsCounter.incrementAndGet();
                             continue;
                         }
@@ -111,7 +113,7 @@ public class BasicCareUnitServer extends JSimProcess {
 
                 }
                 else {
-                    message("Patient moved back to basic care, patient: " + ((Patient)link.getData()).getPatientNumber());
+                    message("model.Patient moved back to basic care, patient: " + ((Patient)link.getData()).getPatientNumber());
                     patientsMovedBackFromICUCounter.incrementAndGet();
                 }
 
@@ -130,21 +132,21 @@ public class BasicCareUnitServer extends JSimProcess {
                 // deciding where to go next
                 if (patient.isDead()) {
                     if (patient.isInMoveToIntensiveCare()) {
-                        message("Patient died in basic care... (no free bed in intensive care unit), patient: " + patient.getPatientNumber());
+                        message("model.Patient died in basic care... (no free bed in intensive care unit), patient: " + patient.getPatientNumber());
                         deadPatientsNoFreeBedInICUCounter.incrementAndGet();
 
                     }
                     else {
-                        message("Patient died on basic care, patient: " + patient.getPatientNumber());
+                        message("model.Patient died on basic care, patient: " + patient.getPatientNumber());
                         deadPatientsCounter.incrementAndGet();
                     }
                 }
                 else {
                     if (patient.isInMoveToIntensiveCare()) {
-                        message("Patient moved to intensive care unit successfully, patient: " + patient.getPatientNumber());
+                        message("model.Patient moved to intensive care unit successfully, patient: " + patient.getPatientNumber());
                         patientsMovedToICUCounter.incrementAndGet();
                     } else {
-                        message("Patient is healthy, patient: " + patient.getPatientNumber());
+                        message("model.Patient is healthy, patient: " + patient.getPatientNumber());
                         healedPatientsCounter.incrementAndGet();
                     }
                 }
@@ -187,7 +189,7 @@ public class BasicCareUnitServer extends JSimProcess {
         }
 
         firstRequestPatientLink = firstServerRequest.getPatientOnBed();
-        //((Patient)firstRequestPatientLink.getData()).setInMoveToIntensiveCare(false);
+        //((model.Patient)firstRequestPatientLink.getData()).setInMoveToIntensiveCare(false);
 
         firstServerRequest.setPatientOnBed(null);
         firstServerRequest.setOccupied(false);
