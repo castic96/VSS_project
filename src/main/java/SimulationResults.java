@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Stores simulation results.
  */
@@ -23,12 +25,22 @@ public class SimulationResults {
     /** Total number of patients who died in intensive care unit. */
     private final int patientsDiedInIntensiveCare;
 
+    /** Total number of patients who are still lying in basic care unit. */
+    private final int patientsStillInBasicCare;
+    /** Total number of patients who are still lying in intensive care unit. */
+    private final int patientsStillInIntensiveCare;
+
     /** Total number of patients who left hospital healthy. */
     private final int healedPatients;
     /** Total number of patients who died in hospital (including deaths in queue). */
     private final int deadPatients;
     /** Total number of patients who left hospital (dead or alive). */
     private final int leavingPatients;
+
+    /** Rho for each bed in basic care unit. */
+    private final double[] basicCareRhos;
+    /** Rho for each bed in intensive care unit. */
+    private final double[] intensiveCareRhos;
 
     /** Rho (load) in basic care. */
     private final double basicCareRho;
@@ -61,9 +73,13 @@ public class SimulationResults {
      * @param patientsDiedInBasicCare total number of patients who died in basic care unit
      * @param patientsDiedInBasicCareNoFreeBedInICU total number of patients who died in basic care unit because there was no free bed in ICU
      * @param patientsDiedInIntensiveCare total number of patients who died in intensive care unit
+     * @param patientsStillInBasicCare total number of patients who are still lying in basic care unit
+     * @param patientsStillInIntensiveCare total number of patients who are still lying in intensive care unit
      * @param healedPatients total number of patients who left hospital healthy
      * @param deadPatients total number of patients who died in hospital (including deaths in queue)
      * @param leavingPatients total number of patients who left hospital (dead or alive)
+     * @param basicCareRhos rho for each bed in basic care unit
+     * @param intensiveCareRhos rho for each bed in basic care unit
      * @param basicCareRho rho (load) in basic care
      * @param intensiveCareRho rho (load) in intensive care
      * @param totalRho rho (load) in whole system
@@ -74,7 +90,11 @@ public class SimulationResults {
      * @param tw Tw - mean waiting time in queue
      * @param twForAllLinks Tw - mean waiting time in queue for all elements
      */
-    public SimulationResults(int incomingPatients, int patientsMovedToICU, int patientsMovedBackFromICU, int patientsDiedInQueue, int patientsDiedInBasicCare, int patientsDiedInBasicCareNoFreeBedInICU, int patientsDiedInIntensiveCare, int healedPatients, int deadPatients, int leavingPatients, double basicCareRho, double intensiveCareRho, double totalRho, double basicCareAverage, double intensiveCareAverage, double totalAverage, double lw, double tw, double twForAllLinks) {
+    public SimulationResults(int incomingPatients, int patientsMovedToICU, int patientsMovedBackFromICU, int patientsDiedInQueue, int patientsDiedInBasicCare, int patientsDiedInBasicCareNoFreeBedInICU, int patientsDiedInIntensiveCare,
+                             int patientsStillInBasicCare, int patientsStillInIntensiveCare,
+                             int healedPatients, int deadPatients, int leavingPatients,
+                             double[] basicCareRhos, double[] intensiveCareRhos,
+                             double basicCareRho, double intensiveCareRho, double totalRho, double basicCareAverage, double intensiveCareAverage, double totalAverage, double lw, double tw, double twForAllLinks) {
         this.incomingPatients = incomingPatients;
         this.patientsMovedToICU = patientsMovedToICU;
         this.patientsMovedBackFromICU = patientsMovedBackFromICU;
@@ -82,9 +102,13 @@ public class SimulationResults {
         this.patientsDiedInBasicCare = patientsDiedInBasicCare;
         this.patientsDiedInBasicCareNoFreeBedInICU = patientsDiedInBasicCareNoFreeBedInICU;
         this.patientsDiedInIntensiveCare = patientsDiedInIntensiveCare;
+        this.patientsStillInBasicCare = patientsStillInBasicCare;
+        this.patientsStillInIntensiveCare = patientsStillInIntensiveCare;
         this.healedPatients = healedPatients;
         this.deadPatients = deadPatients;
         this.leavingPatients = leavingPatients;
+        this.basicCareRhos = basicCareRhos;
+        this.intensiveCareRhos = intensiveCareRhos;
         this.basicCareRho = basicCareRho;
         this.intensiveCareRho = intensiveCareRho;
         this.totalRho = totalRho;
@@ -99,10 +123,11 @@ public class SimulationResults {
     @Override
     public String toString() {
         return "---- RESULTS ----" +
-                "\npatients coming to hospital = " + incomingPatients +
+                "\npatients coming to hospital (to queue) = " + incomingPatients +
                 "\nhealed patients = " + healedPatients + " (" + getHealedPatientsPercent()  + " %)" +
                 "\ndead patients = " + deadPatients + " (" + getDeadPatientsPercent() + " %)" +
                 "\npatients leaving hospital (dead or alive) = " + leavingPatients +
+                "\npatients still lying in hospital = " + getPatientsInHospital() +
 
                 "\n\npatients moved to ICU = " + patientsMovedToICU + " (" + getPatientsMovedToICUPercent() + " %)" +
                 "\npatients moved back from ICU = " + patientsMovedBackFromICU +
@@ -111,6 +136,9 @@ public class SimulationResults {
                 "\npatients died in basic care = " + patientsDiedInBasicCare + " (" + getDeadPatientsInBasicCarePercent() + " %)" +
                 "\npatients died in basic care (no free bed in ICU) = " + patientsDiedInBasicCareNoFreeBedInICU + " (" + getDeadPatientsInBasicCareNoFreeBedPercent() + " %)" +
                 "\npatients died in intensive care = " + patientsDiedInIntensiveCare + " (" + getDeadPatientsInICUPercent() + " %)" +
+
+                "\n\nrhos (basic care) = " + Arrays.toString(basicCareRhos) +
+                "\nrhos (intensive care) = " + Arrays.toString(intensiveCareRhos) +
 
                 "\n\nrho (basic care) = " + basicCareRho +
                 "\nrho (intensive care) = " + intensiveCareRho +
@@ -122,6 +150,10 @@ public class SimulationResults {
                 "\nQueue Tw = " + tw +
                 "\nQueue Tw all = " + twForAllLinks
                 ;
+    }
+
+    private int getPatientsInHospital() {
+        return patientsStillInBasicCare + patientsStillInIntensiveCare;
     }
 
     private String getHealedPatientsPercent() {

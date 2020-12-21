@@ -20,17 +20,35 @@ public class Statistics {
         // basic care
         double basicCareSum = 0.0;
         int basicCarePatientsSum = 0;
-        for (BasicCareUnitServer basicCareUnitServer : basicCareUnitServerList) {
+        int patientsStillInBasicCare = 0;
+        double[] basicCareRhos = new double[basicCareUnitServerList.size()];
+        for (int i = 0; i < basicCareUnitServerList.size(); i++) {
+            BasicCareUnitServer basicCareUnitServer = basicCareUnitServerList.get(i);
             basicCareSum += basicCareUnitServer.getTransTq();
             basicCarePatientsSum += basicCareUnitServer.getCounter();
+
+            if (basicCareUnitServer.isOccupied() || !basicCareUnitServer.isIdle()) {
+                patientsStillInBasicCare++;
+            }
+
+            basicCareRhos[i] = (basicCareUnitServer.getTransTq() / totalTime);
         }
 
         // intensive care
         double intensiveCareSum = 0.0;
         int intensiveCarePatientsSum = 0;
-        for (IntensiveCareUnitServer intensiveCareUnitServer : intensiveCareUnitServerList) {
+        int patientsStillInIntensiveCare = 0;
+        double[] intensiveCareRhos = new double[intensiveCareUnitServerList.size()];
+        for (int i = 0; i < intensiveCareUnitServerList.size(); i++) {
+            IntensiveCareUnitServer intensiveCareUnitServer = intensiveCareUnitServerList.get(i);
             intensiveCareSum += intensiveCareUnitServer.getTransTq();
             intensiveCarePatientsSum += intensiveCareUnitServer.getCounter();
+
+            if (intensiveCareUnitServer.isOccupied() || !intensiveCareUnitServer.isIdle()) {
+                patientsStillInIntensiveCare++;
+            }
+
+            intensiveCareRhos[i] = (intensiveCareUnitServer.getTransTq() / totalTime);
         }
 
         // Tqs
@@ -53,7 +71,10 @@ public class Statistics {
         SimulationResults results = new SimulationResults(
                 InputGenerator.getIncomingPatientsCounter(), BasicCareUnitServer.getPatientsMovedToICUCounter(), BasicCareUnitServer.getPatientsMovedBackFromICUCounter(),
                 BasicCareUnitServer.getDiedInQueuePatientsCounter(), BasicCareUnitServer.getDeadPatientsCounter(), BasicCareUnitServer.getDeadPatientsNoFreeBedInICUCounter(),
-                IntensiveCareUnitServer.getDeadPatientsCounter(), BasicCareUnitServer.getHealedPatientsCounter(), totalDeadPatients, totalLeavingPatients,
+                IntensiveCareUnitServer.getDeadPatientsCounter(),
+                patientsStillInBasicCare, patientsStillInIntensiveCare,
+                BasicCareUnitServer.getHealedPatientsCounter(), totalDeadPatients, totalLeavingPatients,
+                basicCareRhos, intensiveCareRhos,
                 basicCareRho, intensiveCareRho, totalRho, basicCareAverage, intensiveCareAverage, totalAverage,
                 basicCareUnitQueue.getLw(), basicCareUnitQueue.getTw(), basicCareUnitQueue.getTwForAllLinks());
         return results;

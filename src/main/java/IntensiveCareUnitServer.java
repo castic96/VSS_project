@@ -11,9 +11,9 @@ public class IntensiveCareUnitServer extends JSimProcess {
     private static final AtomicInteger deadPatientsCounter = new AtomicInteger(0);
 
     /** mu (exponential distribution parameter) */
-    private double mu;
+    private final double mu;
     /** probability of death in intensive care */
-    private double pDeath;
+    private final double pDeath;
     /** patient */
     private JSimLink patientOnBed;
     /** if server (bed) is occupied */
@@ -64,8 +64,9 @@ public class IntensiveCareUnitServer extends JSimProcess {
                 patient.setInMoveToIntensiveCare(false);
 
                 // spend time in intensive care
+                double startTime = myParent.getCurrentTime();
                 hold(JSimSystem.negExp(mu));
-                transTq += myParent.getCurrentTime() - patient.getTimeOfCreation(); // time spent on bed
+                transTq += myParent.getCurrentTime() - startTime; // time spent on bed
                 counter++;
 
                 setOccupied(false);
@@ -163,10 +164,6 @@ public class IntensiveCareUnitServer extends JSimProcess {
 
     public double getpDeath() {
         return pDeath;
-    }
-
-    public void setpDeath(double pDeath) {
-        this.pDeath = pDeath;
     }
 
     public static int getDeadPatientsCounter() {

@@ -120,8 +120,9 @@ public class BasicCareUnitServer extends JSimProcess {
                 setOccupied(true);
 
                 // spend time in basic care
+                double startTime = myParent.getCurrentTime();
                 hold(Utils.gaussPositive(mu, sigma));
-                transTq += myParent.getCurrentTime() - patient.getTimeOfCreation(); // time spent on bed
+                transTq += myParent.getCurrentTime() - startTime; // time spent on bed
                 counter++;
 
                 setOccupied(false);
