@@ -1,9 +1,14 @@
 import cz.zcu.fav.kiv.jsim.*;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Represents one bed in intensive care unit.
  */
 public class IntensiveCareUnitServer extends JSimProcess {
+
+    /** Counter for patients who die in intensive care unit. */
+    private static final AtomicInteger deadPatientsCounter = new AtomicInteger(0);
 
     /** mu (exponential distribution parameter) */
     private double mu;
@@ -60,27 +65,21 @@ public class IntensiveCareUnitServer extends JSimProcess {
 
                 // spend time in intensive care
                 hold(JSimSystem.negExp(mu));
+                transTq += myParent.getCurrentTime() - patient.getTimeOfCreation(); // time spent on bed
+                counter++;
 
                 setOccupied(false);
 
-                if (patient.isDied()) {
+                if (patient.isDead()) {
                     message("Patient died on intensive care, patient: " + patient.getPatientNumber());
+                    deadPatientsCounter.incrementAndGet();
                     setPatientOnBed(null);
-
-                    counter++;
-                    transTq += myParent.getCurrentTime() - patient.getTimeOfCreation();
 
                 }
                 else {
                     patient.setTimeOfRequestToBasicCare(myParent.getCurrentTime());
-
                     message("Trying to move to basic care unit..., patient: " + patient.getPatientNumber());
-
-                    counter++;
-                    transTq += myParent.getCurrentTime() - patient.getTimeOfCreation();
-
                     activateBasicCareUnitServer();
-
                     setOccupied(true);
                 }
 
@@ -168,5 +167,9 @@ public class IntensiveCareUnitServer extends JSimProcess {
 
     public void setpDeath(double pDeath) {
         this.pDeath = pDeath;
+    }
+
+    public static int getDeadPatientsCounter() {
+        return deadPatientsCounter.get();
     }
 }

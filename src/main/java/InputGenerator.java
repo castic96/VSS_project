@@ -1,9 +1,14 @@
 import cz.zcu.fav.kiv.jsim.*;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Input data (patients) generator.
  */
 public class InputGenerator extends JSimProcess {
+
+    /** Counter for incoming patients. */
+    private static final AtomicInteger incomingPatientsCounter = new AtomicInteger(0);
 
     /** lambda (exponential distribution) */
     private double lambda;
@@ -43,6 +48,7 @@ public class InputGenerator extends JSimProcess {
                 link = new JSimLink(new Patient(myParent.getCurrentTime()));
                 link.into(queue);
                 message("Added patient to queue, patient: " + ((Patient)link.getData()).getPatientNumber());
+                incomingPatientsCounter.incrementAndGet();
 
                 // find free bed in basic care for patient
                 for (JSimProcess currentServer : queue.getServerList()) {
@@ -63,4 +69,7 @@ public class InputGenerator extends JSimProcess {
         }
     }
 
+    public static int getIncomingPatientsCounter() {
+        return incomingPatientsCounter.get();
+    }
 }

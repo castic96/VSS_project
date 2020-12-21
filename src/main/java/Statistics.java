@@ -39,12 +39,22 @@ public class Statistics {
         double totalAverage = (basicCareAverage + intensiveCareAverage) / NUMBER_OF_SERVERS;
 
         // rhos
-        double basicCareRho = basicCareSum / totalTime;
-        double intensiveCareRho = intensiveCareSum / totalTime;
+        double basicCareRho = (basicCareSum / totalTime) / basicCareUnitServerList.size();
+        double intensiveCareRho = (intensiveCareSum / totalTime) / intensiveCareUnitServerList.size();
         double totalRho = (basicCareRho + intensiveCareRho) / NUMBER_OF_SERVERS;
 
+        int totalDeadPatients =
+                BasicCareUnitServer.getDeadPatientsCounter() + BasicCareUnitServer.getDeadPatientsNoFreeBedInICUCounter() // died in basic care
+                + BasicCareUnitServer.getDiedInQueuePatientsCounter() // died in queue
+                + IntensiveCareUnitServer.getDeadPatientsCounter();  // died in ICU
+        int totalLeavingPatients = BasicCareUnitServer.getHealedPatientsCounter() + totalDeadPatients;
+
         // init results
-        SimulationResults results = new SimulationResults(basicCareRho, intensiveCareRho, totalRho, basicCareAverage, intensiveCareAverage, totalAverage,
+        SimulationResults results = new SimulationResults(
+                InputGenerator.getIncomingPatientsCounter(), BasicCareUnitServer.getPatientsMovedToICUCounter(), BasicCareUnitServer.getPatientsMovedBackFromICUCounter(),
+                BasicCareUnitServer.getDiedInQueuePatientsCounter(), BasicCareUnitServer.getDeadPatientsCounter(), BasicCareUnitServer.getDeadPatientsNoFreeBedInICUCounter(),
+                IntensiveCareUnitServer.getDeadPatientsCounter(), BasicCareUnitServer.getHealedPatientsCounter(), totalDeadPatients, totalLeavingPatients,
+                basicCareRho, intensiveCareRho, totalRho, basicCareAverage, intensiveCareAverage, totalAverage,
                 basicCareUnitQueue.getLw(), basicCareUnitQueue.getTw(), basicCareUnitQueue.getTwForAllLinks());
         return results;
     }

@@ -1,11 +1,25 @@
 import cz.zcu.fav.kiv.jsim.*;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Represents one bed in basic care unit.
  */
 public class BasicCareUnitServer extends JSimProcess {
+
+    /** Counter for patients who die in basic care unit. */
+    private static final AtomicInteger deadPatientsCounter = new AtomicInteger(0);
+    /** Counter for patients who die in basic care unit because they needed to move to ICU but there was no free bed. */
+    private static final AtomicInteger deadPatientsNoFreeBedInICUCounter = new AtomicInteger(0);
+    /** Counter for patients who moved to ICU. */
+    private static final AtomicInteger patientsMovedToICUCounter = new AtomicInteger(0);
+    /** Counter for patients who moved back from ICU. */
+    private static final AtomicInteger patientsMovedBackFromICUCounter = new AtomicInteger(0);
+    /** Counter for patients who are leaving hospital as healthy. */
+    private static final AtomicInteger healedPatientsCounter = new AtomicInteger(0);
+    /** Counter for patients who died in queue. */
+    private static final AtomicInteger diedInQueuePatientsCounter = new AtomicInteger(0);
 
     /** mu (gauss distribution parameter) */
     private final double mu;
@@ -85,6 +99,7 @@ public class BasicCareUnitServer extends JSimProcess {
 
                         if (myParent.getCurrentTime() - patient.getTimeOfCreation() > maxTimeInQueue) {
                             message("Patient died in queue, patient: " + patient.getPatientNumber());
+                            diedInQueuePatientsCounter.incrementAndGet();
                             continue;
                         }
 
@@ -97,6 +112,7 @@ public class BasicCareUnitServer extends JSimProcess {
                 }
                 else {
                     message("Patient moved back to basic care, patient: " + ((Patient)link.getData()).getPatientNumber());
+                    patientsMovedBackFromICUCounter.incrementAndGet();
                 }
 
                 patient = (Patient)link.getData();
@@ -105,28 +121,33 @@ public class BasicCareUnitServer extends JSimProcess {
 
                 // spend time in basic care
                 hold(Utils.gaussPositive(mu, sigma));
+                transTq += myParent.getCurrentTime() - patient.getTimeOfCreation(); // time spent on bed
+                counter++;
 
                 setOccupied(false);
 
                 // deciding where to go next
-                if (patient.isDied()) {
+                if (patient.isDead()) {
                     if (patient.isInMoveToIntensiveCare()) {
                         message("Patient died in basic care... (no free bed in intensive care unit), patient: " + patient.getPatientNumber());
+                        deadPatientsNoFreeBedInICUCounter.incrementAndGet();
+
                     }
                     else {
                         message("Patient died on basic care, patient: " + patient.getPatientNumber());
+                        deadPatientsCounter.incrementAndGet();
                     }
                 }
                 else {
                     if (patient.isInMoveToIntensiveCare()) {
                         message("Patient moved to intensive care unit successfully, patient: " + patient.getPatientNumber());
+                        patientsMovedToICUCounter.incrementAndGet();
                     } else {
                         message("Patient is healthy, patient: " + patient.getPatientNumber());
+                        healedPatientsCounter.incrementAndGet();
                     }
                 }
 
-                counter++;
-                transTq += myParent.getCurrentTime() - patient.getTimeOfCreation();
             }
         }
         catch (JSimException e) {
@@ -149,7 +170,7 @@ public class BasicCareUnitServer extends JSimProcess {
 
         for (IntensiveCareUnitServer currentServer : intensiveCareUnitServerList) {
 
-            if (currentServer.isOccupied() && currentServer.isIdle()) {
+            if (currentServer.isOccupied() && currentServer.isIdle()) { // occupied but idle == waiting for basic care
                 currentPatient = (Patient)currentServer.getPatientOnBed().getData();
 
                 if (currentPatient.getTimeOfRequestToBasicCare() < firstPatientRequestTime) {
@@ -230,4 +251,29 @@ public class BasicCareUnitServer extends JSimProcess {
     public JSimLink getLink() {
         return link;
     }
+
+    public static int getDeadPatientsCounter() {
+        return deadPatientsCounter.get();
+    }
+
+    public static int getDeadPatientsNoFreeBedInICUCounter() {
+        return deadPatientsNoFreeBedInICUCounter.get();
+    }
+
+    public static int getDiedInQueuePatientsCounter() {
+        return diedInQueuePatientsCounter.get();
+    }
+
+    public static int getHealedPatientsCounter() {
+        return healedPatientsCounter.get();
+    }
+
+    public static int getPatientsMovedBackFromICUCounter() {
+        return patientsMovedBackFromICUCounter.get();
+    }
+
+    public static int getPatientsMovedToICUCounter() {
+        return patientsMovedToICUCounter.get();
+    }
+
 }

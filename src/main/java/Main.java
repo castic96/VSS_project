@@ -12,10 +12,10 @@ import java.util.List;
 public class Main {
 
     /** Default path to configuration file (properties). */
-    private static String DEFAULT_CONFIG_PATH = "config.properties";
+    private static final String DEFAULT_CONFIG_PATH = "config.properties";
 
     /** Max simulation time. */
-    private static double MAX_TIME = 10000.0;
+    private static final double MAX_TIME = 10000.0;
 
     /**
      * Program entry point.
@@ -86,7 +86,8 @@ public class Main {
             inputGenerator.activate(0.0);
 
             for (int i = 1; i < MAX_TIME; i++) {
-                new DailyProbability("Daily probability " + i, simulation, basicCareUnitServerList, intensiveCareUnitServerList).activate(i);
+                new DailyProbability("Daily probability " + i, simulation, basicCareUnitServerList, intensiveCareUnitServerList)
+                        .activate(i);
             }
 
             // run simulation
@@ -172,17 +173,7 @@ public class Main {
     private static void printResults(SimulationResults results) {
         if (results == null) return;
 
-        System.out.println("rho (basic care) = " + results.getBasicCareRho());
-        System.out.println("rho (intensive care) = " + results.getIntensiveCareRho());
-        System.out.println("rho (system) = " + results.getTotalRho());
-
-        System.out.println("Tq (basic care) = " + results.getBasicCareAverage());
-        System.out.println("Tq (intensive care) = " + results.getIntensiveCareAverage());
-        System.out.println("Tq (system) = " + results.getTotalAverage());
-
-        System.out.println("Queue Lw = " + results.getLw());
-        System.out.println("Queue Tw = " + results.getTw());
-        System.out.println("Queue Tw all = " + results.getTwForAllLinks());
+        System.out.println(results);
     }
 
 

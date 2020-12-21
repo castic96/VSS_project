@@ -1,17 +1,21 @@
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Represents patient.
  */
 public class Patient {
+
+    /** Patients counter. */
+    private static final AtomicInteger patientsCounter = new AtomicInteger(0);
 
     /** Time when patient arrived to hospital (to queue). */
     private double timeOfCreation;
     /** Time when patient requested to transfer back to basic care unit. */
     private double timeOfRequestToBasicCare;
 
-    private boolean died = false;
+    private boolean dead = false;
     private boolean inMoveToIntensiveCare = false;
     private int patientNumber;
-    public static int patientsCounter = 0;
 
     /**
      * Creates new patient with arrival time.
@@ -20,8 +24,8 @@ public class Patient {
      */
     public Patient(double timeOfCreation) {
         this.timeOfCreation = timeOfCreation;
-        patientsCounter++;
-        patientNumber = patientsCounter;
+        int number = patientsCounter.incrementAndGet();
+        patientNumber = number;
     }
 
     /**
@@ -51,12 +55,12 @@ public class Patient {
         return timeOfRequestToBasicCare;
     }
 
-    public boolean isDied() {
-        return died;
+    public boolean isDead() {
+        return dead;
     }
 
-    public void setDied(boolean died) {
-        this.died = died;
+    public void setDead(boolean dead) {
+        this.dead = dead;
     }
 
     public boolean isInMoveToIntensiveCare() {

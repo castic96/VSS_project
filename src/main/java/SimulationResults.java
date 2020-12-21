@@ -3,30 +3,67 @@
  */
 public class SimulationResults {
 
+    private static final String DOUBLE_FORMAT = "%.3f";
+
+    /** Total number of patients who came to hospital. */
+    private final int incomingPatients;
+
+    /** Total number of patients who were moved from basic care unit to ICU. */
+    private final int patientsMovedToICU;
+    /** Total number of patients who were moved back from ICU to basic care unit. */
+    private final int patientsMovedBackFromICU;
+
+    /** Total number of patients who died in queue. */
+    private final int patientsDiedInQueue;
+
+    /** Total number of patients who died in basic care unit. */
+    private final int patientsDiedInBasicCare;
+    /** Total number of patients who died in basic care unit because there was no free bed in ICU. */
+    private final int patientsDiedInBasicCareNoFreeBedInICU;
+    /** Total number of patients who died in intensive care unit. */
+    private final int patientsDiedInIntensiveCare;
+
+    /** Total number of patients who left hospital healthy. */
+    private final int healedPatients;
+    /** Total number of patients who died in hospital (including deaths in queue). */
+    private final int deadPatients;
+    /** Total number of patients who left hospital (dead or alive). */
+    private final int leavingPatients;
+
     /** Rho (load) in basic care. */
-    private double basicCareRho;
+    private final double basicCareRho;
     /** Rho (load) in intensive care. */
-    private double intensiveCareRho;
+    private final double intensiveCareRho;
     /** Rho (load) in whole system. */
-    private double totalRho;
+    private final double totalRho;
 
     /** Tq - mean time spent in basic care. */
-    private double basicCareAverage;
+    private final double basicCareAverage;
     /** Tq - mean time spent in intensive care. */
-    private double intensiveCareAverage;
+    private final double intensiveCareAverage;
     /** Tq - mean time spent in whole system. */
-    private double totalAverage;
+    private final double totalAverage;
 
     /** Lw - mean length of queue. */
-    private double lw;
+    private final double lw;
     /** Tw - mean waiting time in queue. */
-    private double tw;
+    private final double tw;
     /** Tw - mean waiting time in queue for all elements. */
-    private double twForAllLinks;
+    private final double twForAllLinks;
 
     /**
      * Creates new simulation results.
      *
+     * @param incomingPatients total number of patients who came to hospital
+     * @param patientsMovedToICU total number of patients who were moved from basic care unit to ICU
+     * @param patientsMovedBackFromICU total number of patients who were moved back from ICU to basic care unit
+     * @param patientsDiedInQueue total number of patients who died in queue
+     * @param patientsDiedInBasicCare total number of patients who died in basic care unit
+     * @param patientsDiedInBasicCareNoFreeBedInICU total number of patients who died in basic care unit because there was no free bed in ICU
+     * @param patientsDiedInIntensiveCare total number of patients who died in intensive care unit
+     * @param healedPatients total number of patients who left hospital healthy
+     * @param deadPatients total number of patients who died in hospital (including deaths in queue)
+     * @param leavingPatients total number of patients who left hospital (dead or alive)
      * @param basicCareRho rho (load) in basic care
      * @param intensiveCareRho rho (load) in intensive care
      * @param totalRho rho (load) in whole system
@@ -37,7 +74,17 @@ public class SimulationResults {
      * @param tw Tw - mean waiting time in queue
      * @param twForAllLinks Tw - mean waiting time in queue for all elements
      */
-    public SimulationResults(double basicCareRho, double intensiveCareRho, double totalRho, double basicCareAverage, double intensiveCareAverage, double totalAverage, double lw, double tw, double twForAllLinks) {
+    public SimulationResults(int incomingPatients, int patientsMovedToICU, int patientsMovedBackFromICU, int patientsDiedInQueue, int patientsDiedInBasicCare, int patientsDiedInBasicCareNoFreeBedInICU, int patientsDiedInIntensiveCare, int healedPatients, int deadPatients, int leavingPatients, double basicCareRho, double intensiveCareRho, double totalRho, double basicCareAverage, double intensiveCareAverage, double totalAverage, double lw, double tw, double twForAllLinks) {
+        this.incomingPatients = incomingPatients;
+        this.patientsMovedToICU = patientsMovedToICU;
+        this.patientsMovedBackFromICU = patientsMovedBackFromICU;
+        this.patientsDiedInQueue = patientsDiedInQueue;
+        this.patientsDiedInBasicCare = patientsDiedInBasicCare;
+        this.patientsDiedInBasicCareNoFreeBedInICU = patientsDiedInBasicCareNoFreeBedInICU;
+        this.patientsDiedInIntensiveCare = patientsDiedInIntensiveCare;
+        this.healedPatients = healedPatients;
+        this.deadPatients = deadPatients;
+        this.leavingPatients = leavingPatients;
         this.basicCareRho = basicCareRho;
         this.intensiveCareRho = intensiveCareRho;
         this.totalRho = totalRho;
@@ -49,85 +96,62 @@ public class SimulationResults {
         this.twForAllLinks = twForAllLinks;
     }
 
-    /**
-     * Returns rho (load) in basic care.
-     *
-     * @return rho (load) in basic care
-     */
-    public double getBasicCareRho() {
-        return basicCareRho;
+    @Override
+    public String toString() {
+        return "---- RESULTS ----" +
+                "\npatients coming to hospital = " + incomingPatients +
+                "\nhealed patients = " + healedPatients + " (" + getHealedPatientsPercent()  + " %)" +
+                "\ndead patients = " + deadPatients + " (" + getDeadPatientsPercent() + " %)" +
+                "\npatients leaving hospital (dead or alive) = " + leavingPatients +
+
+                "\n\npatients moved to ICU = " + patientsMovedToICU + " (" + getPatientsMovedToICUPercent() + " %)" +
+                "\npatients moved back from ICU = " + patientsMovedBackFromICU +
+
+                "\n\npatients died in queue = " + patientsDiedInQueue +
+                "\npatients died in basic care = " + patientsDiedInBasicCare + " (" + getDeadPatientsInBasicCarePercent() + " %)" +
+                "\npatients died in basic care (no free bed in ICU) = " + patientsDiedInBasicCareNoFreeBedInICU + " (" + getDeadPatientsInBasicCareNoFreeBedPercent() + " %)" +
+                "\npatients died in intensive care = " + patientsDiedInIntensiveCare + " (" + getDeadPatientsInICUPercent() + " %)" +
+
+                "\n\nrho (basic care) = " + basicCareRho +
+                "\nrho (intensive care) = " + intensiveCareRho +
+                "\nrho (system) = " + totalRho +
+                "\nTq (basic care) = " + basicCareAverage +
+                "\nTq (intensive care) = " + intensiveCareAverage +
+                "\nTq (system) = " + totalAverage +
+                "\nQueue Lw = " + lw +
+                "\nQueue Tw = " + tw +
+                "\nQueue Tw all = " + twForAllLinks
+                ;
     }
 
-    /**
-     * Returns rho (load) in intensive care.
-     *
-     * @return rho (load) in intensive care
-     */
-    public double getIntensiveCareRho() {
-        return intensiveCareRho;
+    private String getHealedPatientsPercent() {
+        double p = ((double) healedPatients / incomingPatients);
+        return String.format(DOUBLE_FORMAT, p);
     }
 
-    /**
-     * Returns rho (load) in whole system.
-     *
-     * @return rho (load) in whole system
-     */
-    public double getTotalRho() {
-        return totalRho;
+    private String getDeadPatientsPercent() {
+        double p = ((double) deadPatients / incomingPatients);
+        return String.format(DOUBLE_FORMAT, p);
     }
 
-    /**
-     * Returns Tq - mean time spent in basic care.
-     *
-     * @return Tq - mean time spent in basic care
-     */
-    public double getBasicCareAverage() {
-        return basicCareAverage;
+    private String getPatientsMovedToICUPercent() {
+        double p = ((double) patientsMovedToICU / incomingPatients);
+        return String.format(DOUBLE_FORMAT, p);
     }
 
-    /**
-     * Returns Tq - mean time spent in intensive care.
-     *
-     * @return Tq - mean time spent in intensive care
-     */
-    public double getIntensiveCareAverage() {
-        return intensiveCareAverage;
+    private String getDeadPatientsInBasicCarePercent() {
+        double p = ((double) patientsDiedInBasicCare / incomingPatients);
+        return String.format(DOUBLE_FORMAT, p);
     }
 
-    /**
-     * Returns Tq - mean time spent in whole system.
-     *
-     * @return Tq - mean time spent in whole system
-     */
-    public double getTotalAverage() {
-        return totalAverage;
+    private String getDeadPatientsInBasicCareNoFreeBedPercent() {
+        double p = ((double) patientsDiedInBasicCareNoFreeBedInICU / incomingPatients);
+        return String.format(DOUBLE_FORMAT, p);
     }
 
-    /**
-     * Returns Lw - mean length of queue.
-     *
-     * @return Lw - mean length of queue
-     */
-    public double getLw() {
-        return lw;
-    }
-
-    /**
-     * Returns Tw - mean waiting time in queue.
-     *
-     * @return Tw - mean waiting time in queue
-     */
-    public double getTw() {
-        return tw;
-    }
-
-    /**
-     * Returns Tw - mean waiting time in queue for all elements.
-     *
-     * @return Tw - mean waiting time in queue for all elements
-     */
-    public double getTwForAllLinks() {
-        return twForAllLinks;
+    private String getDeadPatientsInICUPercent() {
+        double p = ((double) patientsDiedInIntensiveCare / patientsMovedToICU);
+        return String.format(DOUBLE_FORMAT, p);
     }
 
 }

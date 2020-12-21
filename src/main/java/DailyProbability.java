@@ -32,10 +32,9 @@ public class DailyProbability extends JSimProcess {
 
                     if (rand < currentServer.getpDeath()) { // death
                         currentServer.getPatient().setInMoveToIntensiveCare(false);
-                        currentServer.getPatient().setDied(true);
+                        currentServer.getPatient().setDead(true);
                         currentServer.cancel();
                         currentServer.activate(myParent.getCurrentTime());
-                        //pridat counter na zesnuleho pacienta na zakladni peci
                     }
                     else {
                         rand = JSimSystem.uniform(0.0, 1.0);
@@ -48,12 +47,10 @@ public class DailyProbability extends JSimProcess {
                             currentServer.activate(myParent.getCurrentTime());
 
                             if (!moveToIntensiveCare(currentServer.getLink())) {
-                                currentServer.getPatient().setDied(true);
-                                //pridat counter na zesnuleho pacienta z nedostatku luzek na jip
+                                currentServer.getPatient().setDead(true);
                             }
                             else {
-                                currentServer.getPatient().setDied(false);
-                                //pridat counter uspesne presunuteho pacienta na jip
+                                currentServer.getPatient().setDead(false);
                             }
 
                         }
@@ -63,17 +60,16 @@ public class DailyProbability extends JSimProcess {
 
             for (IntensiveCareUnitServer currentServer : intensiveCareUnitServerList) {
 
-                if (currentServer.isOccupied() && !currentServer.isIdle()) {
+                if (currentServer.isOccupied() && !currentServer.isIdle()) { // without the ones waiting for basic care
                     Patient patient = (Patient)currentServer.getPatientOnBed().getData();
 
                     if (!patient.isInMoveToIntensiveCare()) {
                         rand = JSimSystem.uniform(0.0, 1.0);
 
                         if (rand < currentServer.getpDeath()) { // death
-                            patient.setDied(true);
+                            patient.setDead(true);
                             currentServer.cancel();
                             currentServer.activate(myParent.getCurrentTime());
-                            // counter - zesnuly na intenzivni
                         }
                     }
                 }
