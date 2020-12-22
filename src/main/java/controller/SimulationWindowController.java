@@ -2,10 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import model.Program;
 import model.enums.LaunchType;
 
@@ -56,6 +53,9 @@ public class SimulationWindowController implements Initializable {
 
     @FXML
     private TextField textFieldMaxTime;
+
+    @FXML
+    private TextArea outputTextArea;
 
     public SimulationWindowController() {
         program = new Program(this);
@@ -146,5 +146,9 @@ public class SimulationWindowController implements Initializable {
     public void stopStepByStep() {
         comboBox.setDisable(true);
         //new Thread(() -> program.stopSimStepByStep(program.getSimulationResults())).start();
+    }
+
+    public void appendOutputText(int b) {
+        outputTextArea.appendText(String.valueOf((char) b));
     }
 }

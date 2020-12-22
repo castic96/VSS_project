@@ -6,6 +6,7 @@ import cz.zcu.fav.kiv.jsim.JSimMethodNotSupportedException;
 import cz.zcu.fav.kiv.jsim.JSimSimulation;
 import javafx.application.Platform;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,7 @@ public class Program {
 
     public Program(SimulationWindowController simulationWindowController) {
         this.simulationWindowController = simulationWindowController;
+        initializeLogging();
     }
 
     /**
@@ -284,6 +286,28 @@ public class Program {
         }
 
         return servers;
+    }
+
+    public void initializeLogging() {
+        try {
+            // creating log file
+            File file = new File("simulation.log");
+            FileOutputStream fos = new FileOutputStream(file);
+
+            // stdout -> to file AND to text area in GUI
+            System.setOut(new PrintStream(new OutputStream() {
+                PrintStream ps = new PrintStream(fos);
+
+                @Override
+                public void write(int b) throws IOException {
+                    ps.write(b);
+                    Platform.runLater(() -> simulationWindowController.appendOutputText(b));
+                }
+            }));
+
+        } catch (FileNotFoundException e) {
+            System.err.println("Simulation log file not found.");
+        }
     }
 
     /**

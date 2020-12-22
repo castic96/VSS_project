@@ -1,5 +1,108 @@
-Application started: 15:14:52 2020/12/22
+Application started: 18:23:38 2020/12/22
 Config file: int value for RUNS_COUNT not found!
 Initializing the simulation..
 Activating generators...
-Application ended: 15:14:58 2020/12/22
+Running the simulation, please wait.
+Added patient to queue, patient: 1
+Added patient to queue, patient: 2
+Added patient to queue, patient: 3
+Added patient to queue, patient: 4
+Added patient to queue, patient: 5
+Added patient to queue, patient: 6
+Added patient to queue, patient: 7
+Added patient to queue, patient: 8
+Added patient to queue, patient: 9
+Added patient to queue, patient: 10
+Added patient to queue, patient: 11
+Trying to move to intensive care unit..., patient: 4
+model.DailyProbability time: 1.0
+Patient moved to intensive care unit successfully, patient: 4
+Added patient to queue, patient: 12
+Added patient to queue, patient: 13
+Added patient to queue, patient: 14
+Added patient to queue, patient: 15
+Added patient to queue, patient: 16
+Added patient to queue, patient: 17
+Added patient to queue, patient: 18
+Added patient to queue, patient: 19
+Added patient to queue, patient: 20
+Trying to move to intensive care unit..., patient: 1
+Trying to move to intensive care unit..., patient: 3
+Trying to move to intensive care unit..., patient: 11
+Trying to move to intensive care unit..., patient: 8
+Trying to move to intensive care unit..., patient: 9
+model.DailyProbability time: 2.0
+Patient moved to intensive care unit successfully, patient: 1
+Patient moved to intensive care unit successfully, patient: 3
+Patient moved to intensive care unit successfully, patient: 11
+Patient moved to intensive care unit successfully, patient: 8
+Patient died in basic care... (no free bed in intensive care unit), patient: 9
+Added patient to queue, patient: 21
+Added patient to queue, patient: 22
+Added patient to queue, patient: 23
+Added patient to queue, patient: 24
+Added patient to queue, patient: 25
+Added patient to queue, patient: 26
+Added patient to queue, patient: 27
+Added patient to queue, patient: 28
+Trying to move to basic care unit..., patient: 4
+Trying to move to basic care unit..., patient: 1
+Trying to move to intensive care unit..., patient: 13
+model.DailyProbability time: 3.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 13
+Patient moved back to basic care, patient: 4
+Added patient to queue, patient: 29
+Added patient to queue, patient: 30
+Added patient to queue, patient: 31
+Added patient to queue, patient: 32
+Added patient to queue, patient: 33
+Trying to move to intensive care unit..., patient: 14
+Trying to move to intensive care unit..., patient: 7
+model.DailyProbability time: 4.0
+Patient moved to intensive care unit successfully, patient: 14
+Patient moved back to basic care, patient: 1
+Patient died in basic care... (no free bed in intensive care unit), patient: 7
+Patient died in queue, patient: 17
+Patient died in queue, patient: 18
+Patient died in queue, patient: 19
+Patient died in queue, patient: 20
+Added patient to queue, patient: 34
+Added patient to queue, patient: 35
+Trying to move to intensive care unit..., patient: 6
+model.DailyProbability time: 5.0
+Patient moved to intensive care unit successfully, patient: 6
+Patient died in queue, patient: 22
+Patient died in queue, patient: 23
+Patient died in queue, patient: 24
+Patient died in queue, patient: 25
+Patient died in queue, patient: 26
+Patient died in queue, patient: 27
+Patient died in queue, patient: 28
+Added patient to queue, patient: 36
+Added patient to queue, patient: 37
+Added patient to queue, patient: 38
+Added patient to queue, patient: 39
+Added patient to queue, patient: 40
+Added patient to queue, patient: 41
+Added patient to queue, patient: 42
+Added patient to queue, patient: 43
+Added patient to queue, patient: 44
+Trying to move to basic care unit..., patient: 14
+Added patient to queue, patient: 45
+Trying to move to intensive care unit..., patient: 12
+model.DailyProbability time: 6.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 12
+Patient moved back to basic care, patient: 14
+Added patient to queue, patient: 46
+Added patient to queue, patient: 47
+Added patient to queue, patient: 48
+Trying to move to basic care unit..., patient: 11
+Added patient to queue, patient: 49
+Patient is healthy, patient: 2
+Patient moved back to basic care, patient: 11
+Patient is healthy, patient: 5
+Patient died in queue, patient: 30
+Patient died in queue, patient: 31
+Patient died in queue, patient: 32
+Patient died in queue, patient: 33
+Application ended: 18:24:45 2020/12/22

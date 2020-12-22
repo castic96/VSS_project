@@ -66,7 +66,7 @@ public class IntensiveCareUnitServer extends JSimProcess {
                 setOccupied(false);
 
                 if (patient.isDead()) {
-                    message("model.Patient died on intensive care, patient: " + patient.getPatientNumber());
+                    message("Patient died on intensive care, patient: " + patient.getPatientNumber());
                     deadPatientsCounter.incrementAndGet();
                     setPatientOnBed(null);
 

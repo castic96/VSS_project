@@ -54,12 +54,12 @@ public class Statistics {
         // Tqs
         double basicCareAverage = basicCareSum /  basicCarePatientsSum;
         double intensiveCareAverage = intensiveCareSum / intensiveCarePatientsSum;
-        double totalAverage = (basicCareAverage + intensiveCareAverage) / Constants.NUMBER_OF_SERVERS;
+        double totalAverage = (basicCareAverage + intensiveCareAverage) / Constants.NUMBER_OF_UNITS;
 
         // rhos
         double basicCareRho = (basicCareSum / totalTime) / basicCareUnitServerList.size();
         double intensiveCareRho = (intensiveCareSum / totalTime) / intensiveCareUnitServerList.size();
-        double totalRho = (basicCareRho + intensiveCareRho) / Constants.NUMBER_OF_SERVERS;
+        double totalRho = (basicCareRho + intensiveCareRho) / Constants.NUMBER_OF_UNITS;
 
         int totalDeadPatients =
                 BasicCareUnitServer.getDeadPatientsCounter() + BasicCareUnitServer.getDeadPatientsNoFreeBedInICUCounter() // died in basic care
