@@ -23,7 +23,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainPane" maxHeight="700.0" maxWidth="1200.0" minHeight="700.0" minWidth="1200.0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@simulationWindow.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SimulationWindowController">
+<BorderPane fx:id="mainPane" maxHeight="770.0" maxWidth="1300.0" minHeight="770.0" minWidth="1300.0" prefHeight="770.0" prefWidth="1300.0" stylesheets="@simulationWindow.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SimulationWindowController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -76,7 +76,7 @@
    <left>
       <VBox prefHeight="648.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="318.0" prefWidth="250.0">
+            <AnchorPane prefHeight="344.0" prefWidth="270.0">
                <children>
                   <Label alignment="CENTER" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Launching" textAlignment="CENTER" wrapText="false" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
                      <font>
@@ -103,15 +103,15 @@
                      </textFill>
                   </Label>
                   <Label fx:id="labelStepByStepCurrTime" layoutY="111.0" text="Current time:" textFill="#434343" />
-                  <Button fx:id="buttonStep" disable="true" layoutX="112.0" layoutY="136.0" mnemonicParsing="false" onAction="#doStep" prefHeight="25.0" prefWidth="90.0" text="Step" textFill="#434343" />
+                  <Button fx:id="buttonStep" disable="true" layoutX="114.0" layoutY="136.0" mnemonicParsing="false" onAction="#doStep" prefHeight="25.0" prefWidth="90.0" text="Step" textFill="#434343" />
                   <Label fx:id="labelRunByTimeMaxTime" disable="true" layoutX="1.0" layoutY="237.0" text="Max time:" textFill="#434343" />
-                  <Button fx:id="buttonStartRunByTime" disable="true" layoutX="16.0" layoutY="286.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Start" textFill="#434343" />
-                  <Button fx:id="buttonStopRunByTime" disable="true" layoutX="113.0" layoutY="286.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Stop" textFill="#434343" />
+                  <Button fx:id="buttonStartRunByTime" disable="true" layoutX="17.0" layoutY="290.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Start" textFill="#434343" />
+                  <Button fx:id="buttonStopRunByTime" disable="true" layoutX="114.0" layoutY="290.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Stop" textFill="#434343" />
                   <Label fx:id="labelRunByTimeCurrTime" disable="true" layoutX="1.0" layoutY="262.0" text="Current time:" textFill="#434343" />
                   <TextField fx:id="textFieldMaxTime" disable="true" layoutX="61.0" layoutY="234.0" prefHeight="25.0" prefWidth="121.0" />
                   <ComboBox fx:id="comboBox" layoutX="42.0" layoutY="45.0" onAction="#comboBoxChange" prefHeight="25.0" prefWidth="137.0" />
-                  <Button fx:id="buttonStartStepByStep" layoutX="15.0" layoutY="136.0" mnemonicParsing="false" onAction="#initStepByStep" prefHeight="25.0" prefWidth="90.0" text="Start" textFill="#434343" />
-                  <Button fx:id="buttonStopStepByStep" disable="true" layoutX="15.0" layoutY="170.0" mnemonicParsing="false" onAction="#stopStepByStep" prefHeight="25.0" prefWidth="90.0" text="Stop" textFill="#434343" />
+                  <Button fx:id="buttonStartStepByStep" layoutX="17.0" layoutY="136.0" mnemonicParsing="false" onAction="#initStepByStep" prefHeight="25.0" prefWidth="90.0" text="Start" textFill="#434343" />
+                  <Button fx:id="buttonStopStepByStep" disable="true" layoutX="17.0" layoutY="170.0" mnemonicParsing="false" onAction="#stopStepByStep" prefHeight="25.0" prefWidth="90.0" text="Stop" textFill="#434343" />
                </children>
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
@@ -156,7 +156,7 @@
                   <Label text="P - death basic care unit:" textFill="#434343" GridPane.rowIndex="8" />
                   <Label text="P - death intensive care unit:" textFill="#434343" GridPane.rowIndex="9" />
                   <Label text="Max time in queue:" textFill="#434343" GridPane.rowIndex="10" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" text="Save" onAction="#updateConfig" textFill="#434343" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+                  <Button mnemonicParsing="false" onAction="#updateConfig" prefHeight="26.0" prefWidth="94.0" text="Save" textFill="#434343" GridPane.columnIndex="2" GridPane.rowIndex="11" />
                   <Label fx:id="labelCurrentBedsBasicCare" text="0" textFill="#434343" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label fx:id="labelCurrentBedsIntensiveCare" text="0" textFill="#434343" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label fx:id="labelCurrentInputLambda" text="0" textFill="#434343" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -180,56 +180,59 @@
                </children>
             </GridPane>
          </children>
+         <BorderPane.margin>
+            <Insets right="30.0" />
+         </BorderPane.margin>
       </VBox>
    </left>
    <center>
-      <AnchorPane prefHeight="653.0" prefWidth="537.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="718.0" prefWidth="850.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="598.0" fitWidth="341.0" layoutX="168.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="598.0" fitWidth="341.0" layoutX="169.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/img_javafx.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="440.0" layoutY="312.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="dead" textAlignment="CENTER" textFill="#464646" wrapText="false">
+            <Label alignment="CENTER" layoutX="441.0" layoutY="337.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="dead" textAlignment="CENTER" textFill="#464646" wrapText="false">
                <font>
                   <Font size="16.0" fx:id="x112" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="216.0" layoutY="312.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="healthy" textAlignment="CENTER" textFill="#464646" wrapText="false">
+            <Label alignment="CENTER" layoutX="217.0" layoutY="337.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="healthy" textAlignment="CENTER" textFill="#464646" wrapText="false">
                <font>
                   <Font size="16.0" fx:id="x1121" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="265.0" layoutY="183.0" maxHeight="27.0" maxWidth="41.0" minHeight="27.0" minWidth="41.0" prefHeight="27.0" prefWidth="41.0" style="&#10;" text="100" textAlignment="CENTER" textFill="#464646" wrapText="false">
+            <Label alignment="CENTER" layoutX="266.0" layoutY="208.0" maxHeight="27.0" maxWidth="41.0" minHeight="27.0" minWidth="41.0" prefHeight="27.0" prefWidth="41.0" style="&#10;" text="100" textAlignment="CENTER" textFill="#464646" wrapText="false">
                <font>
                   <Font size="14.0" fx:id="x11221" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="187.0" layoutY="183.0" maxHeight="27.0" maxWidth="41.0" minHeight="27.0" minWidth="41.0" prefHeight="27.0" prefWidth="41.0" style="&#10;" text="1" textAlignment="CENTER" textFill="#464646" wrapText="false">
+            <Label alignment="CENTER" layoutX="188.0" layoutY="208.0" maxHeight="27.0" maxWidth="41.0" minHeight="27.0" minWidth="41.0" prefHeight="27.0" prefWidth="41.0" style="&#10;" text="1" textAlignment="CENTER" textFill="#464646" wrapText="false">
                <font>
                   <Font size="14.0" fx:id="x112211" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="187.0" layoutY="506.0" maxHeight="27.0" maxWidth="41.0" minHeight="27.0" minWidth="41.0" prefHeight="27.0" prefWidth="41.0" style="&#10;" text="1" textAlignment="CENTER" textFill="#464646" wrapText="false">
+            <Label alignment="CENTER" layoutX="188.0" layoutY="531.0" maxHeight="27.0" maxWidth="41.0" minHeight="27.0" minWidth="41.0" prefHeight="27.0" prefWidth="41.0" style="&#10;" text="1" textAlignment="CENTER" textFill="#464646" wrapText="false">
                <font>
                   <Font size="14.0" fx:id="x1122111" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="265.0" layoutY="506.0" maxHeight="27.0" maxWidth="41.0" minHeight="27.0" minWidth="41.0" prefHeight="27.0" prefWidth="41.0" style="&#10;" text="100" textAlignment="CENTER" textFill="#464646" wrapText="false">
+            <Label alignment="CENTER" layoutX="266.0" layoutY="531.0" maxHeight="27.0" maxWidth="41.0" minHeight="27.0" minWidth="41.0" prefHeight="27.0" prefWidth="41.0" style="&#10;" text="100" textAlignment="CENTER" textFill="#464646" wrapText="false">
                <font>
                   <Font size="14.0" fx:id="x112212" />
                </font>
             </Label>
-            <TextArea fx:id="textAreaBasicCare" editable="false" layoutX="-1.0" layoutY="159.0" prefHeight="118.0" prefWidth="154.0" />
-            <TextArea fx:id="textAreaIntensiveCare" editable="false" layoutX="-1.0" layoutY="460.0" prefHeight="118.0" prefWidth="154.0" />
-            <TextArea fx:id="textAreaDead" editable="false" layoutX="314.0" layoutY="303.0" prefHeight="73.0" prefWidth="134.0" />
-            <TextArea fx:id="textAreaHealthy" editable="false" layoutX="77.0" layoutY="303.0" prefHeight="73.0" prefWidth="134.0" />
-            <TextArea fx:id="textAreaQueue" editable="false" layoutY="14.0" prefHeight="118.0" prefWidth="154.0" />
+            <TextArea fx:id="textAreaBasicCare" editable="false" layoutY="184.0" prefHeight="118.0" prefWidth="154.0" />
+            <TextArea fx:id="textAreaIntensiveCare" editable="false" layoutY="485.0" prefHeight="118.0" prefWidth="154.0" />
+            <TextArea fx:id="textAreaDead" editable="false" layoutX="315.0" layoutY="328.0" prefHeight="73.0" prefWidth="134.0" />
+            <TextArea fx:id="textAreaHealthy" editable="false" layoutX="78.0" layoutY="328.0" prefHeight="73.0" prefWidth="134.0" />
+            <TextArea fx:id="textAreaQueue" editable="false" layoutX="1.0" layoutY="39.0" prefHeight="118.0" prefWidth="154.0" />
          </children>
       </AnchorPane>
    </center>
    <right>
-      <VBox BorderPane.alignment="CENTER">
+      <VBox prefHeight="718.0" prefWidth="436.0" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane prefHeight="54.0" prefWidth="200.0">
                <children>
@@ -246,9 +249,9 @@
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </AnchorPane>
-            <AnchorPane>
+            <AnchorPane prefHeight="645.0" prefWidth="406.0">
                <children>
-                  <TextArea fx:id="textAreaOutputLog" editable="false" prefHeight="562.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextArea fx:id="textAreaOutputLog" editable="false" prefHeight="562.0" prefWidth="406.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
