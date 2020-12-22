@@ -1,5 +1,6 @@
 package model;
 
+import controller.SimulationWindowController;
 import cz.zcu.fav.kiv.jsim.*;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -11,6 +12,8 @@ public class IntensiveCareUnitServer extends JSimProcess {
 
     /** Counter for patients who die in intensive care unit. */
     private static final AtomicInteger deadPatientsCounter = new AtomicInteger(0);
+
+    private SimulationWindowController simulationWindowController;
 
     /** patient */
     private JSimLink patientOnBed;
@@ -28,16 +31,17 @@ public class IntensiveCareUnitServer extends JSimProcess {
      * Creates new server in intensive care unit.
      *
      * @param name server name
-     * @param parent simulation
+     * @param program program
      * @param occupied if server (bed) is occupied
      * @throws JSimSimulationAlreadyTerminatedException if simulation is already terminated
      * @throws JSimInvalidParametersException parent (simulation) is invalid parameter
      * @throws JSimTooManyProcessesException process cannot be added to simulation
      */
-    public IntensiveCareUnitServer(String name, JSimSimulation parent, boolean occupied, BasicCareUnitQueue queue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
-        super(name, parent);
+    public IntensiveCareUnitServer(String name, Program program, boolean occupied, BasicCareUnitQueue queue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
+        super(name, program.getSimulation());
         this.occupied = occupied;
         this.queue = queue;
+        this.simulationWindowController = program.getSimulationWindowController();
 
         this.counter = 0;
         this.transTq = 0.0;
@@ -67,6 +71,8 @@ public class IntensiveCareUnitServer extends JSimProcess {
 
                 if (patient.isDead()) {
                     message("Patient died on intensive care, patient: " + patient.getPatientNumber());
+                    simulationWindowController.appendLineTextAreaDead(patient.toString());
+                    simulationWindowController.removeLineTextAreaIntensiveCare(patient.toString());
                     deadPatientsCounter.incrementAndGet();
                     setPatientOnBed(null);
 

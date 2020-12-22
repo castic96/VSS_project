@@ -140,10 +140,10 @@ public class Program {
             simulation = new JSimSimulation("Hospital simulation");
             basicCareUnitQueue = new BasicCareUnitQueue("Basic Care Unit Queue", simulation, null);
 
-            intensiveCareUnitServerList = createIntensiveCareUnitServersArray(simulation, basicCareUnitQueue);
-            basicCareUnitServerList = createBasicCareUnitServersArray(simulation, basicCareUnitQueue, intensiveCareUnitServerList);
+            intensiveCareUnitServerList = createIntensiveCareUnitServersArray(this, basicCareUnitQueue);
+            basicCareUnitServerList = createBasicCareUnitServersArray(this, basicCareUnitQueue, intensiveCareUnitServerList);
 
-            inputGenerator = new InputGenerator("Input generator", simulation, basicCareUnitQueue);
+            inputGenerator = new InputGenerator("Input generator", this, basicCareUnitQueue);
             basicCareUnitQueue.setServerList(basicCareUnitServerList);
 
             // activate generators
@@ -191,10 +191,10 @@ public class Program {
             simulation = new JSimSimulation("Hospital simulation");
             basicCareUnitQueue = new BasicCareUnitQueue("Basic Care Unit Queue", simulation, null);
 
-            intensiveCareUnitServerList = createIntensiveCareUnitServersArray(simulation, basicCareUnitQueue);
-            basicCareUnitServerList = createBasicCareUnitServersArray(simulation, basicCareUnitQueue, intensiveCareUnitServerList);
+            intensiveCareUnitServerList = createIntensiveCareUnitServersArray(this, basicCareUnitQueue);
+            basicCareUnitServerList = createBasicCareUnitServersArray(this, basicCareUnitQueue, intensiveCareUnitServerList);
 
-            inputGenerator = new InputGenerator("Input generator", simulation, basicCareUnitQueue);
+            inputGenerator = new InputGenerator("Input generator", this, basicCareUnitQueue);
             basicCareUnitQueue.setServerList(basicCareUnitServerList);
 
             // activate generators
@@ -251,20 +251,20 @@ public class Program {
     /**
      * Creates all servers in basic care unit. One server = one bed.
      *
-     * @param simulation simulation
+     * @param program program
      * @param queue queue to basic care
      * @param intensiveCareUnitServerList list of intensive care servers
      * @return list of basic unit servers
      * @throws JSimException if problem in simulation occurs
      */
-    private static List<BasicCareUnitServer> createBasicCareUnitServersArray(JSimSimulation simulation,
+    private static List<BasicCareUnitServer> createBasicCareUnitServersArray(Program program,
                                                                              BasicCareUnitQueue queue,
                                                                              List<IntensiveCareUnitServer> intensiveCareUnitServerList) throws JSimException {
 
         List<BasicCareUnitServer> servers = new ArrayList<>();
 
         for (int i = 0; i < Constants.NUMBER_OF_BED_BASIC_UNIT; i++) {
-            servers.add(new BasicCareUnitServer("Basic Care Unit Server " + i, simulation, queue, intensiveCareUnitServerList));
+            servers.add(new BasicCareUnitServer("Basic Care Unit Server " + i, program, queue, intensiveCareUnitServerList));
         }
 
         return servers;
@@ -273,16 +273,16 @@ public class Program {
     /**
      * Creates all servers in intensive care unit. One server = one bed.
      *
-     * @param simulation simulation
+     * @param program program
      * @return list of intensive care servers
      * @throws JSimException if problem in simulation occurs
      */
-    private static List<IntensiveCareUnitServer> createIntensiveCareUnitServersArray(JSimSimulation simulation, BasicCareUnitQueue queue) throws JSimException {
+    private static List<IntensiveCareUnitServer> createIntensiveCareUnitServersArray(Program program, BasicCareUnitQueue queue) throws JSimException {
 
         List<IntensiveCareUnitServer> servers = new ArrayList<>();
 
         for (int i = 0; i < Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT; i++) {
-            servers.add(new IntensiveCareUnitServer("Intensive Care Unit Server " + i, simulation, false, queue));
+            servers.add(new IntensiveCareUnitServer("Intensive Care Unit Server " + i, program, false, queue));
         }
 
         return servers;
@@ -301,7 +301,7 @@ public class Program {
                 @Override
                 public void write(int b) throws IOException {
                     ps.write(b);
-                    Platform.runLater(() -> simulationWindowController.appendOutputText(b));
+                    Platform.runLater(() -> simulationWindowController.appendTextAreaOutputLog(b));
                 }
             }));
 
@@ -329,5 +329,9 @@ public class Program {
 
     public JSimSimulation getSimulation() {
         return simulation;
+    }
+
+    public SimulationWindowController getSimulationWindowController() {
+        return simulationWindowController;
     }
 }

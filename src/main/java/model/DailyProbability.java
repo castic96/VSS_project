@@ -73,7 +73,7 @@ public class DailyProbability extends JSimProcess {
 
             }
 
-            message("model.DailyProbability time: " + myParent.getCurrentTime());
+            message("DailyProbability time: " + myParent.getCurrentTime());
         }
         catch (JSimException e)
         {

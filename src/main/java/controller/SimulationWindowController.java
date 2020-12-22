@@ -55,7 +55,22 @@ public class SimulationWindowController implements Initializable {
     private TextField textFieldMaxTime;
 
     @FXML
-    private TextArea outputTextArea;
+    private TextArea textAreaOutputLog;
+
+    @FXML
+    private TextArea textAreaQueue;
+
+    @FXML
+    private TextArea textAreaBasicCare;
+
+    @FXML
+    private TextArea textAreaIntensiveCare;
+
+    @FXML
+    private TextArea textAreaDead;
+
+    @FXML
+    private TextArea textAreaHealthy;
 
     public SimulationWindowController() {
         program = new Program(this);
@@ -148,7 +163,46 @@ public class SimulationWindowController implements Initializable {
         //new Thread(() -> program.stopSimStepByStep(program.getSimulationResults())).start();
     }
 
-    public void appendOutputText(int b) {
-        outputTextArea.appendText(String.valueOf((char) b));
+    public void appendTextAreaOutputLog(int b) {
+        textAreaOutputLog.appendText(String.valueOf((char) b));
     }
+
+    public void appendLineTextAreaQueue(String text) {
+        textAreaQueue.appendText(text + "\n");
+    }
+
+    public void removeLineTextAreaQueue(String text) {
+        String areaText = textAreaQueue.getText();
+        String result = areaText.replaceAll(text + "\n", "");
+        textAreaQueue.setText(result);
+    }
+
+    public void appendLineTextAreaBasicCare(String text) {
+        textAreaBasicCare.appendText(text + "\n");
+    }
+
+    public void removeLineTextAreaBasicCare(String text) {
+        String areaText = textAreaBasicCare.getText();
+        String result = areaText.replaceAll(text + "\n", "");
+        textAreaBasicCare.setText(result);
+    }
+
+    public void appendLineTextAreaIntensiveCare(String text) {
+        textAreaIntensiveCare.appendText(text + "\n");
+    }
+
+    public void removeLineTextAreaIntensiveCare(String text) {
+        String areaText = textAreaIntensiveCare.getText();
+        String result = areaText.replaceAll(text + "\n", "");
+        textAreaIntensiveCare.setText(result);
+    }
+
+    public void appendLineTextAreaDead(String text) {
+        textAreaDead.appendText(text + "\n");
+    }
+
+    public void appendLineTextAreaHealthy(String text) {
+        textAreaHealthy.appendText(text + "\n");
+    }
+
 }

@@ -1,5 +1,6 @@
 package model;
 
+import controller.SimulationWindowController;
 import cz.zcu.fav.kiv.jsim.*;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,20 +16,23 @@ public class InputGenerator extends JSimProcess {
     /** queue */
     private final BasicCareUnitQueue queue;
 
+    private SimulationWindowController simulationWindowController;
+
     /**
      * Creates new generator.
      *
      * @param name generator name
-     * @param simulation simulation
+     * @param program program
      * @param queue queue
      * @throws JSimSimulationAlreadyTerminatedException if simulation is already terminated
      * @throws JSimInvalidParametersException parent (simulation) is invalid parameter
      * @throws JSimTooManyProcessesException process cannot be added to simulation
      */
-    public InputGenerator(String name, JSimSimulation simulation, BasicCareUnitQueue queue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException
+    public InputGenerator(String name, Program program, BasicCareUnitQueue queue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException
     {
-        super(name, simulation);
+        super(name, program.getSimulation());
         this.queue = queue;
+        this.simulationWindowController = program.getSimulationWindowController();
     }
 
     /**
@@ -45,7 +49,9 @@ public class InputGenerator extends JSimProcess {
                 // generate patient and put him into queue
                 link = new JSimLink(new Patient(myParent.getCurrentTime()));
                 link.into(queue);
-                message("Added patient to queue, patient: " + ((Patient)link.getData()).getPatientNumber());
+                Patient patient = (Patient) link.getData();
+                message("Added patient to queue, patient: " + patient.getPatientNumber());
+                simulationWindowController.appendLineTextAreaQueue(patient.toString());
                 incomingPatientsCounter.incrementAndGet();
 
                 // find free bed in basic care for patient

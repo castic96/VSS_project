@@ -75,4 +75,9 @@ public class Patient {
     public int getPatientNumber() {
         return patientNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Patient:" + patientNumber;
+    }
 }
