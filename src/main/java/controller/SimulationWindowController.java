@@ -211,7 +211,6 @@ public class SimulationWindowController implements Initializable {
         buttonStartStepByStep.setDisable(true);
         labelStatus.setText("Status: Running");
         comboBox.setDisable(true);
-        initConfigurations();
         new Thread(program::initSimStepByStep).start();
     }
 
@@ -226,6 +225,7 @@ public class SimulationWindowController implements Initializable {
         comboBox.getItems().addAll(LaunchType.STEP_BY_STEP.getValue(), LaunchType.RUN_BY_TIME.getValue());
         comboBox.setEditable(false);
         comboBox.setValue(LaunchType.STEP_BY_STEP.getValue());
+        initConfigurations();
         stepByStepEnable();
     }
 
