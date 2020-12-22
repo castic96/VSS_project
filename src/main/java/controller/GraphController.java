@@ -1,34 +1,32 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import model.ScenarioResults;
+import model.enums.InputParams;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.Map;
 
-public class GraphController implements Initializable {
+public class GraphController {
 
     @FXML
     private LineChart lineChart;
 
-    private double[] results;
+    public void addSeries(InputParams inputParam, ScenarioResults scenarioResults) {
+        Map<Double, Double> results = scenarioResults.getResults();
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
 
-        // todo
-        series.setName("Series 1");
-        series.getData().add(new XYChart.Data<>(1, 20));
-        series.getData().add(new XYChart.Data<>(2, 30));
-        series.getData().add(new XYChart.Data<>(3, 40));
+        series.setName("Scenario 1");
+
+        for (double key : results.keySet()) {
+            series.getData().add(new XYChart.Data<>(key, results.get(key))); // todo - test it if it works
+        }
+
+        lineChart.getXAxis().setLabel(inputParam.name());
+        lineChart.getYAxis().setLabel(scenarioResults.getOutputParam().name());
 
         lineChart.getData().add(series);
-    }
-
-    public void setResults(double[] results) {
-        this.results = results;
     }
 }

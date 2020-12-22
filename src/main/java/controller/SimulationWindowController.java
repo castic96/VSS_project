@@ -63,7 +63,7 @@ public class SimulationWindowController implements Initializable {
     }
 
     public void initStepByStep() {
-        program.initialize();
+        program.loadConfigurationFile();
         SimulationParams simulationParams = program.getSimulationParams();
         new Thread(() -> program.initSimStepByStep(simulationParams)).start();
         buttonStartStepByStep.setDisable(true);

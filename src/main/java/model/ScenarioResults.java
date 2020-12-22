@@ -3,14 +3,16 @@ package model;
 import model.enums.OutputParams;
 
 import java.util.Arrays;
+import java.util.Map;
 
 public class ScenarioResults {
 
     private OutputParams outputParam;
 
-    private double[] results;
+    /** key = input param value, value = output param value */
+    private Map<Double, Double> results;
 
-    public ScenarioResults(OutputParams outputParam, double[] results) {
+    public ScenarioResults(OutputParams outputParam, Map<Double, Double> results) {
         this.outputParam = outputParam;
         this.results = results;
     }
@@ -19,7 +21,15 @@ public class ScenarioResults {
     public String toString() {
         return "ScenarioResults{" +
                 "outputParam=" + outputParam +
-                ", results=" + Arrays.toString(results) +
+                ", results=" + results +
                 '}';
+    }
+
+    public Map<Double, Double> getResults() {
+        return results;
+    }
+
+    public OutputParams getOutputParam() {
+        return outputParam;
     }
 }

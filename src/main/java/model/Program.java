@@ -29,12 +29,9 @@ public class Program {
     }
 
     /**
-     * Initializes simulation parameters from configuration file.
-     * Arguments can be either empty or one argument as path to configuration file.
-     *
-     * @return initialized simulation parameters
+     * Loads configuration file.
      */
-    public void initialize() {
+    public void loadConfigurationFile() {
         String configFilePath = DEFAULT_CONFIG_PATH;
         Constants.init(configFilePath);
     }
@@ -60,7 +57,7 @@ public class Program {
         double step = scenarioParams.getStep();
         int runsCount = scenarioParams.getRunsCount();
 
-        double[] scenarioResults = new double[runsCount];
+        double[] scenarioResults = new double[runsCount]; // todo - to map
 
         for (int i = 0; i < runsCount; i++) {
             // run simulation
