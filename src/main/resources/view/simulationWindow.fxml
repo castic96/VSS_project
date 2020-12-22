@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -9,7 +10,6 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -20,6 +20,8 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <BorderPane fx:id="mainPane" maxHeight="700.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="700.0" prefWidth="1000.0" stylesheets="@simulationWindow.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SimulationWindowController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
@@ -48,7 +50,7 @@
    <bottom>
       <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
          <children>
-            <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Status: Running" HBox.hgrow="ALWAYS">
+            <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Status: Ready" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="11.0" fx:id="x3" />
                </font>
@@ -73,7 +75,7 @@
    <left>
       <VBox prefHeight="648.0" prefWidth="250.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="318.0" prefWidth="211.0">
+            <AnchorPane prefHeight="318.0" prefWidth="211.0" >
                <children>
                   <Label alignment="CENTER" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Launching" textAlignment="CENTER" wrapText="false" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
                      <font>
@@ -91,7 +93,7 @@
                         <Color blue="0.624" green="0.624" red="0.624" fx:id="x21" />
                      </textFill>
                   </Label>
-                  <Label alignment="CENTER" layoutX="-1.0" layoutY="180.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Run by time" textAlignment="CENTER" wrapText="false">
+                  <Label alignment="CENTER" layoutX="-1.0" layoutY="180.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Run by time" textAlignment="CENTER" wrapText="false" disable="true" >
                      <font>
                         <Font size="14.0" fx:id="x121" />
                      </font>
@@ -101,13 +103,19 @@
                   </Label>
                   <Label layoutY="115.0" text="Current time:" textFill="#434343" />
                   <Button layoutX="43.0" layoutY="140.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" text="Step" textFill="#434343" />
-                  <Label layoutY="205.0" text="Max time:" textFill="#434343" />
-                  <Button layoutX="43.0" layoutY="255.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" text="Start" textFill="#434343" />
-                  <Button layoutX="43.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" text="Stop" textFill="#434343" />
-                  <Label layoutY="230.0" text="Current time:" textFill="#434343" />
-                  <TextField layoutX="60.0" layoutY="202.0" prefHeight="25.0" prefWidth="121.0" />
-                    <ToggleButton layoutX="112.0" layoutY="45.0" text="Run by time" textFill="#434343" />
-                    <ToggleButton layoutX="29.0" layoutY="45.0" text="Step by step" textFill="#434343" />
+                  <Label layoutY="205.0" text="Max time:" textFill="#434343" disable="true" />
+                  <Button layoutX="43.0" layoutY="255.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" text="Start" textFill="#434343" disable="true" />
+                  <Button layoutX="43.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" text="Stop" textFill="#434343" disable="true" />
+                  <Label layoutY="230.0" text="Current time:" textFill="#434343" disable="true" />
+                  <TextField layoutX="60.0" layoutY="202.0" prefHeight="25.0" prefWidth="121.0" disable="true" />
+                  <ChoiceBox layoutX="42.0" layoutY="45.0" prefHeight="25.0" prefWidth="137.0" value="Step by step">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <String fx:value="Step by step" />
+                           <String fx:value="Run by time" />
+                        </FXCollections>
+                     </items>
+                  </ChoiceBox>
                </children>
                <padding>
                   <Insets left="15.0" right="15.0" />
