@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Program constants.
+ * model.Program constants.
  */
 public class Constants {
 

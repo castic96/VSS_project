@@ -1,12 +1,13 @@
 package controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.Program;
+import model.SimulationParams;
 import model.enums.LaunchType;
 
 import java.net.URL;
@@ -15,6 +16,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class SimulationWindowController implements Initializable {
+
+    private Program program;
 
     @FXML
     private ComboBox<String> comboBox;
@@ -35,17 +38,44 @@ public class SimulationWindowController implements Initializable {
     private Label labelRunByTimeMaxTime;
 
     @FXML
+    private Label labelStatus;
+
+    @FXML
     private Button buttonStep;
 
     @FXML
-    private Button buttonStart;
+    private Button buttonStartStepByStep;
 
     @FXML
-    private Button buttonStop;
+    private Button buttonStopStepByStep;
+
+    @FXML
+    private Button buttonStartRunByTime;
+
+    @FXML
+    private Button buttonStopRunByTime;
 
     @FXML
     private TextField textFieldMaxTime;
 
+    public SimulationWindowController() {
+        program = new Program(this);
+    }
+
+    public void initStepByStep() {
+        program.initialize();
+        SimulationParams simulationParams = program.getSimulationParams();
+        new Thread(() -> program.initSimStepByStep(simulationParams)).start();
+        buttonStartStepByStep.setDisable(true);
+        labelStatus.setText("Status: Running");
+        comboBox.setDisable(true);
+    }
+
+    public void finishInitStepByStep() {
+        buttonStep.setDisable(false);
+        buttonStopStepByStep.setDisable(false);
+        labelStatus.setText("Status: Ready");
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -76,13 +106,15 @@ public class SimulationWindowController implements Initializable {
     private void stepByStepEnable() {
         labelStepByStep.setDisable(false);
         labelStepByStepCurrTime.setDisable(false);
-        buttonStep.setDisable(false);
+        buttonStep.setDisable(true);
+        buttonStartStepByStep.setDisable(false);
+        buttonStopStepByStep.setDisable(true);
 
         labelRunByTime.setDisable(true);
         labelRunByTimeCurrTime.setDisable(true);
         labelRunByTimeMaxTime.setDisable(true);
-        buttonStart.setDisable(true);
-        buttonStop.setDisable(true);
+        buttonStartRunByTime.setDisable(true);
+        buttonStopRunByTime.setDisable(true);
         textFieldMaxTime.setDisable(true);
     }
 
@@ -90,13 +122,31 @@ public class SimulationWindowController implements Initializable {
         labelStepByStep.setDisable(true);
         labelStepByStepCurrTime.setDisable(true);
         buttonStep.setDisable(true);
+        buttonStartStepByStep.setDisable(true);
+        buttonStopStepByStep.setDisable(true);
 
         labelRunByTime.setDisable(false);
         labelRunByTimeCurrTime.setDisable(false);
         labelRunByTimeMaxTime.setDisable(false);
-        buttonStart.setDisable(false);
-        buttonStop.setDisable(false);
+        buttonStartRunByTime.setDisable(false);
+        buttonStopRunByTime.setDisable(true);
         textFieldMaxTime.setDisable(false);
     }
 
+    @FXML
+    public void doStep() {
+        new Thread(() -> program.doStep()).start();
+        buttonStep.setDisable(true);
+        buttonStopStepByStep.setDisable(true);
+        labelStatus.setText("Status: Running");
+    }
+
+    public void finishDoStep() {
+        finishInitStepByStep();
+    }
+
+    public void stopStepByStep() {
+        comboBox.setDisable(true);
+        //new Thread(() -> program.stopSimStepByStep(program.getSimulationResults())).start();
+    }
 }
