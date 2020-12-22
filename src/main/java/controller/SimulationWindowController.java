@@ -76,9 +76,19 @@ public class SimulationWindowController implements Initializable {
         program = new Program(this);
     }
 
+    public void clear() {
+        textAreaOutputLog.clear();
+        textAreaQueue.clear();
+        textAreaBasicCare.clear();
+        textAreaIntensiveCare.clear();
+        textAreaDead.clear();
+        textAreaHealthy.clear();
+    }
+
     public void initStepByStep() {
+        clear();
         program.loadConfigurationFile();
-        new Thread(() -> program.initSimStepByStep()).start();
+        new Thread(program::initSimStepByStep).start();
         buttonStartStepByStep.setDisable(true);
         labelStatus.setText("Status: Running");
         comboBox.setDisable(true);
@@ -117,6 +127,7 @@ public class SimulationWindowController implements Initializable {
     }
 
     private void stepByStepEnable() {
+        labelStatus.setText("Status: Ready");
         labelStepByStep.setDisable(false);
         labelStepByStepCurrTime.setDisable(false);
         buttonStep.setDisable(true);
@@ -129,9 +140,12 @@ public class SimulationWindowController implements Initializable {
         buttonStartRunByTime.setDisable(true);
         buttonStopRunByTime.setDisable(true);
         textFieldMaxTime.setDisable(true);
+
+        comboBox.setDisable(false);
     }
 
     private void runByTimeEnable() {
+        labelStatus.setText("Status: Ready");
         labelStepByStep.setDisable(true);
         labelStepByStepCurrTime.setDisable(true);
         buttonStep.setDisable(true);
@@ -144,11 +158,13 @@ public class SimulationWindowController implements Initializable {
         buttonStartRunByTime.setDisable(false);
         buttonStopRunByTime.setDisable(true);
         textFieldMaxTime.setDisable(false);
+
+        comboBox.setDisable(false);
     }
 
     @FXML
     public void doStep() {
-        new Thread(() -> program.doStep()).start();
+        new Thread(program::doStep).start();
         buttonStep.setDisable(true);
         buttonStopStepByStep.setDisable(true);
         labelStatus.setText("Status: Running");
@@ -159,8 +175,15 @@ public class SimulationWindowController implements Initializable {
     }
 
     public void stopStepByStep() {
-        comboBox.setDisable(true);
-        //new Thread(() -> program.stopSimStepByStep(program.getSimulationResults())).start();
+        //comboBox.setDisable(true);
+        new Thread(program::stopSimStepByStep).start();
+        buttonStep.setDisable(true);
+        buttonStopStepByStep.setDisable(true);
+        labelStatus.setText("Status: Running");
+    }
+
+    public void finishStopStepByStep() {
+        stepByStepEnable();
     }
 
     public void appendTextAreaOutputLog(int b) {

@@ -25,6 +25,10 @@ public class Program {
 
     private JSimSimulation simulation;
 
+    private BasicCareUnitQueue basicCareUnitQueue;
+    private List<BasicCareUnitServer> basicCareUnitServerList;
+    private List<IntensiveCareUnitServer> intensiveCareUnitServerList;
+
     public Program(SimulationWindowController simulationWindowController) {
         this.simulationWindowController = simulationWindowController;
         initializeLogging();
@@ -129,9 +133,6 @@ public class Program {
      */
     public SimulationResults runSimRunByTime() {
 
-        BasicCareUnitQueue basicCareUnitQueue;
-        List<BasicCareUnitServer> basicCareUnitServerList;
-        List<IntensiveCareUnitServer> intensiveCareUnitServerList;
         InputGenerator inputGenerator;
 
         try {
@@ -179,10 +180,6 @@ public class Program {
      * Runs simulation with parameters.
      */
     public void initSimStepByStep() {
-
-        BasicCareUnitQueue basicCareUnitQueue;
-        List<BasicCareUnitServer> basicCareUnitServerList;
-        List<IntensiveCareUnitServer> intensiveCareUnitServerList;
         InputGenerator inputGenerator;
 
         try {
@@ -206,7 +203,7 @@ public class Program {
                         .activate(i);
             }
 
-            Platform.runLater(() -> simulationWindowController.finishInitStepByStep());
+            Platform.runLater(simulationWindowController::finishInitStepByStep);
 
             // run simulation
             simulation.message("Running the simulation, please wait.");
@@ -231,21 +228,20 @@ public class Program {
     public void doStep() {
         try {
             simulation.step();
-            Platform.runLater(() -> simulationWindowController.finishDoStep());
+            Platform.runLater(simulationWindowController::finishDoStep);
         } catch (JSimMethodNotSupportedException e) {
             e.printStackTrace();
         }
     }
 
-    public void stopSimStepByStep(List<BasicCareUnitServer> basicCareUnitServerList,
-                                        List<IntensiveCareUnitServer> intensiveCareUnitServerList,
-                                        BasicCareUnitQueue basicCareUnitQueue) {
+    public void stopSimStepByStep() {
         double totalTime = simulation.getCurrentTime();
         simulation.message("Simulation interrupted at time " + totalTime);
         SimulationResults results = Statistics.calculateResults(basicCareUnitServerList, intensiveCareUnitServerList, totalTime, basicCareUnitQueue);
         simulation.shutdown();
 
         printResults(results);
+        Platform.runLater(simulationWindowController::finishStopStepByStep);
     }
 
     /**
@@ -333,5 +329,17 @@ public class Program {
 
     public SimulationWindowController getSimulationWindowController() {
         return simulationWindowController;
+    }
+
+    public BasicCareUnitQueue getBasicCareUnitQueue() {
+        return basicCareUnitQueue;
+    }
+
+    public List<BasicCareUnitServer> getBasicCareUnitServerList() {
+        return basicCareUnitServerList;
+    }
+
+    public List<IntensiveCareUnitServer> getIntensiveCareUnitServerList() {
+        return intensiveCareUnitServerList;
     }
 }
