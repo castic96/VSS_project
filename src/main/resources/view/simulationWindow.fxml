@@ -203,7 +203,7 @@
                   <Font size="16.0" fx:id="x1121" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="266.0" layoutY="208.0" maxHeight="27.0" maxWidth="41.0" minHeight="27.0" minWidth="41.0" prefHeight="27.0" prefWidth="41.0" style="&#10;" text="100" textAlignment="CENTER" textFill="#464646" wrapText="false">
+            <Label fx:id="labelMaxBasicServerCount" alignment="CENTER" layoutX="266.0" layoutY="208.0" maxHeight="27.0" maxWidth="41.0" minHeight="27.0" minWidth="41.0" prefHeight="27.0" prefWidth="41.0" style="&#10;" text="100" textAlignment="CENTER" textFill="#464646" wrapText="false">
                <font>
                   <Font size="14.0" fx:id="x11221" />
                </font>
@@ -218,7 +218,7 @@
                   <Font size="14.0" fx:id="x1122111" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="266.0" layoutY="531.0" maxHeight="27.0" maxWidth="41.0" minHeight="27.0" minWidth="41.0" prefHeight="27.0" prefWidth="41.0" style="&#10;" text="100" textAlignment="CENTER" textFill="#464646" wrapText="false">
+            <Label fx:id="labelMaxIntensiveServerCount" alignment="CENTER" layoutX="266.0" layoutY="531.0" maxHeight="27.0" maxWidth="41.0" minHeight="27.0" minWidth="41.0" prefHeight="27.0" prefWidth="41.0" style="&#10;" text="100" textAlignment="CENTER" textFill="#464646" wrapText="false">
                <font>
                   <Font size="14.0" fx:id="x112212" />
                </font>

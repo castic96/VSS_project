@@ -104,6 +104,12 @@ public class SimulationWindowController implements Initializable {
     private Label labelCurrentMaxTimeInQueue;
 
     @FXML
+    private Label labelMaxBasicServerCount;
+
+    @FXML
+    private Label labelMaxIntensiveServerCount;
+
+    @FXML
     private TextField textFieldBedsBasicCare;
 
     @FXML
@@ -159,6 +165,9 @@ public class SimulationWindowController implements Initializable {
         labelCurrentPDeathBasicCare.setText(String.valueOf(Constants.P_DEATH_BASIC_CARE_UNIT));
         labelCurrentPDeathIntensiveCare.setText(String.valueOf(Constants.P_DEATH_INTENSIVE_CARE_UNIT));
         labelCurrentMaxTimeInQueue.setText(String.valueOf(Constants.MAX_TIME_IN_QUEUE));
+
+        labelMaxBasicServerCount.setText(String.valueOf(Constants.NUMBER_OF_BED_BASIC_UNIT));
+        labelMaxIntensiveServerCount.setText(String.valueOf(Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT));
     }
 
     @FXML
