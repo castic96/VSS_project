@@ -208,11 +208,11 @@ public class SimulationWindowController implements Initializable {
 
     public void initStepByStep() {
         clear();
-        initConfigurations();
-        new Thread(program::initSimStepByStep).start();
         buttonStartStepByStep.setDisable(true);
         labelStatus.setText("Status: Running");
         comboBox.setDisable(true);
+        initConfigurations();
+        new Thread(program::initSimStepByStep).start();
     }
 
     public void finishInitStepByStep() {
@@ -285,10 +285,10 @@ public class SimulationWindowController implements Initializable {
 
     @FXML
     public void doStep() {
-        new Thread(program::doStep).start();
         buttonStep.setDisable(true);
         buttonStopStepByStep.setDisable(true);
         labelStatus.setText("Status: Running");
+        new Thread(program::doStep).start();
     }
 
     public void finishDoStep() {
@@ -296,11 +296,10 @@ public class SimulationWindowController implements Initializable {
     }
 
     public void stopStepByStep() {
-        //comboBox.setDisable(true);
-        new Thread(program::stopSimStepByStep).start();
         buttonStep.setDisable(true);
         buttonStopStepByStep.setDisable(true);
         labelStatus.setText("Status: Running");
+        new Thread(program::stopSimStepByStep).start();
     }
 
     public void finishStopStepByStep() {
