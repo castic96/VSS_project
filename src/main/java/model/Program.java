@@ -5,11 +5,11 @@ import cz.zcu.fav.kiv.jsim.JSimException;
 import cz.zcu.fav.kiv.jsim.JSimMethodNotSupportedException;
 import cz.zcu.fav.kiv.jsim.JSimSimulation;
 import javafx.application.Platform;
-import model.enums.InputParams;
-import model.enums.OutputParams;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Program {
 
@@ -20,7 +20,7 @@ public class Program {
     /** Max simulation time. */
     private static final double MAX_TIME = 10000.0;
 
-    private SimulationWindowController simulationWindowController;
+    private final SimulationWindowController simulationWindowController;
 
     private JSimSimulation simulation;
 
@@ -32,53 +32,31 @@ public class Program {
      * Loads configuration file.
      */
     public void loadConfigurationFile() {
-        String configFilePath = DEFAULT_CONFIG_PATH;
-        Constants.init(configFilePath);
+        Constants.init(DEFAULT_CONFIG_PATH);
     }
 
-    public SimulationParams getSimulationParams() {
-        return new SimulationParams(Constants.NUMBER_OF_BED_BASIC_UNIT, Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT,
-                Constants.INPUT_LAMBDA, Constants.BASIC_CARE_UNIT_MU, Constants.BASIC_CARE_UNIT_SIGMA, Constants.INTENSIVE_CARE_UNIT_MU,
-                Constants.P_FROM_BASIC_TO_INTENSIVE, Constants.P_DEATH_BASIC_CARE_UNIT, Constants.P_DEATH_INTENSIVE_CARE_UNIT,
-                Constants.MAX_TIME_IN_QUEUE);
-    }
 
-    private static ScenarioParams getScenarioParams() {
-        return new ScenarioParams(
-                Constants.INPUT_PARAM, Constants.OUTPUT_PARAM, Constants.STEP, Constants.RUNS_COUNT,
+    private ScenarioResults runScenario() {
+        Map<Double, Double> scenarioResults = new HashMap<>();
 
-                Constants.NUMBER_OF_BED_BASIC_UNIT, Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT,
-                Constants.INPUT_LAMBDA, Constants.BASIC_CARE_UNIT_MU, Constants.BASIC_CARE_UNIT_SIGMA, Constants.INTENSIVE_CARE_UNIT_MU,
-                Constants.P_FROM_BASIC_TO_INTENSIVE, Constants.P_DEATH_BASIC_CARE_UNIT, Constants.P_DEATH_INTENSIVE_CARE_UNIT,
-                Constants.MAX_TIME_IN_QUEUE);
-    }
-/*
-    private static ScenarioResults runScenario(ScenarioParams scenarioParams) {
-        double step = scenarioParams.getStep();
-        int runsCount = scenarioParams.getRunsCount();
-
-        double[] scenarioResults = new double[runsCount]; // todo - to map
-
-        for (int i = 0; i < runsCount; i++) {
+        double newValue = updateSimulationParam(0); // step == 0 -> no update, just getting value
+        for (int i = 0; i < Constants.RUNS_COUNT; i++) {
             // run simulation
-            SimulationResults results = initSimStepByStep(scenarioParams);
+            SimulationResults results = runSimRunByTime();
 
             // save result
-            double result = getResultToSave(scenarioParams.getOutputParam(), results);
-            scenarioResults[i] = result;
+            double result = getResultToSave(results);
+            scenarioResults.put(newValue, result);
 
             // update simulation parameter
-            updateSimulationParam(scenarioParams.getInputParam(), scenarioParams, step);
+            newValue = updateSimulationParam(Constants.STEP);
         }
 
-        ScenarioResults results = new ScenarioResults(scenarioParams.getOutputParam(), scenarioResults);
-        return results;
+        return new ScenarioResults(scenarioResults);
     }
 
- */
-
-    private static double getResultToSave(OutputParams outputParam, SimulationResults results) {
-        switch (outputParam) {
+    private static double getResultToSave(SimulationResults results) {
+        switch (Constants.OUTPUT_PARAM) {
             case HEALED_PATIENTS:
                 return results.getHealedPatients();
             case DEAD_PATIENTS:
@@ -90,44 +68,64 @@ public class Program {
         return 0;
     }
 
-    private static void updateSimulationParam(InputParams inputParam, SimulationParams params, double step) {
-        switch (inputParam) {
+    private static double updateSimulationParam(double step) {
+        double newValue = 0;
+
+        switch (Constants.INPUT_PARAM) {
             case NUMBER_OF_BED_BASIC_UNIT:
-                params.setNumberOfBedsBasicCareUnit((int) (params.getNumberOfBedsBasicCareUnit() + step));
+                newValue = Constants.NUMBER_OF_BED_BASIC_UNIT + (int) step;
+                Constants.NUMBER_OF_BED_BASIC_UNIT = (int) newValue;
                 break;
             case NUMBER_OF_BED_INTENSIVE_CARE_UNIT:
-                params.setNumberOfBedsIntensiveCareUnit((int) (params.getNumberOfBedsIntensiveCareUnit() + step));
+                newValue = Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT + (int) step;
+                Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT = (int) newValue;
                 break;
             case INPUT_LAMBDA:
-                params.setInputLambda(params.getInputLambda() + step);
+                newValue = Constants.INPUT_LAMBDA + step;
+                Constants.INPUT_LAMBDA = newValue;
                 break;
 
             case BASIC_CARE_UNIT_MU:
-                params.setBasicCareUnitMu(params.getBasicCareUnitMu() + step);
+                newValue = Constants.BASIC_CARE_UNIT_MU + step;
+                Constants.BASIC_CARE_UNIT_MU = newValue;
+                break;
             case BASIC_CARE_UNIT_SIGMA:
-                params.setBasicCareUnitSigma(params.getBasicCareUnitSigma() + step);
+                newValue = Constants.BASIC_CARE_UNIT_SIGMA + step;
+                Constants.BASIC_CARE_UNIT_SIGMA = newValue;
+                break;
             case INTENSIVE_CARE_UNIT_MU:
-                params.setIntensiveCareUnitMu(params.getIntensiveCareUnitMu() + step);
+                newValue = Constants.INTENSIVE_CARE_UNIT_MU + step;
+                Constants.INTENSIVE_CARE_UNIT_MU = newValue;
+                break;
 
             case P_FROM_BASIC_TO_INTENSIVE:
-                params.setpFromBasicToIntensive(params.getpFromBasicToIntensive() + step);
+                newValue = Constants.P_FROM_BASIC_TO_INTENSIVE + step;
+                Constants.P_FROM_BASIC_TO_INTENSIVE = newValue;
+                break;
             case P_DEATH_BASIC_CARE_UNIT:
-                params.setpDeathBasicCareUnit(params.getpDeathBasicCareUnit() + step);
+                newValue = Constants.P_DEATH_BASIC_CARE_UNIT + step;
+                Constants.P_DEATH_BASIC_CARE_UNIT = newValue;
+                break;
             case P_DEATH_INTENSIVE_CARE_UNIT:
-                params.setpDeathIntensiveCareUnit(params.getpDeathIntensiveCareUnit() + step);
+                newValue = Constants.P_DEATH_INTENSIVE_CARE_UNIT + step;
+                Constants.P_DEATH_INTENSIVE_CARE_UNIT = newValue;
+                break;
 
             case MAX_TIME_IN_QUEUE:
-                params.setMaxTimeInQueue(params.getMaxTimeInQueue() + step);
+                newValue = Constants.MAX_TIME_IN_QUEUE + step;
+                Constants.MAX_TIME_IN_QUEUE = newValue;
+                break;
         }
+
+        return newValue;
     }
 
     /**
      * Runs simulation with parameters.
      *
-     * @param params simulation parameters
      * @return simulation results or null if some error occurred during simulation
      */
-    public SimulationResults runSimRunByTime(SimulationParams params) {
+    public SimulationResults runSimRunByTime() {
 
         BasicCareUnitQueue basicCareUnitQueue;
         List<BasicCareUnitServer> basicCareUnitServerList;
@@ -140,15 +138,10 @@ public class Program {
             simulation = new JSimSimulation("Hospital simulation");
             basicCareUnitQueue = new BasicCareUnitQueue("Basic Care Unit Queue", simulation, null);
 
-            intensiveCareUnitServerList = createIntensiveCareUnitServersArray(params.getNumberOfBedsIntensiveCareUnit(),
-                    simulation, params.getIntensiveCareUnitMu(),
-                    params.getpDeathIntensiveCareUnit(), basicCareUnitQueue);
-            basicCareUnitServerList = createBasicCareUnitServersArray(params.getNumberOfBedsBasicCareUnit(), simulation,
-                    params.getBasicCareUnitMu(), params.getBasicCareUnitSigma(),
-                    params.getpDeathBasicCareUnit(), params.getpFromBasicToIntensive(),
-                    basicCareUnitQueue, intensiveCareUnitServerList, params.getMaxTimeInQueue());
+            intensiveCareUnitServerList = createIntensiveCareUnitServersArray(simulation, basicCareUnitQueue);
+            basicCareUnitServerList = createBasicCareUnitServersArray(simulation, basicCareUnitQueue, intensiveCareUnitServerList);
 
-            inputGenerator = new InputGenerator("Input generator", simulation, params.getInputLambda(), basicCareUnitQueue);
+            inputGenerator = new InputGenerator("Input generator", simulation, basicCareUnitQueue);
             basicCareUnitQueue.setServerList(basicCareUnitServerList);
 
             // activate generators
@@ -182,11 +175,8 @@ public class Program {
 
     /**
      * Runs simulation with parameters.
-     *
-     * @param params simulation parameters
-     * @return simulation results or null if some error occurred during simulation
      */
-    public void initSimStepByStep(SimulationParams params) {
+    public void initSimStepByStep() {
 
         BasicCareUnitQueue basicCareUnitQueue;
         List<BasicCareUnitServer> basicCareUnitServerList;
@@ -199,15 +189,10 @@ public class Program {
             simulation = new JSimSimulation("Hospital simulation");
             basicCareUnitQueue = new BasicCareUnitQueue("Basic Care Unit Queue", simulation, null);
 
-            intensiveCareUnitServerList = createIntensiveCareUnitServersArray(params.getNumberOfBedsIntensiveCareUnit(),
-                    simulation, params.getIntensiveCareUnitMu(),
-                    params.getpDeathIntensiveCareUnit(), basicCareUnitQueue);
-            basicCareUnitServerList = createBasicCareUnitServersArray(params.getNumberOfBedsBasicCareUnit(), simulation,
-                    params.getBasicCareUnitMu(), params.getBasicCareUnitSigma(),
-                    params.getpDeathBasicCareUnit(), params.getpFromBasicToIntensive(),
-                    basicCareUnitQueue, intensiveCareUnitServerList, params.getMaxTimeInQueue());
+            intensiveCareUnitServerList = createIntensiveCareUnitServersArray(simulation, basicCareUnitQueue);
+            basicCareUnitServerList = createBasicCareUnitServersArray(simulation, basicCareUnitQueue, intensiveCareUnitServerList);
 
-            inputGenerator = new InputGenerator("Input generator", simulation, params.getInputLambda(), basicCareUnitQueue);
+            inputGenerator = new InputGenerator("Input generator", simulation, basicCareUnitQueue);
             basicCareUnitQueue.setServerList(basicCareUnitServerList);
 
             // activate generators
@@ -264,29 +249,20 @@ public class Program {
     /**
      * Creates all servers in basic care unit. One server = one bed.
      *
-     * @param numberOfServers number of servers (beds) in basic care unit
      * @param simulation simulation
-     * @param mu mu (gauss distribution parameter)
-     * @param sigma sigma (gauss distribution parameter)
-     * @param pDeath probability of death in basic care
-     * @param pFromBasicToIntensive probability of transfer to intensive care
      * @param queue queue to basic care
      * @param intensiveCareUnitServerList list of intensive care servers
-     * @param maxTimeInQueue maximum time which can be spent in queue (if exceeded -> death)
      * @return list of basic unit servers
      * @throws JSimException if problem in simulation occurs
      */
-    private static List<BasicCareUnitServer> createBasicCareUnitServersArray(int numberOfServers,
-                                                                             JSimSimulation simulation,
-                                                                             double mu, double sigma, double pDeath, double pFromBasicToIntensive,
+    private static List<BasicCareUnitServer> createBasicCareUnitServersArray(JSimSimulation simulation,
                                                                              BasicCareUnitQueue queue,
-                                                                             List<IntensiveCareUnitServer> intensiveCareUnitServerList,
-                                                                             double maxTimeInQueue) throws JSimException {
+                                                                             List<IntensiveCareUnitServer> intensiveCareUnitServerList) throws JSimException {
 
         List<BasicCareUnitServer> servers = new ArrayList<>();
 
-        for (int i = 0; i < numberOfServers; i++) {
-            servers.add(new BasicCareUnitServer("Basic Care Unit Server " + i, simulation, mu, sigma, pDeath, pFromBasicToIntensive, queue, intensiveCareUnitServerList, maxTimeInQueue));
+        for (int i = 0; i < Constants.NUMBER_OF_BED_BASIC_UNIT; i++) {
+            servers.add(new BasicCareUnitServer("Basic Care Unit Server " + i, simulation, queue, intensiveCareUnitServerList));
         }
 
         return servers;
@@ -295,22 +271,16 @@ public class Program {
     /**
      * Creates all servers in intensive care unit. One server = one bed.
      *
-     * @param numberOfServers number of servers (beds) in intensive care unit
      * @param simulation simulation
-     * @param mu mu (exponential distribution parameter)
-     * @param pDeath probability of death in intensive care
      * @return list of intensive care servers
      * @throws JSimException if problem in simulation occurs
      */
-    private static List<IntensiveCareUnitServer> createIntensiveCareUnitServersArray(int numberOfServers,
-                                                                                     JSimSimulation simulation,
-                                                                                     double mu, double pDeath,
-                                                                                     BasicCareUnitQueue queue) throws JSimException {
+    private static List<IntensiveCareUnitServer> createIntensiveCareUnitServersArray(JSimSimulation simulation, BasicCareUnitQueue queue) throws JSimException {
 
         List<IntensiveCareUnitServer> servers = new ArrayList<>();
 
-        for (int i = 0; i < numberOfServers; i++) {
-            servers.add(new IntensiveCareUnitServer("Intensive Care Unit Server " + i, simulation, mu, pDeath, false, queue));
+        for (int i = 0; i < Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT; i++) {
+            servers.add(new IntensiveCareUnitServer("Intensive Care Unit Server " + i, simulation, false, queue));
         }
 
         return servers;

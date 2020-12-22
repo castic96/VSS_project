@@ -23,15 +23,6 @@ public class BasicCareUnitServer extends JSimProcess {
     /** Counter for patients who died in queue. */
     private static final AtomicInteger diedInQueuePatientsCounter = new AtomicInteger(0);
 
-    /** mu (gauss distribution parameter) */
-    private final double mu;
-    /** sigma (gauss distribution parameter) */
-    private final double sigma;
-
-    /** probability of death in basic care */
-    private final double pDeath;
-    /** probability of transfer to intensive care */
-    private final double pFromBasicToIntensive;
     /** patient */
     private Patient patient;
 
@@ -41,8 +32,6 @@ public class BasicCareUnitServer extends JSimProcess {
     private final BasicCareUnitQueue queue;
     /** list of intensive care servers */
     private final List<IntensiveCareUnitServer> intensiveCareUnitServerList;
-    /** maximum time which can be spent in queue (if exceeded -> death) */
-    private final double maxTimeInQueue;
     /** if server (bed) is occupied */
     private boolean occupied;
 
@@ -56,26 +45,16 @@ public class BasicCareUnitServer extends JSimProcess {
      *
      * @param name server name
      * @param parent simulation
-     * @param mu mu (gauss distribution parameter)
-     * @param sigma sigma (gauss distribution parameter)
-     * @param pDeath probability of death in basic care
-     * @param pFromBasicToIntensive probability of transfer to intensive care
      * @param queue queue to basic care
      * @param intensiveCareUnitServerList list of intensive care servers
-     * @param maxTimeInQueue maximum time which can be spent in queue (if exceeded -> death)
      * @throws JSimSimulationAlreadyTerminatedException if simulation is already terminated
      * @throws JSimInvalidParametersException parent (simulation) is invalid parameter
      * @throws JSimTooManyProcessesException process cannot be added to simulation
      */
-    public BasicCareUnitServer(String name, JSimSimulation parent, double mu, double sigma, double pDeath, double pFromBasicToIntensive, BasicCareUnitQueue queue, List<IntensiveCareUnitServer> intensiveCareUnitServerList, double maxTimeInQueue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
+    public BasicCareUnitServer(String name, JSimSimulation parent, BasicCareUnitQueue queue, List<IntensiveCareUnitServer> intensiveCareUnitServerList) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
         super(name, parent);
-        this.mu = mu;
-        this.sigma = sigma;
-        this.pDeath = pDeath;
-        this.pFromBasicToIntensive = pFromBasicToIntensive;
         this.queue = queue;
         this.intensiveCareUnitServerList = intensiveCareUnitServerList;
-        this.maxTimeInQueue = maxTimeInQueue;
 
         this.counter = 0;
         this.transTq = 0.0;
@@ -99,7 +78,7 @@ public class BasicCareUnitServer extends JSimProcess {
                     if (link != null) {
                         patient = (Patient)link.getData();
 
-                        if (myParent.getCurrentTime() - patient.getTimeOfCreation() > maxTimeInQueue) {
+                        if (myParent.getCurrentTime() - patient.getTimeOfCreation() > Constants.MAX_TIME_IN_QUEUE) {
                             message("model.Patient died in queue, patient: " + patient.getPatientNumber());
                             diedInQueuePatientsCounter.incrementAndGet();
                             continue;
@@ -123,7 +102,7 @@ public class BasicCareUnitServer extends JSimProcess {
 
                 // spend time in basic care
                 double startTime = myParent.getCurrentTime();
-                hold(Utils.gaussPositive(mu, sigma));
+                hold(Utils.gaussPositive(Constants.BASIC_CARE_UNIT_MU, Constants.BASIC_CARE_UNIT_SIGMA));
                 transTq += myParent.getCurrentTime() - startTime; // time spent on bed
                 counter++;
 
@@ -235,20 +214,12 @@ public class BasicCareUnitServer extends JSimProcess {
         return transTq;
     }
 
-    public double getpDeath() {
-        return pDeath;
-    }
-
     public Patient getPatient() {
         return patient;
     }
 
     public void setPatient(Patient patient) {
         this.patient = patient;
-    }
-
-    public double getpFromBasicToIntensive() {
-        return pFromBasicToIntensive;
     }
 
     public JSimLink getLink() {

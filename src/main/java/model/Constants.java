@@ -13,6 +13,8 @@ import java.util.Properties;
  */
 public class Constants {
 
+    public static final int NUMBER_OF_SERVERS = 2;
+
     public static boolean isScenario = false;
 
     public static InputParams INPUT_PARAM;

@@ -7,7 +7,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.Program;
-import model.SimulationParams;
 import model.enums.LaunchType;
 
 import java.net.URL;
@@ -17,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class SimulationWindowController implements Initializable {
 
-    private Program program;
+    private final Program program;
 
     @FXML
     private ComboBox<String> comboBox;
@@ -64,8 +63,7 @@ public class SimulationWindowController implements Initializable {
 
     public void initStepByStep() {
         program.loadConfigurationFile();
-        SimulationParams simulationParams = program.getSimulationParams();
-        new Thread(() -> program.initSimStepByStep(simulationParams)).start();
+        new Thread(() -> program.initSimStepByStep()).start();
         buttonStartStepByStep.setDisable(true);
         labelStatus.setText("Status: Running");
         comboBox.setDisable(true);

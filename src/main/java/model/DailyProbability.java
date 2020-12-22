@@ -32,7 +32,7 @@ public class DailyProbability extends JSimProcess {
                 if (currentServer.isOccupied()) {
                     rand = JSimSystem.uniform(0.0, 1.0);
 
-                    if (rand < currentServer.getpDeath()) { // death
+                    if (rand < Constants.P_DEATH_BASIC_CARE_UNIT) { // death
                         currentServer.getPatient().setInMoveToIntensiveCare(false);
                         currentServer.getPatient().setDead(true);
                         currentServer.cancel();
@@ -41,19 +41,14 @@ public class DailyProbability extends JSimProcess {
                     else {
                         rand = JSimSystem.uniform(0.0, 1.0);
 
-                        if (rand < currentServer.getpFromBasicToIntensive()) { // move to intensive care unit (if not possible -> death)
+                        if (rand < Constants.P_FROM_BASIC_TO_INTENSIVE) { // move to intensive care unit (if not possible -> death)
                             message("Trying to move to intensive care unit..., patient: " + currentServer.getPatient().getPatientNumber());
                             currentServer.getPatient().setInMoveToIntensiveCare(true);
 
                             currentServer.cancel();
                             currentServer.activate(myParent.getCurrentTime());
 
-                            if (!moveToIntensiveCare(currentServer.getLink())) {
-                                currentServer.getPatient().setDead(true);
-                            }
-                            else {
-                                currentServer.getPatient().setDead(false);
-                            }
+                            currentServer.getPatient().setDead(!moveToIntensiveCare(currentServer.getLink()));
 
                         }
                     }
@@ -68,7 +63,7 @@ public class DailyProbability extends JSimProcess {
                     if (!patient.isInMoveToIntensiveCare()) {
                         rand = JSimSystem.uniform(0.0, 1.0);
 
-                        if (rand < currentServer.getpDeath()) { // death
+                        if (rand < Constants.P_DEATH_INTENSIVE_CARE_UNIT) { // death
                             patient.setDead(true);
                             currentServer.cancel();
                             currentServer.activate(myParent.getCurrentTime());

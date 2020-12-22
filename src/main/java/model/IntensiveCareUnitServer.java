@@ -12,10 +12,6 @@ public class IntensiveCareUnitServer extends JSimProcess {
     /** Counter for patients who die in intensive care unit. */
     private static final AtomicInteger deadPatientsCounter = new AtomicInteger(0);
 
-    /** mu (exponential distribution parameter) */
-    private final double mu;
-    /** probability of death in intensive care */
-    private final double pDeath;
     /** patient */
     private JSimLink patientOnBed;
     /** if server (bed) is occupied */
@@ -33,17 +29,13 @@ public class IntensiveCareUnitServer extends JSimProcess {
      *
      * @param name server name
      * @param parent simulation
-     * @param mu mu (exponential distribution parameter)
-     * @param pDeath probability of death in intensive care
      * @param occupied if server (bed) is occupied
      * @throws JSimSimulationAlreadyTerminatedException if simulation is already terminated
      * @throws JSimInvalidParametersException parent (simulation) is invalid parameter
      * @throws JSimTooManyProcessesException process cannot be added to simulation
      */
-    public IntensiveCareUnitServer(String name, JSimSimulation parent, double mu, double pDeath, boolean occupied, BasicCareUnitQueue queue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
+    public IntensiveCareUnitServer(String name, JSimSimulation parent, boolean occupied, BasicCareUnitQueue queue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException {
         super(name, parent);
-        this.mu = mu;
-        this.pDeath = pDeath;
         this.occupied = occupied;
         this.queue = queue;
 
@@ -67,7 +59,7 @@ public class IntensiveCareUnitServer extends JSimProcess {
 
                 // spend time in intensive care
                 double startTime = myParent.getCurrentTime();
-                hold(JSimSystem.negExp(mu));
+                hold(JSimSystem.negExp(Constants.INTENSIVE_CARE_UNIT_MU));
                 transTq += myParent.getCurrentTime() - startTime; // time spent on bed
                 counter++;
 
@@ -162,10 +154,6 @@ public class IntensiveCareUnitServer extends JSimProcess {
     public double getTransTq()
     {
         return transTq;
-    }
-
-    public double getpDeath() {
-        return pDeath;
     }
 
     public static int getDeadPatientsCounter() {

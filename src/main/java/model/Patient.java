@@ -11,13 +11,13 @@ public class Patient {
     private static final AtomicInteger patientsCounter = new AtomicInteger(0);
 
     /** Time when patient arrived to hospital (to queue). */
-    private double timeOfCreation;
+    private final double timeOfCreation;
     /** Time when patient requested to transfer back to basic care unit. */
     private double timeOfRequestToBasicCare;
 
     private boolean dead = false;
     private boolean inMoveToIntensiveCare = false;
-    private int patientNumber;
+    private final int patientNumber;
 
     /**
      * Creates new patient with arrival time.
@@ -26,8 +26,7 @@ public class Patient {
      */
     public Patient(double timeOfCreation) {
         this.timeOfCreation = timeOfCreation;
-        int number = patientsCounter.incrementAndGet();
-        patientNumber = number;
+        patientNumber = patientsCounter.incrementAndGet();
     }
 
     /**

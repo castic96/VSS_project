@@ -7,8 +7,6 @@ import java.util.List;
  */
 public class Statistics {
 
-    private static int NUMBER_OF_SERVERS = 2;
-
     /**
      * Calculates results.
      *
@@ -56,12 +54,12 @@ public class Statistics {
         // Tqs
         double basicCareAverage = basicCareSum /  basicCarePatientsSum;
         double intensiveCareAverage = intensiveCareSum / intensiveCarePatientsSum;
-        double totalAverage = (basicCareAverage + intensiveCareAverage) / NUMBER_OF_SERVERS;
+        double totalAverage = (basicCareAverage + intensiveCareAverage) / Constants.NUMBER_OF_SERVERS;
 
         // rhos
         double basicCareRho = (basicCareSum / totalTime) / basicCareUnitServerList.size();
         double intensiveCareRho = (intensiveCareSum / totalTime) / intensiveCareUnitServerList.size();
-        double totalRho = (basicCareRho + intensiveCareRho) / NUMBER_OF_SERVERS;
+        double totalRho = (basicCareRho + intensiveCareRho) / Constants.NUMBER_OF_SERVERS;
 
         int totalDeadPatients =
                 BasicCareUnitServer.getDeadPatientsCounter() + BasicCareUnitServer.getDeadPatientsNoFreeBedInICUCounter() // died in basic care
@@ -70,7 +68,7 @@ public class Statistics {
         int totalLeavingPatients = BasicCareUnitServer.getHealedPatientsCounter() + totalDeadPatients;
 
         // init results
-        SimulationResults results = new SimulationResults(
+        return new SimulationResults(
                 InputGenerator.getIncomingPatientsCounter(), BasicCareUnitServer.getPatientsMovedToICUCounter(), BasicCareUnitServer.getPatientsMovedBackFromICUCounter(),
                 BasicCareUnitServer.getDiedInQueuePatientsCounter(), BasicCareUnitServer.getDeadPatientsCounter(), BasicCareUnitServer.getDeadPatientsNoFreeBedInICUCounter(),
                 IntensiveCareUnitServer.getDeadPatientsCounter(),
@@ -79,6 +77,5 @@ public class Statistics {
                 basicCareRhos, intensiveCareRhos,
                 basicCareRho, intensiveCareRho, totalRho, basicCareAverage, intensiveCareAverage, totalAverage,
                 basicCareUnitQueue.getLw(), basicCareUnitQueue.getTw(), basicCareUnitQueue.getTwForAllLinks());
-        return results;
     }
 }

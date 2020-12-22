@@ -12,26 +12,22 @@ public class InputGenerator extends JSimProcess {
     /** Counter for incoming patients. */
     private static final AtomicInteger incomingPatientsCounter = new AtomicInteger(0);
 
-    /** lambda (exponential distribution) */
-    private double lambda;
     /** queue */
-    private BasicCareUnitQueue queue;
+    private final BasicCareUnitQueue queue;
 
     /**
      * Creates new generator.
      *
      * @param name generator name
      * @param simulation simulation
-     * @param lambda lambda (exponential distribution)
      * @param queue queue
      * @throws JSimSimulationAlreadyTerminatedException if simulation is already terminated
      * @throws JSimInvalidParametersException parent (simulation) is invalid parameter
      * @throws JSimTooManyProcessesException process cannot be added to simulation
      */
-    public InputGenerator(String name, JSimSimulation simulation, double lambda, BasicCareUnitQueue queue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException
+    public InputGenerator(String name, JSimSimulation simulation, BasicCareUnitQueue queue) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException
     {
         super(name, simulation);
-        this.lambda = lambda;
         this.queue = queue;
     }
 
@@ -61,7 +57,7 @@ public class InputGenerator extends JSimProcess {
                 }
 
                 // wait before generating another patient
-                hold(JSimSystem.negExp(lambda));
+                hold(JSimSystem.negExp(Constants.INPUT_LAMBDA));
             }
         }
         catch (JSimException e)
