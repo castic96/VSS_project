@@ -3,6 +3,7 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import model.Constants;
 import model.Program;
 import model.enums.LaunchType;
 
@@ -72,6 +73,66 @@ public class SimulationWindowController implements Initializable {
     @FXML
     private TextArea textAreaHealthy;
 
+    @FXML
+    private Label labelCurrentBedsBasicCare;
+
+    @FXML
+    private Label labelCurrentBedsIntensiveCare;
+
+    @FXML
+    private Label labelCurrentInputLambda;
+
+    @FXML
+    private Label labelCurrentBasicCareMu;
+
+    @FXML
+    private Label labelCurrentBasicCareSigma;
+
+    @FXML
+    private Label labelCurrentIntensiveCareMu;
+
+    @FXML
+    private Label labelCurrentPFromBasicToIntensive;
+
+    @FXML
+    private Label labelCurrentPDeathBasicCare;
+
+    @FXML
+    private Label labelCurrentPDeathIntensiveCare;
+
+    @FXML
+    private Label labelCurrentMaxTimeInQueue;
+
+    @FXML
+    private TextField textFieldBedsBasicCare;
+
+    @FXML
+    private TextField textFieldBedsIntensiveCare;
+
+    @FXML
+    private TextField textFieldInputLambda;
+
+    @FXML
+    private TextField textFieldBasicCareMu;
+
+    @FXML
+    private TextField textFieldBasicCareSigma;
+
+    @FXML
+    private TextField textFieldIntensiveCareMu;
+
+    @FXML
+    private TextField textFieldPFromBasicToIntensive;
+
+    @FXML
+    private TextField textFieldPDeathBasicCare;
+
+    @FXML
+    private TextField textFieldPDeathIntensiveCare;
+
+    @FXML
+    private TextField textFieldMaxTimeInQueue;
+
     public SimulationWindowController() {
         program = new Program(this);
     }
@@ -85,9 +146,69 @@ public class SimulationWindowController implements Initializable {
         textAreaHealthy.clear();
     }
 
+    public void initConfigurations() {
+        program.loadConfigurationFile();
+
+        labelCurrentBedsBasicCare.setText(String.valueOf(Constants.NUMBER_OF_BED_BASIC_UNIT));
+        labelCurrentBedsIntensiveCare.setText(String.valueOf(Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT));
+        labelCurrentInputLambda.setText(String.valueOf(Constants.INPUT_LAMBDA));
+        labelCurrentBasicCareMu.setText(String.valueOf(Constants.BASIC_CARE_UNIT_MU));
+        labelCurrentBasicCareSigma.setText(String.valueOf(Constants.BASIC_CARE_UNIT_SIGMA));
+        labelCurrentIntensiveCareMu.setText(String.valueOf(Constants.INTENSIVE_CARE_UNIT_MU));
+        labelCurrentPFromBasicToIntensive.setText(String.valueOf(Constants.P_FROM_BASIC_TO_INTENSIVE));
+        labelCurrentPDeathBasicCare.setText(String.valueOf(Constants.P_DEATH_BASIC_CARE_UNIT));
+        labelCurrentPDeathIntensiveCare.setText(String.valueOf(Constants.P_DEATH_INTENSIVE_CARE_UNIT));
+        labelCurrentMaxTimeInQueue.setText(String.valueOf(Constants.MAX_TIME_IN_QUEUE));
+    }
+
+    @FXML
+    public void updateConfig() {
+        String newText;
+
+        newText = textFieldBedsBasicCare.getText();
+        labelCurrentBedsBasicCare.setText(newText);
+        Constants.NUMBER_OF_BED_BASIC_UNIT = Integer.parseInt(newText);
+
+        newText = textFieldBedsIntensiveCare.getText();
+        labelCurrentBedsIntensiveCare.setText(newText);
+        Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT = Integer.parseInt(newText);
+
+        newText = textFieldInputLambda.getText();
+        labelCurrentInputLambda.setText(newText);
+        Constants.INPUT_LAMBDA = Double.parseDouble(newText);
+
+        newText = textFieldBasicCareMu.getText();
+        labelCurrentBasicCareMu.setText(newText);
+        Constants.BASIC_CARE_UNIT_MU = Double.parseDouble(newText);
+
+        newText = textFieldBasicCareSigma.getText();
+        labelCurrentBasicCareSigma.setText(newText);
+        Constants.BASIC_CARE_UNIT_SIGMA= Double.parseDouble(newText);
+
+        newText = textFieldIntensiveCareMu.getText();
+        labelCurrentIntensiveCareMu.setText(newText);
+        Constants.INTENSIVE_CARE_UNIT_MU = Double.parseDouble(newText);
+
+        newText = textFieldPFromBasicToIntensive.getText();
+        labelCurrentPFromBasicToIntensive.setText(newText);
+        Constants.P_FROM_BASIC_TO_INTENSIVE = Double.parseDouble(newText);
+
+        newText = textFieldPDeathBasicCare.getText();
+        labelCurrentPDeathBasicCare.setText(newText);
+        Constants.P_DEATH_BASIC_CARE_UNIT = Double.parseDouble(newText);
+
+        newText = textFieldPDeathIntensiveCare.getText();
+        labelCurrentPDeathIntensiveCare.setText(newText);
+        Constants.P_DEATH_INTENSIVE_CARE_UNIT = Double.parseDouble(newText);
+
+        newText = textFieldMaxTimeInQueue.getText();
+        labelCurrentMaxTimeInQueue.setText(newText);
+        Constants.MAX_TIME_IN_QUEUE = Double.parseDouble(newText);
+    }
+
     public void initStepByStep() {
         clear();
-        program.loadConfigurationFile();
+        initConfigurations();
         new Thread(program::initSimStepByStep).start();
         buttonStartStepByStep.setDisable(true);
         labelStatus.setText("Status: Running");
