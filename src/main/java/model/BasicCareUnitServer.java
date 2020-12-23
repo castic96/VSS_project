@@ -2,6 +2,7 @@ package model;
 
 import controller.SimulationWindowController;
 import cz.zcu.fav.kiv.jsim.*;
+import javafx.application.Platform;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -81,12 +82,14 @@ public class BasicCareUnitServer extends JSimProcess {
 
                     if (link != null) {
                         patient = (Patient) link.getData();
-                        simulationWindowController.removeLineTextAreaQueue(patient.toString());
+                        Platform.runLater(() -> simulationWindowController.removeLineTextAreaQueue(patient.toString()));
 
                         if (myParent.getCurrentTime() - patient.getTimeOfCreation() > Constants.MAX_TIME_IN_QUEUE) {
                             message("Patient died in queue, patient: " + patient.getPatientNumber());
-                            simulationWindowController.appendLineTextAreaDead(patient.toString());
-                            simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
+                            Platform.runLater(() -> {
+                                simulationWindowController.appendLineTextAreaDead(patient.toString());
+                                simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
+                            });
                             diedInQueuePatientsCounter.incrementAndGet();
                             continue;
                         }
@@ -101,12 +104,12 @@ public class BasicCareUnitServer extends JSimProcess {
                 else {
                     patient = (Patient) link.getData();
                     message("Patient moved back to basic care, patient: " + patient.getPatientNumber());
-                    simulationWindowController.removeLineTextAreaIntensiveCare(patient.toString());
+                    Platform.runLater(() -> simulationWindowController.removeLineTextAreaIntensiveCare(patient.toString()));
                     patientsMovedBackFromICUCounter.incrementAndGet();
                 }
 
                 patient = (Patient) link.getData();
-                simulationWindowController.appendLineTextAreaBasicCare(patient.toString());
+                Platform.runLater(() -> simulationWindowController.appendLineTextAreaBasicCare(patient.toString()));
 
                 setOccupied(true);
 
@@ -122,28 +125,36 @@ public class BasicCareUnitServer extends JSimProcess {
                 if (patient.isDead()) {
                     if (patient.isInMoveToIntensiveCare()) {
                         message("Patient died in basic care... (no free bed in intensive care unit), patient: " + patient.getPatientNumber());
-                        simulationWindowController.appendLineTextAreaDead(patient.toString());
-                        simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
+                        Platform.runLater(() -> {
+                            simulationWindowController.appendLineTextAreaDead(patient.toString());
+                            simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
+                        });
                         deadPatientsNoFreeBedInICUCounter.incrementAndGet();
 
                     }
                     else {
                         message("Patient died on basic care, patient: " + patient.getPatientNumber());
-                        simulationWindowController.appendLineTextAreaDead(patient.toString());
-                        simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
+                        Platform.runLater(() -> {
+                            simulationWindowController.appendLineTextAreaDead(patient.toString());
+                            simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
+                        });
                         deadPatientsCounter.incrementAndGet();
                     }
                 }
                 else {
                     if (patient.isInMoveToIntensiveCare()) {
                         message("Patient moved to intensive care unit successfully, patient: " + patient.getPatientNumber());
-                        simulationWindowController.appendLineTextAreaIntensiveCare(patient.toString());
-                        simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
+                        Platform.runLater(() -> {
+                            simulationWindowController.appendLineTextAreaIntensiveCare(patient.toString());
+                            simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
+                        });
                         patientsMovedToICUCounter.incrementAndGet();
                     } else {
                         message("Patient is healthy, patient: " + patient.getPatientNumber());
-                        simulationWindowController.appendLineTextAreaHealthy(patient.toString());
-                        simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
+                        Platform.runLater(() -> {
+                            simulationWindowController.appendLineTextAreaHealthy(patient.toString());
+                            simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
+                        });
                         healedPatientsCounter.incrementAndGet();
                     }
                 }
