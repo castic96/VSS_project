@@ -19,6 +19,8 @@ public class Program {
     /** Max simulation time. */
     private static double maxTimeGlobal = 5000.0;
 
+    private static double START_VALUE_PROGRESS_BAR = 0.005;
+
     private final SimulationWindowController simulationWindowController;
 
     private JSimSimulation simulation;
@@ -158,14 +160,22 @@ public class Program {
 
             // run simulation
             simulation.message("Running the simulation, please wait.");
-            while ((simulation.getCurrentTime() < maxTime) && (simulation.step() == true) && (isRunning()))
-                ;
+
+            double progressBarStep = 0.1;
+            double progressBarValue = 0.1;
+
+            while ((simulation.getCurrentTime() < maxTime) && (simulation.step() == true) && (isRunning())) {
+                if ((simulation.getCurrentTime() / maxTime) >= progressBarValue) {
+                    simulationWindowController.setProgressBarValue(progressBarValue);
+                    progressBarValue += progressBarStep;
+                }
+            }
 
             // results
             double totalTime = simulation.getCurrentTime();
             simulation.message("Simulation interrupted at time " + totalTime);
             SimulationResults results = Statistics.calculateResults(basicCareUnitServerList, intensiveCareUnitServerList, totalTime, basicCareUnitQueue);
-            Platform.runLater(() -> simulationWindowController.setTextAreaResults(results.toString()));
+            simulationWindowController.setTextAreaResults(results.toString());
 
             return results;
         } catch (JSimException e) {
@@ -173,7 +183,10 @@ public class Program {
             e.printComment(System.err);
         } finally {
             simulation.shutdown();
-            Platform.runLater(simulationWindowController::finishRunByTime);
+            Platform.runLater(() -> {
+                simulationWindowController.finishRunByTime();
+                simulationWindowController.setProgressBarValue(0);
+            });
         }
 
         return null;

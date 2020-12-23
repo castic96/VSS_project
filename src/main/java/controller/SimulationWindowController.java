@@ -20,10 +20,7 @@ public class SimulationWindowController implements Initializable {
     private final Program program;
 
     @FXML
-    private Label labelBedsBasicCare;
-
-    @FXML
-    private Label labelBedsIntensiveCare;
+    private ProgressBar progressBar;
 
     @FXML
     private Label labelInputLambda;
@@ -183,6 +180,7 @@ public class SimulationWindowController implements Initializable {
         textAreaDead.clear();
         textAreaHealthy.clear();
         textAreaResults.clear();
+        progressBar.setProgress(0);
     }
 
     public void initConfigurations() {
@@ -330,6 +328,7 @@ public class SimulationWindowController implements Initializable {
     public void startRunByTime() {
         program.setRunning(true);
         clear();
+        setProgressBarValue(0.05);
         textFieldMaxTime.setDisable(true);
         buttonStartRunByTime.setDisable(true);
         labelStatus.setText("Status: Running");
@@ -557,5 +556,17 @@ public class SimulationWindowController implements Initializable {
     public void stopRunByTime() {
         buttonStopRunByTime.setDisable(true);
         new Thread(program::setRunningFalse).start();
+    }
+
+    public void setProgressBarValue(double value) {
+        if (value < 0) {
+            progressBar.setProgress(0);
+        }
+        else if (value > 1) {
+            progressBar.setProgress(1);
+        }
+        else {
+            progressBar.setProgress(value);
+        }
     }
 }

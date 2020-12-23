@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -51,7 +52,7 @@
    <bottom>
       <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
          <children>
-            <Label fx:id="labelStatus" maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Status: Ready" HBox.hgrow="ALWAYS">
+            <Label fx:id="labelStatus" maxHeight="1.7976931348623157E308" maxWidth="-1.0" prefHeight="16.0" prefWidth="89.0" text="Status: Ready" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="11.0" fx:id="x3" />
                </font>
@@ -62,7 +63,10 @@
                   <Insets bottom="5.0" left="10.0" right="15.0" />
                </HBox.margin>
             </Label>
-            <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+            <Pane HBox.hgrow="ALWAYS">
+               <children>
+                  <ProgressBar fx:id="progressBar" prefHeight="18.0" prefWidth="1014.0" progress="0.0" />
+               </children></Pane>
             <Label font="$x3" maxWidth="-1.0" text="Mode: Manual Simulation" textFill="$x4" HBox.hgrow="NEVER">
                <HBox.margin>
                   <Insets bottom="5.0" left="15.0" right="15.0" />
@@ -105,8 +109,8 @@
                   <Label fx:id="labelStepByStepCurrTime" layoutY="111.0" text="Current time:" textFill="#434343" />
                   <Button fx:id="buttonStep" disable="true" layoutX="114.0" layoutY="136.0" mnemonicParsing="false" onAction="#doStep" prefHeight="25.0" prefWidth="90.0" text="Step" textFill="#434343" />
                   <Label fx:id="labelRunByTimeMaxTime" disable="true" layoutX="1.0" layoutY="237.0" text="Max time:" textFill="#434343" />
-                  <Button fx:id="buttonStartRunByTime" onAction="#startRunByTime" disable="true" layoutX="17.0" layoutY="290.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Start" textFill="#434343" />
-                  <Button fx:id="buttonStopRunByTime" onAction="#stopRunByTime" disable="true" layoutX="114.0" layoutY="290.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Stop" textFill="#434343" />
+                  <Button fx:id="buttonStartRunByTime" disable="true" layoutX="17.0" layoutY="290.0" mnemonicParsing="false" onAction="#startRunByTime" prefHeight="25.0" prefWidth="90.0" text="Start" textFill="#434343" />
+                  <Button fx:id="buttonStopRunByTime" disable="true" layoutX="114.0" layoutY="290.0" mnemonicParsing="false" onAction="#stopRunByTime" prefHeight="25.0" prefWidth="90.0" text="Stop" textFill="#434343" />
                   <Label fx:id="labelRunByTimeCurrTime" disable="true" layoutX="1.0" layoutY="262.0" text="Current time:" textFill="#434343" />
                   <TextField fx:id="textFieldMaxTime" disable="true" layoutX="61.0" layoutY="234.0" prefHeight="25.0" prefWidth="121.0" text="10000.0" />
                   <ComboBox fx:id="comboBox" layoutX="42.0" layoutY="45.0" onAction="#comboBoxChange" prefHeight="25.0" prefWidth="137.0" />
