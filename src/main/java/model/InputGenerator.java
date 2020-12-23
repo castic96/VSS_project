@@ -2,7 +2,6 @@ package model;
 
 import controller.SimulationWindowController;
 import cz.zcu.fav.kiv.jsim.*;
-import javafx.application.Platform;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -52,7 +51,7 @@ public class InputGenerator extends JSimProcess {
                 link.into(queue);
                 Patient patient = (Patient) link.getData();
                 message("Added patient to queue, patient: " + patient.getPatientNumber());
-                Platform.runLater(() -> simulationWindowController.appendLineTextAreaQueue(patient.toString()));
+                simulationWindowController.appendLineTextAreaQueue(patient.toString());
                 incomingPatientsCounter.incrementAndGet();
 
                 // find free bed in basic care for patient
