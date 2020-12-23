@@ -1,9 +1,7 @@
 package model;
 
 import controller.SimulationWindowController;
-import cz.zcu.fav.kiv.jsim.JSimException;
-import cz.zcu.fav.kiv.jsim.JSimMethodNotSupportedException;
-import cz.zcu.fav.kiv.jsim.JSimSimulation;
+import cz.zcu.fav.kiv.jsim.*;
 import javafx.application.Platform;
 
 import java.io.*;
@@ -19,7 +17,7 @@ public class Program {
     private static final String DEFAULT_CONFIG_PATH = "config.properties";
 
     /** Max simulation time. */
-    private static final double MAX_TIME = 10000.0;
+    private static double maxTimeGlobal = 5000.0;
 
     private final SimulationWindowController simulationWindowController;
 
@@ -48,7 +46,7 @@ public class Program {
         double newValue = updateSimulationParam(0); // step == 0 -> no update, just getting value
         for (int i = 0; i < Constants.RUNS_COUNT; i++) {
             // run simulation
-            SimulationResults results = runSimRunByTime();
+            SimulationResults results = runSimRunByTime(10000); //TODO: hodnota 10000 jen aby to fungovalo
 
             // save result
             double result = getResultToSave(results);
@@ -131,7 +129,7 @@ public class Program {
      *
      * @return simulation results or null if some error occurred during simulation
      */
-    public SimulationResults runSimRunByTime() {
+    public SimulationResults runSimRunByTime(double maxTime) {
 
         InputGenerator inputGenerator;
 
@@ -151,14 +149,14 @@ public class Program {
             simulation.message("Activating generators...");
             inputGenerator.activate(0.0);
 
-            for (int i = 1; i < MAX_TIME; i++) {
+            for (int i = 1; i < maxTime; i++) {
                 new DailyProbability("Daily probability " + i, simulation, basicCareUnitServerList, intensiveCareUnitServerList)
                         .activate(i);
             }
 
             // run simulation
             simulation.message("Running the simulation, please wait.");
-            while ((simulation.getCurrentTime() < MAX_TIME) && (simulation.step() == true))
+            while ((simulation.getCurrentTime() < maxTime) && (simulation.step() == true))
                 ;
 
             // results
@@ -198,7 +196,7 @@ public class Program {
             simulation.message("Activating generators...");
             inputGenerator.activate(0.0);
 
-            for (int i = 1; i < MAX_TIME; i++) {
+            for (int i = 1; i < maxTimeGlobal; i++) {
                 new DailyProbability("Daily probability " + i, simulation, basicCareUnitServerList, intensiveCareUnitServerList)
                         .activate(i);
             }
@@ -228,8 +226,11 @@ public class Program {
     public void doStep() {
         try {
             simulation.step();
+            new DailyProbability("Daily probability " + maxTimeGlobal, simulation, basicCareUnitServerList, intensiveCareUnitServerList)
+                    .activate(maxTimeGlobal);
+            maxTimeGlobal++;
             Platform.runLater(simulationWindowController::finishDoStep);
-        } catch (JSimMethodNotSupportedException e) {
+        } catch (JSimMethodNotSupportedException | JSimInvalidParametersException | JSimSecurityException | JSimSimulationAlreadyTerminatedException | JSimTooManyProcessesException e) {
             e.printStackTrace();
         }
     }

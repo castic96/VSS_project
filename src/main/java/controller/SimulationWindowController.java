@@ -223,6 +223,48 @@ public class SimulationWindowController implements Initializable {
         new Thread(program::initSimStepByStep).start();
     }
 
+    public void startRunByTime() {
+        clear();
+        textFieldMaxTime.setDisable(true);
+        buttonStartRunByTime.setDisable(true);
+        labelStatus.setText("Status: Running");
+        comboBox.setDisable(true);
+
+        double maxTime = tryParseMaxTimeValue(textFieldMaxTime.getText());
+
+        if (Double.isNaN(maxTime)) {
+            parsingAllertError(textFieldMaxTime.getText());
+            textFieldMaxTime.setDisable(false);
+            buttonStartRunByTime.setDisable(false);
+            labelStatus.setText("Status: Ready");
+            comboBox.setDisable(false);
+            return;
+        }
+
+        new Thread(() -> program.runSimRunByTime(maxTime)).start();
+    }
+
+    public static void parsingAllertError(String text) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        alert.setTitle("Parse Error");
+
+        alert.setHeaderText("Parse Error");
+        alert.setContentText("Entered value " + text + " is not convertible to double!");
+
+        alert.showAndWait();
+    }
+
+    private double tryParseMaxTimeValue(String text) {
+        try {
+            double value = Double.parseDouble(text);
+            return value;
+        }
+        catch (NumberFormatException e) {
+            return Double.NaN;
+        }
+    }
+
     public void finishInitStepByStep() {
         buttonStep.setDisable(false);
         buttonStopStepByStep.setDisable(false);
