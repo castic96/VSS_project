@@ -328,6 +328,7 @@ public class SimulationWindowController implements Initializable {
     }
 
     public void startRunByTime() {
+        program.setRunning(true);
         clear();
         textFieldMaxTime.setDisable(true);
         buttonStartRunByTime.setDisable(true);
@@ -355,6 +356,7 @@ public class SimulationWindowController implements Initializable {
         }
 
         new Thread(() -> program.runSimRunByTime(maxTime)).start();
+        buttonStopRunByTime.setDisable(false);
     }
 
     public static void emptyAlertError(String emptyField) {
@@ -552,4 +554,8 @@ public class SimulationWindowController implements Initializable {
         }
     }
 
+    public void stopRunByTime() {
+        buttonStopRunByTime.setDisable(true);
+        new Thread(program::setRunningFalse).start();
+    }
 }

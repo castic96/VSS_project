@@ -106,7 +106,7 @@
                   <Button fx:id="buttonStep" disable="true" layoutX="114.0" layoutY="136.0" mnemonicParsing="false" onAction="#doStep" prefHeight="25.0" prefWidth="90.0" text="Step" textFill="#434343" />
                   <Label fx:id="labelRunByTimeMaxTime" disable="true" layoutX="1.0" layoutY="237.0" text="Max time:" textFill="#434343" />
                   <Button fx:id="buttonStartRunByTime" onAction="#startRunByTime" disable="true" layoutX="17.0" layoutY="290.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Start" textFill="#434343" />
-                  <Button fx:id="buttonStopRunByTime" disable="true" layoutX="114.0" layoutY="290.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Stop" textFill="#434343" />
+                  <Button fx:id="buttonStopRunByTime" onAction="#stopRunByTime" disable="true" layoutX="114.0" layoutY="290.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Stop" textFill="#434343" />
                   <Label fx:id="labelRunByTimeCurrTime" disable="true" layoutX="1.0" layoutY="262.0" text="Current time:" textFill="#434343" />
                   <TextField fx:id="textFieldMaxTime" disable="true" layoutX="61.0" layoutY="234.0" prefHeight="25.0" prefWidth="121.0" text="10000.0" />
                   <ComboBox fx:id="comboBox" layoutX="42.0" layoutY="45.0" onAction="#comboBoxChange" prefHeight="25.0" prefWidth="137.0" />

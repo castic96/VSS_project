@@ -27,6 +27,8 @@ public class Program {
     private List<BasicCareUnitServer> basicCareUnitServerList;
     private List<IntensiveCareUnitServer> intensiveCareUnitServerList;
 
+    private boolean running = true;
+
     public Program(SimulationWindowController simulationWindowController) {
         this.simulationWindowController = simulationWindowController;
         initializeLogging();
@@ -156,7 +158,7 @@ public class Program {
 
             // run simulation
             simulation.message("Running the simulation, please wait.");
-            while ((simulation.getCurrentTime() < maxTime) && (simulation.step() == true))
+            while ((simulation.getCurrentTime() < maxTime) && (simulation.step() == true) && (isRunning()))
                 ;
 
             // results
@@ -347,5 +349,17 @@ public class Program {
 
     public List<IntensiveCareUnitServer> getIntensiveCareUnitServerList() {
         return intensiveCareUnitServerList;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
+    public void setRunningFalse() {
+        this.running = false;
     }
 }

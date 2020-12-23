@@ -1,3 +1,1473 @@
 Config file: int value for RUNS_COUNT not found!
-Application started: 21:25:29 2020/12/23
-Application ended: 21:26:35 2020/12/23
+Application started: 22:19:43 2020/12/23
+Initializing the simulation..
+Activating generators...
+Running the simulation, please wait.
+Added patient to queue, patient: 1
+Added patient to queue, patient: 2
+Added patient to queue, patient: 3
+Added patient to queue, patient: 4
+DailyProbability time: 1.0
+Added patient to queue, patient: 5
+Added patient to queue, patient: 6
+Added patient to queue, patient: 7
+Added patient to queue, patient: 8
+Added patient to queue, patient: 9
+Added patient to queue, patient: 10
+DailyProbability time: 2.0
+Added patient to queue, patient: 11
+Added patient to queue, patient: 12
+Added patient to queue, patient: 13
+Added patient to queue, patient: 14
+Added patient to queue, patient: 15
+Added patient to queue, patient: 16
+Trying to move to intensive care unit..., patient: 2
+Trying to move to intensive care unit..., patient: 7
+Trying to move to intensive care unit..., patient: 10
+DailyProbability time: 3.0
+Patient moved to intensive care unit successfully, patient: 2
+Patient moved to intensive care unit successfully, patient: 7
+Patient moved to intensive care unit successfully, patient: 10
+Added patient to queue, patient: 17
+Added patient to queue, patient: 18
+Added patient to queue, patient: 19
+Trying to move to intensive care unit..., patient: 11
+Trying to move to intensive care unit..., patient: 8
+DailyProbability time: 4.0
+Patient moved to intensive care unit successfully, patient: 11
+Patient moved to intensive care unit successfully, patient: 8
+Added patient to queue, patient: 20
+Added patient to queue, patient: 21
+Trying to move to basic care unit..., patient: 8
+Added patient to queue, patient: 22
+Added patient to queue, patient: 23
+Added patient to queue, patient: 24
+Trying to move to intensive care unit..., patient: 14
+Trying to move to intensive care unit..., patient: 6
+Trying to move to intensive care unit..., patient: 9
+Trying to move to intensive care unit..., patient: 13
+DailyProbability time: 5.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 14
+Patient moved back to basic care, patient: 8
+Patient died in basic care... (no free bed in intensive care unit), patient: 6
+Patient died in queue, patient: 16
+Patient died in basic care... (no free bed in intensive care unit), patient: 9
+Patient died in basic care... (no free bed in intensive care unit), patient: 13
+Added patient to queue, patient: 25
+Added patient to queue, patient: 26
+Added patient to queue, patient: 27
+DailyProbability time: 6.0
+Added patient to queue, patient: 28
+Added patient to queue, patient: 29
+Added patient to queue, patient: 30
+Added patient to queue, patient: 31
+Patient is healthy, patient: 3
+Patient died in queue, patient: 20
+Patient died in queue, patient: 21
+Patient died in queue, patient: 22
+Patient died in queue, patient: 23
+Trying to move to basic care unit..., patient: 11
+Patient is healthy, patient: 1
+Patient moved back to basic care, patient: 11
+Added patient to queue, patient: 32
+Added patient to queue, patient: 33
+Added patient to queue, patient: 34
+Added patient to queue, patient: 35
+Trying to move to intensive care unit..., patient: 8
+Trying to move to intensive care unit..., patient: 24
+Trying to move to intensive care unit..., patient: 4
+DailyProbability time: 7.0
+Patient moved to intensive care unit successfully, patient: 8
+Patient moved to intensive care unit successfully, patient: 24
+Patient died in basic care... (no free bed in intensive care unit), patient: 4
+Trying to move to basic care unit..., patient: 8
+Added patient to queue, patient: 36
+Added patient to queue, patient: 37
+Patient is healthy, patient: 5
+Patient moved back to basic care, patient: 8
+Added patient to queue, patient: 38
+Added patient to queue, patient: 39
+Trying to move to basic care unit..., patient: 10
+Trying to move to basic care unit..., patient: 24
+Added patient to queue, patient: 40
+Added patient to queue, patient: 41
+Added patient to queue, patient: 42
+Added patient to queue, patient: 43
+Trying to move to intensive care unit..., patient: 11
+Trying to move to intensive care unit..., patient: 17
+Trying to move to intensive care unit..., patient: 12
+Trying to move to intensive care unit..., patient: 18
+DailyProbability time: 8.0
+Patient moved to intensive care unit successfully, patient: 11
+Patient moved back to basic care, patient: 10
+Patient died in basic care... (no free bed in intensive care unit), patient: 17
+Patient moved back to basic care, patient: 24
+Patient died in basic care... (no free bed in intensive care unit), patient: 12
+Patient died in basic care... (no free bed in intensive care unit), patient: 18
+Added patient to queue, patient: 44
+Added patient to queue, patient: 45
+Added patient to queue, patient: 46
+Added patient to queue, patient: 47
+Added patient to queue, patient: 48
+Added patient to queue, patient: 49
+Added patient to queue, patient: 50
+Added patient to queue, patient: 51
+Added patient to queue, patient: 52
+Added patient to queue, patient: 53
+Added patient to queue, patient: 54
+Trying to move to intensive care unit..., patient: 29
+DailyProbability time: 9.0
+Patient moved to intensive care unit successfully, patient: 29
+Patient died in queue, patient: 30
+Patient died in queue, patient: 31
+Patient died in queue, patient: 32
+Patient died in queue, patient: 33
+Patient died in queue, patient: 34
+Patient died in queue, patient: 35
+Added patient to queue, patient: 55
+Added patient to queue, patient: 56
+Added patient to queue, patient: 57
+Added patient to queue, patient: 58
+Added patient to queue, patient: 59
+Added patient to queue, patient: 60
+Trying to move to intensive care unit..., patient: 10
+Trying to move to intensive care unit..., patient: 25
+Trying to move to intensive care unit..., patient: 26
+Trying to move to intensive care unit..., patient: 36
+DailyProbability time: 10.0
+Patient moved to intensive care unit successfully, patient: 10
+Patient died in queue, patient: 37
+Patient died in queue, patient: 38
+Patient died in queue, patient: 39
+Patient died in queue, patient: 40
+Patient died in queue, patient: 41
+Patient died in queue, patient: 42
+Patient died in queue, patient: 43
+Patient died in basic care... (no free bed in intensive care unit), patient: 25
+Patient died in basic care... (no free bed in intensive care unit), patient: 26
+Patient died in basic care... (no free bed in intensive care unit), patient: 36
+Added patient to queue, patient: 61
+Trying to move to basic care unit..., patient: 11
+Added patient to queue, patient: 62
+Patient is healthy, patient: 15
+Patient moved back to basic care, patient: 11
+Added patient to queue, patient: 63
+Added patient to queue, patient: 64
+Added patient to queue, patient: 65
+Trying to move to intensive care unit..., patient: 27
+DailyProbability time: 11.0
+Patient moved to intensive care unit successfully, patient: 27
+Patient died in queue, patient: 48
+Patient died in queue, patient: 49
+Patient died in queue, patient: 50
+Patient died in queue, patient: 51
+Patient died in queue, patient: 52
+Patient died in queue, patient: 53
+Patient died in queue, patient: 54
+Added patient to queue, patient: 66
+Added patient to queue, patient: 67
+Added patient to queue, patient: 68
+Added patient to queue, patient: 69
+Trying to move to basic care unit..., patient: 2
+Patient is healthy, patient: 19
+Patient moved back to basic care, patient: 2
+Trying to move to basic care unit..., patient: 29
+Trying to move to basic care unit..., patient: 7
+Added patient to queue, patient: 70
+Added patient to queue, patient: 71
+Added patient to queue, patient: 72
+Added patient to queue, patient: 73
+Trying to move to intensive care unit..., patient: 8
+DailyProbability time: 12.0
+Patient moved to intensive care unit successfully, patient: 8
+Patient moved back to basic care, patient: 29
+Added patient to queue, patient: 74
+Added patient to queue, patient: 75
+Added patient to queue, patient: 76
+Trying to move to basic care unit..., patient: 8
+Trying to move to intensive care unit..., patient: 55
+Trying to move to intensive care unit..., patient: 11
+Trying to move to intensive care unit..., patient: 2
+DailyProbability time: 13.0
+Patient died on basic care, patient: 45
+Patient moved back to basic care, patient: 7
+Patient moved to intensive care unit successfully, patient: 55
+Patient moved back to basic care, patient: 8
+Patient died in basic care... (no free bed in intensive care unit), patient: 11
+Patient died in queue, patient: 56
+Patient died in queue, patient: 57
+Patient died in queue, patient: 58
+Patient died in queue, patient: 59
+Patient died in queue, patient: 60
+Patient died in queue, patient: 61
+Patient died in queue, patient: 62
+Patient died in queue, patient: 63
+Patient died in queue, patient: 64
+Patient died in queue, patient: 65
+Patient died in basic care... (no free bed in intensive care unit), patient: 2
+Added patient to queue, patient: 77
+Added patient to queue, patient: 78
+Trying to move to intensive care unit..., patient: 46
+DailyProbability time: 14.0
+Patient moved to intensive care unit successfully, patient: 46
+Patient died in queue, patient: 68
+Patient died in queue, patient: 69
+Patient died in queue, patient: 70
+Patient died in queue, patient: 71
+Patient died in queue, patient: 72
+Patient died in queue, patient: 73
+Added patient to queue, patient: 79
+Added patient to queue, patient: 80
+Patient is healthy, patient: 28
+Patient died in queue, patient: 75
+Patient died in queue, patient: 76
+Patient is healthy, patient: 24
+Trying to move to basic care unit..., patient: 10
+Trying to move to intensive care unit..., patient: 7
+Trying to move to intensive care unit..., patient: 67
+DailyProbability time: 15.0
+Patient moved to intensive care unit successfully, patient: 7
+Patient moved back to basic care, patient: 10
+Patient died in basic care... (no free bed in intensive care unit), patient: 67
+Added patient to queue, patient: 81
+Added patient to queue, patient: 82
+Added patient to queue, patient: 83
+Added patient to queue, patient: 84
+Trying to move to basic care unit..., patient: 7
+Added patient to queue, patient: 85
+Added patient to queue, patient: 86
+Trying to move to intensive care unit..., patient: 10
+Trying to move to intensive care unit..., patient: 74
+DailyProbability time: 16.0
+Patient moved to intensive care unit successfully, patient: 10
+Patient moved back to basic care, patient: 7
+Patient died in basic care... (no free bed in intensive care unit), patient: 74
+Trying to move to basic care unit..., patient: 55
+Added patient to queue, patient: 87
+Patient is healthy, patient: 47
+Patient moved back to basic care, patient: 55
+Added patient to queue, patient: 88
+Added patient to queue, patient: 89
+Added patient to queue, patient: 90
+Patient is healthy, patient: 44
+Trying to move to basic care unit..., patient: 27
+Added patient to queue, patient: 91
+Added patient to queue, patient: 92
+Trying to move to intensive care unit..., patient: 8
+DailyProbability time: 17.0
+Patient moved to intensive care unit successfully, patient: 8
+Patient moved back to basic care, patient: 27
+Added patient to queue, patient: 93
+Added patient to queue, patient: 94
+Added patient to queue, patient: 95
+Trying to move to basic care unit..., patient: 8
+Added patient to queue, patient: 96
+Added patient to queue, patient: 97
+Trying to move to intensive care unit..., patient: 55
+DailyProbability time: 18.0
+Patient moved to intensive care unit successfully, patient: 55
+Patient moved back to basic care, patient: 8
+Trying to move to basic care unit..., patient: 46
+Patient is healthy, patient: 29
+Patient moved back to basic care, patient: 46
+Added patient to queue, patient: 98
+Added patient to queue, patient: 99
+Added patient to queue, patient: 100
+Added patient to queue, patient: 101
+Added patient to queue, patient: 102
+Trying to move to intensive care unit..., patient: 46
+Trying to move to intensive care unit..., patient: 78
+Trying to move to intensive care unit..., patient: 79
+DailyProbability time: 19.0
+Patient moved to intensive care unit successfully, patient: 46
+Patient died in queue, patient: 82
+Patient died in queue, patient: 83
+Patient died in queue, patient: 84
+Patient died in queue, patient: 85
+Patient died in queue, patient: 86
+Patient died in queue, patient: 87
+Patient died in queue, patient: 88
+Patient died in queue, patient: 89
+Patient died in queue, patient: 90
+Patient died in queue, patient: 91
+Patient died in queue, patient: 92
+Patient moved to intensive care unit successfully, patient: 78
+Patient moved to intensive care unit successfully, patient: 79
+Added patient to queue, patient: 103
+Patient is healthy, patient: 66
+Patient died in queue, patient: 96
+Patient died in queue, patient: 97
+Added patient to queue, patient: 104
+Trying to move to intensive care unit..., patient: 98
+DailyProbability time: 20.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 98
+Patient died on intensive care, patient: 10
+Added patient to queue, patient: 105
+Trying to move to basic care unit..., patient: 55
+Added patient to queue, patient: 106
+Trying to move to intensive care unit..., patient: 94
+Trying to move to intensive care unit..., patient: 99
+Trying to move to intensive care unit..., patient: 95
+DailyProbability time: 21.0
+Patient moved to intensive care unit successfully, patient: 94
+Patient moved back to basic care, patient: 55
+Patient died in basic care... (no free bed in intensive care unit), patient: 99
+Patient died in queue, patient: 100
+Patient died in queue, patient: 101
+Patient died in queue, patient: 102
+Patient died in basic care... (no free bed in intensive care unit), patient: 95
+Added patient to queue, patient: 107
+Trying to move to basic care unit..., patient: 46
+Patient is healthy, patient: 77
+Patient moved back to basic care, patient: 46
+Added patient to queue, patient: 108
+Added patient to queue, patient: 109
+Added patient to queue, patient: 110
+Added patient to queue, patient: 111
+Added patient to queue, patient: 112
+Trying to move to intensive care unit..., patient: 81
+Trying to move to intensive care unit..., patient: 55
+Trying to move to intensive care unit..., patient: 103
+DailyProbability time: 22.0
+Patient moved to intensive care unit successfully, patient: 81
+Patient died on basic care, patient: 93
+Patient moved to intensive care unit successfully, patient: 55
+Patient died in basic care... (no free bed in intensive care unit), patient: 103
+Patient died on basic care, patient: 104
+Trying to move to basic care unit..., patient: 81
+Added patient to queue, patient: 113
+Added patient to queue, patient: 114
+Added patient to queue, patient: 115
+Patient is healthy, patient: 7
+Patient moved back to basic care, patient: 81
+Added patient to queue, patient: 116
+Patient is healthy, patient: 80
+Trying to move to intensive care unit..., patient: 110
+DailyProbability time: 23.0
+Patient moved to intensive care unit successfully, patient: 110
+Added patient to queue, patient: 117
+Added patient to queue, patient: 118
+Added patient to queue, patient: 119
+Added patient to queue, patient: 120
+Added patient to queue, patient: 121
+Added patient to queue, patient: 122
+Added patient to queue, patient: 123
+Patient is healthy, patient: 27
+Patient died in queue, patient: 112
+Added patient to queue, patient: 124
+Added patient to queue, patient: 125
+Trying to move to intensive care unit..., patient: 108
+DailyProbability time: 24.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 108
+Added patient to queue, patient: 126
+Added patient to queue, patient: 127
+Added patient to queue, patient: 128
+Patient is healthy, patient: 8
+Trying to move to intensive care unit..., patient: 81
+DailyProbability time: 25.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 81
+Patient died in queue, patient: 116
+Patient died on basic care, patient: 46
+Added patient to queue, patient: 129
+Added patient to queue, patient: 130
+Added patient to queue, patient: 131
+Added patient to queue, patient: 132
+Added patient to queue, patient: 133
+Trying to move to basic care unit..., patient: 55
+Added patient to queue, patient: 134
+Trying to move to intensive care unit..., patient: 105
+Trying to move to intensive care unit..., patient: 118
+Trying to move to intensive care unit..., patient: 109
+DailyProbability time: 26.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 105
+Patient moved back to basic care, patient: 55
+Patient died in basic care... (no free bed in intensive care unit), patient: 118
+Patient died in queue, patient: 119
+Patient died in queue, patient: 120
+Patient died in queue, patient: 121
+Patient died in queue, patient: 122
+Patient died in queue, patient: 123
+Patient died in queue, patient: 124
+Patient died in queue, patient: 125
+Patient died in basic care... (no free bed in intensive care unit), patient: 109
+Added patient to queue, patient: 135
+Trying to move to basic care unit..., patient: 78
+Trying to move to intensive care unit..., patient: 113
+Trying to move to intensive care unit..., patient: 114
+DailyProbability time: 27.0
+Patient moved to intensive care unit successfully, patient: 113
+Patient moved back to basic care, patient: 78
+Patient died in basic care... (no free bed in intensive care unit), patient: 114
+Patient died in queue, patient: 128
+Added patient to queue, patient: 136
+Trying to move to basic care unit..., patient: 110
+Added patient to queue, patient: 137
+Added patient to queue, patient: 138
+Added patient to queue, patient: 139
+Added patient to queue, patient: 140
+Trying to move to basic care unit..., patient: 113
+Trying to move to intensive care unit..., patient: 111
+Trying to move to intensive care unit..., patient: 78
+DailyProbability time: 28.0
+Patient moved to intensive care unit successfully, patient: 111
+Patient moved back to basic care, patient: 110
+Patient died in basic care... (no free bed in intensive care unit), patient: 78
+Patient moved back to basic care, patient: 113
+Trying to move to basic care unit..., patient: 111
+Added patient to queue, patient: 141
+Added patient to queue, patient: 142
+Patient is healthy, patient: 106
+Patient moved back to basic care, patient: 111
+Patient is healthy, patient: 107
+Patient died in queue, patient: 130
+Patient died in queue, patient: 131
+Patient died in queue, patient: 132
+Patient died in queue, patient: 133
+Patient died in queue, patient: 134
+Patient died in queue, patient: 135
+Added patient to queue, patient: 143
+Added patient to queue, patient: 144
+Added patient to queue, patient: 145
+Added patient to queue, patient: 146
+Added patient to queue, patient: 147
+DailyProbability time: 29.0
+Added patient to queue, patient: 148
+Added patient to queue, patient: 149
+Added patient to queue, patient: 150
+Added patient to queue, patient: 151
+Added patient to queue, patient: 152
+DailyProbability time: 30.0
+Added patient to queue, patient: 153
+Added patient to queue, patient: 154
+Added patient to queue, patient: 155
+Added patient to queue, patient: 156
+Added patient to queue, patient: 157
+Added patient to queue, patient: 158
+Patient is healthy, patient: 115
+Patient died in queue, patient: 137
+Patient died in queue, patient: 138
+Patient died in queue, patient: 139
+Patient died in queue, patient: 140
+Patient died in queue, patient: 141
+Patient died in queue, patient: 142
+Patient died in queue, patient: 143
+Patient died in queue, patient: 144
+Patient died in queue, patient: 145
+Patient died in queue, patient: 146
+Added patient to queue, patient: 159
+Trying to move to intensive care unit..., patient: 117
+Trying to move to intensive care unit..., patient: 110
+DailyProbability time: 31.0
+Patient moved to intensive care unit successfully, patient: 117
+Patient moved to intensive care unit successfully, patient: 110
+Added patient to queue, patient: 160
+Added patient to queue, patient: 161
+Added patient to queue, patient: 162
+Added patient to queue, patient: 163
+Added patient to queue, patient: 164
+Added patient to queue, patient: 165
+Trying to move to intensive care unit..., patient: 148
+DailyProbability time: 32.0
+Patient moved to intensive care unit successfully, patient: 148
+Patient died in queue, patient: 150
+Patient died in queue, patient: 151
+Patient died in queue, patient: 152
+Added patient to queue, patient: 166
+Added patient to queue, patient: 167
+Added patient to queue, patient: 168
+Added patient to queue, patient: 169
+Added patient to queue, patient: 170
+Patient is healthy, patient: 127
+Patient died in queue, patient: 154
+Patient died in queue, patient: 155
+Patient died in queue, patient: 156
+Patient died in queue, patient: 157
+Added patient to queue, patient: 171
+Patient is healthy, patient: 55
+Patient is healthy, patient: 126
+Trying to move to basic care unit..., patient: 148
+Trying to move to intensive care unit..., patient: 159
+Trying to move to intensive care unit..., patient: 160
+DailyProbability time: 33.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 159
+Patient moved back to basic care, patient: 148
+Patient died in basic care... (no free bed in intensive care unit), patient: 160
+Added patient to queue, patient: 172
+Added patient to queue, patient: 173
+Trying to move to basic care unit..., patient: 110
+Added patient to queue, patient: 174
+Added patient to queue, patient: 175
+Added patient to queue, patient: 176
+Added patient to queue, patient: 177
+Patient is healthy, patient: 129
+Patient moved back to basic care, patient: 110
+Added patient to queue, patient: 178
+Added patient to queue, patient: 179
+Trying to move to intensive care unit..., patient: 136
+Trying to move to intensive care unit..., patient: 110
+DailyProbability time: 34.0
+Patient died on basic care, patient: 111
+Patient died in queue, patient: 162
+Patient died in queue, patient: 163
+Patient died in queue, patient: 164
+Patient died in queue, patient: 165
+Patient moved to intensive care unit successfully, patient: 136
+Patient moved to intensive care unit successfully, patient: 110
+Added patient to queue, patient: 180
+Added patient to queue, patient: 181
+Added patient to queue, patient: 182
+Added patient to queue, patient: 183
+Patient is healthy, patient: 113
+Patient died in queue, patient: 169
+Patient died in queue, patient: 170
+Patient died in queue, patient: 171
+Added patient to queue, patient: 184
+Added patient to queue, patient: 185
+Added patient to queue, patient: 186
+Trying to move to intensive care unit..., patient: 161
+DailyProbability time: 35.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 161
+Added patient to queue, patient: 187
+Added patient to queue, patient: 188
+Added patient to queue, patient: 189
+Added patient to queue, patient: 190
+Added patient to queue, patient: 191
+Added patient to queue, patient: 192
+Trying to move to intensive care unit..., patient: 153
+Trying to move to intensive care unit..., patient: 147
+DailyProbability time: 36.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 153
+Patient died in queue, patient: 174
+Patient died in queue, patient: 175
+Patient died in queue, patient: 176
+Patient died in queue, patient: 177
+Patient died in queue, patient: 178
+Patient died in queue, patient: 179
+Patient died in basic care... (no free bed in intensive care unit), patient: 147
+Added patient to queue, patient: 193
+Added patient to queue, patient: 194
+Added patient to queue, patient: 195
+Added patient to queue, patient: 196
+Added patient to queue, patient: 197
+Trying to move to basic care unit..., patient: 110
+Added patient to queue, patient: 198
+Added patient to queue, patient: 199
+Added patient to queue, patient: 200
+Added patient to queue, patient: 201
+Trying to move to intensive care unit..., patient: 167
+DailyProbability time: 37.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 167
+Patient moved back to basic care, patient: 110
+Added patient to queue, patient: 202
+Added patient to queue, patient: 203
+Added patient to queue, patient: 204
+Patient is healthy, patient: 149
+Patient died in queue, patient: 182
+Patient died in queue, patient: 183
+Patient died in queue, patient: 184
+Patient died in queue, patient: 185
+Patient died in queue, patient: 186
+Patient died in queue, patient: 187
+Patient died in queue, patient: 188
+Added patient to queue, patient: 205
+Added patient to queue, patient: 206
+Added patient to queue, patient: 207
+Trying to move to intensive care unit..., patient: 172
+Trying to move to intensive care unit..., patient: 110
+Trying to move to intensive care unit..., patient: 173
+DailyProbability time: 38.0
+Patient moved to intensive care unit successfully, patient: 172
+Patient died in queue, patient: 190
+Patient died in queue, patient: 191
+Patient died in queue, patient: 192
+Patient died in basic care... (no free bed in intensive care unit), patient: 110
+Patient died in basic care... (no free bed in intensive care unit), patient: 173
+Added patient to queue, patient: 208
+Added patient to queue, patient: 209
+Added patient to queue, patient: 210
+Added patient to queue, patient: 211
+Added patient to queue, patient: 212
+Added patient to queue, patient: 213
+Trying to move to intensive care unit..., patient: 180
+DailyProbability time: 39.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 180
+Patient died in queue, patient: 196
+Patient died in queue, patient: 197
+Patient died in queue, patient: 198
+Patient died in queue, patient: 199
+Patient died in queue, patient: 200
+Patient died in queue, patient: 201
+Patient died on intensive care, patient: 79
+Patient is healthy, patient: 158
+Patient is healthy, patient: 148
+Patient died in queue, patient: 204
+Trying to move to basic care unit..., patient: 94
+Added patient to queue, patient: 214
+Added patient to queue, patient: 215
+Added patient to queue, patient: 216
+Added patient to queue, patient: 217
+Trying to move to intensive care unit..., patient: 189
+DailyProbability time: 40.0
+Patient moved to intensive care unit successfully, patient: 189
+Patient moved back to basic care, patient: 94
+Trying to move to basic care unit..., patient: 189
+Added patient to queue, patient: 218
+Patient is healthy, patient: 168
+Patient moved back to basic care, patient: 189
+Added patient to queue, patient: 219
+Added patient to queue, patient: 220
+Patient is healthy, patient: 166
+Patient died in queue, patient: 206
+Patient died in queue, patient: 207
+Patient died in queue, patient: 208
+Patient died in queue, patient: 209
+Trying to move to basic care unit..., patient: 136
+Added patient to queue, patient: 221
+Trying to move to intensive care unit..., patient: 194
+Trying to move to intensive care unit..., patient: 195
+Trying to move to intensive care unit..., patient: 203
+DailyProbability time: 41.0
+Patient moved to intensive care unit successfully, patient: 194
+Patient moved back to basic care, patient: 136
+Patient moved to intensive care unit successfully, patient: 195
+Patient died in queue, patient: 211
+Patient died in queue, patient: 212
+Patient died in queue, patient: 213
+Patient died in basic care... (no free bed in intensive care unit), patient: 203
+Added patient to queue, patient: 222
+Added patient to queue, patient: 223
+Added patient to queue, patient: 224
+Added patient to queue, patient: 225
+Trying to move to basic care unit..., patient: 117
+Added patient to queue, patient: 226
+Trying to move to intensive care unit..., patient: 202
+Trying to move to intensive care unit..., patient: 210
+Trying to move to intensive care unit..., patient: 215
+DailyProbability time: 42.0
+Patient moved to intensive care unit successfully, patient: 202
+Patient moved back to basic care, patient: 117
+Patient died in basic care... (no free bed in intensive care unit), patient: 210
+Patient died in queue, patient: 216
+Patient died in queue, patient: 217
+Patient died in basic care... (no free bed in intensive care unit), patient: 215
+Added patient to queue, patient: 227
+Patient is healthy, patient: 181
+Patient died in queue, patient: 220
+Trying to move to basic care unit..., patient: 172
+Added patient to queue, patient: 228
+Added patient to queue, patient: 229
+Added patient to queue, patient: 230
+Added patient to queue, patient: 231
+Trying to move to intensive care unit..., patient: 117
+Trying to move to intensive care unit..., patient: 219
+DailyProbability time: 43.0
+Patient moved to intensive care unit successfully, patient: 117
+Patient moved back to basic care, patient: 172
+Patient died in basic care... (no free bed in intensive care unit), patient: 219
+Added patient to queue, patient: 232
+Added patient to queue, patient: 233
+Added patient to queue, patient: 234
+Added patient to queue, patient: 235
+Trying to move to intensive care unit..., patient: 205
+Trying to move to intensive care unit..., patient: 193
+Trying to move to intensive care unit..., patient: 218
+Trying to move to intensive care unit..., patient: 136
+DailyProbability time: 44.0
+Patient moved to intensive care unit successfully, patient: 205
+Patient died in queue, patient: 223
+Patient died in queue, patient: 224
+Patient died in queue, patient: 225
+Patient died in queue, patient: 226
+Patient died in basic care... (no free bed in intensive care unit), patient: 193
+Patient died in basic care... (no free bed in intensive care unit), patient: 218
+Patient died in basic care... (no free bed in intensive care unit), patient: 136
+Added patient to queue, patient: 236
+Added patient to queue, patient: 237
+Added patient to queue, patient: 238
+Added patient to queue, patient: 239
+Added patient to queue, patient: 240
+Trying to move to intensive care unit..., patient: 172
+Trying to move to intensive care unit..., patient: 228
+DailyProbability time: 45.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 172
+Patient died in queue, patient: 231
+Patient died in basic care... (no free bed in intensive care unit), patient: 228
+Added patient to queue, patient: 241
+Added patient to queue, patient: 242
+Added patient to queue, patient: 243
+Added patient to queue, patient: 244
+Added patient to queue, patient: 245
+Added patient to queue, patient: 246
+Added patient to queue, patient: 247
+Trying to move to basic care unit..., patient: 205
+Added patient to queue, patient: 248
+Added patient to queue, patient: 249
+Trying to move to basic care unit..., patient: 117
+Added patient to queue, patient: 250
+Trying to move to intensive care unit..., patient: 222
+DailyProbability time: 46.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 222
+Patient moved back to basic care, patient: 205
+Added patient to queue, patient: 251
+Added patient to queue, patient: 252
+Added patient to queue, patient: 253
+Trying to move to basic care unit..., patient: 202
+Added patient to queue, patient: 254
+Patient is healthy, patient: 94
+Patient moved back to basic care, patient: 117
+Patient is healthy, patient: 189
+Patient moved back to basic care, patient: 202
+Added patient to queue, patient: 255
+Added patient to queue, patient: 256
+Trying to move to intensive care unit..., patient: 214
+DailyProbability time: 47.0
+Patient moved to intensive care unit successfully, patient: 214
+Patient died in queue, patient: 234
+Patient died in queue, patient: 235
+Patient died in queue, patient: 236
+Patient died in queue, patient: 237
+Patient died in queue, patient: 238
+Patient died in queue, patient: 239
+Patient died in queue, patient: 240
+Added patient to queue, patient: 257
+Added patient to queue, patient: 258
+Added patient to queue, patient: 259
+Trying to move to basic care unit..., patient: 214
+Added patient to queue, patient: 260
+Trying to move to basic care unit..., patient: 194
+Added patient to queue, patient: 261
+Trying to move to intensive care unit..., patient: 205
+DailyProbability time: 48.0
+Patient moved to intensive care unit successfully, patient: 205
+Patient moved back to basic care, patient: 214
+Trying to move to basic care unit..., patient: 195
+Added patient to queue, patient: 262
+Added patient to queue, patient: 263
+Patient is healthy, patient: 221
+Patient moved back to basic care, patient: 194
+Trying to move to intensive care unit..., patient: 227
+Trying to move to intensive care unit..., patient: 230
+Trying to move to intensive care unit..., patient: 214
+DailyProbability time: 49.0
+Patient moved to intensive care unit successfully, patient: 227
+Patient moved back to basic care, patient: 195
+Patient moved to intensive care unit successfully, patient: 230
+Patient died in queue, patient: 242
+Patient died in queue, patient: 243
+Patient died in queue, patient: 244
+Patient died in queue, patient: 245
+Patient died in queue, patient: 246
+Patient died in queue, patient: 247
+Patient died in queue, patient: 248
+Patient died in queue, patient: 249
+Patient died in queue, patient: 250
+Patient died in queue, patient: 251
+Patient died in queue, patient: 252
+Patient died in queue, patient: 253
+Patient died in queue, patient: 254
+Patient died in queue, patient: 255
+Patient died in queue, patient: 256
+Patient moved to intensive care unit successfully, patient: 214
+Added patient to queue, patient: 264
+Added patient to queue, patient: 265
+Added patient to queue, patient: 266
+Added patient to queue, patient: 267
+Added patient to queue, patient: 268
+Added patient to queue, patient: 269
+Added patient to queue, patient: 270
+Trying to move to intensive care unit..., patient: 241
+DailyProbability time: 50.0
+Patient moved to intensive care unit successfully, patient: 241
+Patient died in queue, patient: 259
+Patient died in queue, patient: 260
+Patient died in queue, patient: 261
+Trying to move to basic care unit..., patient: 241
+Added patient to queue, patient: 271
+Added patient to queue, patient: 272
+Added patient to queue, patient: 273
+Added patient to queue, patient: 274
+Added patient to queue, patient: 275
+Added patient to queue, patient: 276
+Patient is healthy, patient: 229
+Patient moved back to basic care, patient: 241
+DailyProbability time: 51.0
+Added patient to queue, patient: 277
+Patient is healthy, patient: 232
+Patient died in queue, patient: 263
+Patient died in queue, patient: 264
+Patient died in queue, patient: 265
+Patient died in queue, patient: 266
+Added patient to queue, patient: 278
+Patient is healthy, patient: 233
+Trying to move to basic care unit..., patient: 205
+Added patient to queue, patient: 279
+Added patient to queue, patient: 280
+Added patient to queue, patient: 281
+Trying to move to intensive care unit..., patient: 195
+Trying to move to intensive care unit..., patient: 194
+DailyProbability time: 52.0
+Patient moved to intensive care unit successfully, patient: 195
+Patient moved back to basic care, patient: 205
+Patient died in basic care... (no free bed in intensive care unit), patient: 194
+Patient died in queue, patient: 269
+Patient died in queue, patient: 270
+Added patient to queue, patient: 282
+Added patient to queue, patient: 283
+DailyProbability time: 53.0
+Patient is healthy, patient: 117
+Patient died in queue, patient: 272
+Patient died in queue, patient: 273
+Patient died in queue, patient: 274
+Patient died in queue, patient: 275
+Patient died in queue, patient: 276
+Patient died in queue, patient: 277
+Added patient to queue, patient: 284
+Trying to move to basic care unit..., patient: 195
+Added patient to queue, patient: 285
+Trying to move to basic care unit..., patient: 214
+Added patient to queue, patient: 286
+Patient is healthy, patient: 202
+Patient moved back to basic care, patient: 195
+Added patient to queue, patient: 287
+Added patient to queue, patient: 288
+Added patient to queue, patient: 289
+Trying to move to basic care unit..., patient: 230
+Trying to move to intensive care unit..., patient: 267
+Trying to move to intensive care unit..., patient: 262
+DailyProbability time: 54.0
+Patient moved to intensive care unit successfully, patient: 267
+Patient moved back to basic care, patient: 214
+Patient moved to intensive care unit successfully, patient: 262
+Patient moved back to basic care, patient: 230
+Added patient to queue, patient: 290
+Added patient to queue, patient: 291
+Added patient to queue, patient: 292
+Added patient to queue, patient: 293
+Added patient to queue, patient: 294
+Added patient to queue, patient: 295
+Trying to move to basic care unit..., patient: 262
+Added patient to queue, patient: 296
+Trying to move to intensive care unit..., patient: 214
+DailyProbability time: 55.0
+Patient moved to intensive care unit successfully, patient: 214
+Patient moved back to basic care, patient: 262
+Added patient to queue, patient: 297
+Added patient to queue, patient: 298
+Patient is healthy, patient: 257
+Patient died in queue, patient: 279
+Patient died in queue, patient: 280
+Patient died in queue, patient: 281
+Patient died in queue, patient: 282
+Patient died in queue, patient: 283
+Patient died in queue, patient: 284
+Patient died in queue, patient: 285
+Added patient to queue, patient: 299
+Added patient to queue, patient: 300
+Added patient to queue, patient: 301
+Patient is healthy, patient: 258
+Patient died in queue, patient: 287
+Patient died in queue, patient: 288
+Trying to move to intensive care unit..., patient: 286
+DailyProbability time: 56.0
+Patient moved to intensive care unit successfully, patient: 286
+Added patient to queue, patient: 302
+Trying to move to basic care unit..., patient: 227
+Added patient to queue, patient: 303
+Trying to move to intensive care unit..., patient: 262
+Trying to move to intensive care unit..., patient: 290
+DailyProbability time: 57.0
+Patient moved to intensive care unit successfully, patient: 262
+Patient moved back to basic care, patient: 227
+Patient died in basic care... (no free bed in intensive care unit), patient: 290
+Patient died in queue, patient: 291
+Patient died in queue, patient: 292
+Patient died in queue, patient: 293
+Patient died in queue, patient: 294
+Patient died in queue, patient: 295
+Patient died in queue, patient: 296
+Added patient to queue, patient: 304
+Patient is healthy, patient: 241
+Patient died in queue, patient: 298
+Added patient to queue, patient: 305
+Added patient to queue, patient: 306
+Trying to move to intensive care unit..., patient: 268
+Trying to move to intensive care unit..., patient: 289
+DailyProbability time: 58.0
+Patient moved to intensive care unit successfully, patient: 268
+Patient died in queue, patient: 300
+Patient died in queue, patient: 301
+Patient died in basic care... (no free bed in intensive care unit), patient: 289
+Added patient to queue, patient: 307
+Trying to move to basic care unit..., patient: 286
+Patient is healthy, patient: 271
+Patient moved back to basic care, patient: 286
+Added patient to queue, patient: 308
+Patient is healthy, patient: 205
+Trying to move to intensive care unit..., patient: 304
+Trying to move to intensive care unit..., patient: 299
+Trying to move to intensive care unit..., patient: 286
+DailyProbability time: 59.0
+Patient moved to intensive care unit successfully, patient: 304
+Patient died in basic care... (no free bed in intensive care unit), patient: 299
+Patient died in basic care... (no free bed in intensive care unit), patient: 286
+Added patient to queue, patient: 309
+Trying to move to basic care unit..., patient: 268
+Added patient to queue, patient: 310
+Added patient to queue, patient: 311
+Patient is healthy, patient: 278
+Patient moved back to basic care, patient: 268
+Added patient to queue, patient: 312
+Added patient to queue, patient: 313
+Trying to move to intensive care unit..., patient: 305
+Trying to move to intensive care unit..., patient: 227
+DailyProbability time: 60.0
+Patient moved to intensive care unit successfully, patient: 305
+Patient died in basic care... (no free bed in intensive care unit), patient: 227
+Patient is healthy, patient: 195
+Added patient to queue, patient: 314
+Patient is healthy, patient: 230
+Trying to move to intensive care unit..., patient: 268
+Trying to move to intensive care unit..., patient: 310
+Trying to move to intensive care unit..., patient: 307
+Trying to move to intensive care unit..., patient: 303
+DailyProbability time: 61.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 268
+Patient died in basic care... (no free bed in intensive care unit), patient: 310
+Patient died in basic care... (no free bed in intensive care unit), patient: 307
+Patient died in basic care... (no free bed in intensive care unit), patient: 303
+Added patient to queue, patient: 315
+Added patient to queue, patient: 316
+Trying to move to intensive care unit..., patient: 309
+Trying to move to intensive care unit..., patient: 312
+DailyProbability time: 62.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 309
+Patient died in basic care... (no free bed in intensive care unit), patient: 312
+Patient died on intensive care, patient: 304
+Added patient to queue, patient: 317
+Added patient to queue, patient: 318
+Added patient to queue, patient: 319
+Added patient to queue, patient: 320
+Trying to move to intensive care unit..., patient: 308
+Trying to move to intensive care unit..., patient: 316
+DailyProbability time: 63.0
+Patient moved to intensive care unit successfully, patient: 308
+Patient died in basic care... (no free bed in intensive care unit), patient: 316
+Added patient to queue, patient: 321
+Added patient to queue, patient: 322
+Trying to move to basic care unit..., patient: 267
+Patient is healthy, patient: 297
+Patient moved back to basic care, patient: 267
+Added patient to queue, patient: 323
+Added patient to queue, patient: 324
+Added patient to queue, patient: 325
+Added patient to queue, patient: 326
+Trying to move to intensive care unit..., patient: 319
+Trying to move to intensive care unit..., patient: 302
+Trying to move to intensive care unit..., patient: 267
+Trying to move to intensive care unit..., patient: 311
+DailyProbability time: 64.0
+Patient moved to intensive care unit successfully, patient: 319
+Patient died in basic care... (no free bed in intensive care unit), patient: 302
+Patient died in basic care... (no free bed in intensive care unit), patient: 267
+Patient died in basic care... (no free bed in intensive care unit), patient: 311
+Added patient to queue, patient: 327
+Added patient to queue, patient: 328
+Added patient to queue, patient: 329
+Added patient to queue, patient: 330
+Trying to move to basic care unit..., patient: 319
+Trying to move to basic care unit..., patient: 305
+Added patient to queue, patient: 331
+Added patient to queue, patient: 332
+Added patient to queue, patient: 333
+Trying to move to intensive care unit..., patient: 322
+Trying to move to intensive care unit..., patient: 314
+Trying to move to intensive care unit..., patient: 315
+DailyProbability time: 65.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 322
+Patient moved back to basic care, patient: 319
+Patient died in basic care... (no free bed in intensive care unit), patient: 314
+Patient moved back to basic care, patient: 305
+Patient died in basic care... (no free bed in intensive care unit), patient: 315
+Added patient to queue, patient: 334
+Added patient to queue, patient: 335
+Added patient to queue, patient: 336
+Added patient to queue, patient: 337
+Patient is healthy, patient: 306
+Trying to move to basic care unit..., patient: 308
+Added patient to queue, patient: 338
+Added patient to queue, patient: 339
+Trying to move to intensive care unit..., patient: 318
+DailyProbability time: 66.0
+Patient moved to intensive care unit successfully, patient: 318
+Patient moved back to basic care, patient: 308
+Added patient to queue, patient: 340
+Added patient to queue, patient: 341
+Added patient to queue, patient: 342
+Trying to move to intensive care unit..., patient: 325
+Trying to move to intensive care unit..., patient: 319
+Trying to move to intensive care unit..., patient: 305
+DailyProbability time: 67.0
+Patient moved to intensive care unit successfully, patient: 325
+Patient died in queue, patient: 326
+Patient died in queue, patient: 327
+Patient died in queue, patient: 328
+Patient died in queue, patient: 329
+Patient died in queue, patient: 330
+Patient died in queue, patient: 331
+Patient died in queue, patient: 332
+Patient died in queue, patient: 333
+Patient moved to intensive care unit successfully, patient: 319
+Patient died in basic care... (no free bed in intensive care unit), patient: 305
+Trying to move to basic care unit..., patient: 214
+Added patient to queue, patient: 343
+Added patient to queue, patient: 344
+Added patient to queue, patient: 345
+Patient is healthy, patient: 313
+Patient moved back to basic care, patient: 214
+Trying to move to intensive care unit..., patient: 320
+Trying to move to intensive care unit..., patient: 321
+Trying to move to intensive care unit..., patient: 214
+Trying to move to intensive care unit..., patient: 336
+DailyProbability time: 68.0
+Patient moved to intensive care unit successfully, patient: 320
+Patient died in queue, patient: 337
+Patient died in queue, patient: 338
+Patient died in queue, patient: 339
+Patient died in basic care... (no free bed in intensive care unit), patient: 321
+Patient died in basic care... (no free bed in intensive care unit), patient: 214
+Patient died in basic care... (no free bed in intensive care unit), patient: 336
+Patient is healthy, patient: 317
+Trying to move to basic care unit..., patient: 320
+Added patient to queue, patient: 346
+Added patient to queue, patient: 347
+Added patient to queue, patient: 348
+Added patient to queue, patient: 349
+Trying to move to intensive care unit..., patient: 308
+Trying to move to intensive care unit..., patient: 335
+DailyProbability time: 69.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 308
+Patient moved back to basic care, patient: 320
+Patient died in basic care... (no free bed in intensive care unit), patient: 335
+Added patient to queue, patient: 350
+Added patient to queue, patient: 351
+Trying to move to intensive care unit..., patient: 340
+Trying to move to intensive care unit..., patient: 334
+DailyProbability time: 70.0
+Patient moved to intensive care unit successfully, patient: 340
+Patient died in basic care... (no free bed in intensive care unit), patient: 334
+Added patient to queue, patient: 352
+Added patient to queue, patient: 353
+Added patient to queue, patient: 354
+Patient is healthy, patient: 323
+Added patient to queue, patient: 355
+Trying to move to basic care unit..., patient: 318
+Added patient to queue, patient: 356
+Trying to move to intensive care unit..., patient: 324
+DailyProbability time: 71.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 324
+Patient moved back to basic care, patient: 318
+Added patient to queue, patient: 357
+Added patient to queue, patient: 358
+Added patient to queue, patient: 359
+Added patient to queue, patient: 360
+Trying to move to basic care unit..., patient: 325
+Trying to move to intensive care unit..., patient: 346
+Trying to move to intensive care unit..., patient: 341
+Trying to move to intensive care unit..., patient: 345
+DailyProbability time: 72.0
+Patient moved to intensive care unit successfully, patient: 346
+Patient moved back to basic care, patient: 325
+Patient died in basic care... (no free bed in intensive care unit), patient: 341
+Patient died in queue, patient: 349
+Patient died in queue, patient: 350
+Patient died in queue, patient: 351
+Patient died in basic care... (no free bed in intensive care unit), patient: 345
+Added patient to queue, patient: 361
+Added patient to queue, patient: 362
+Added patient to queue, patient: 363
+Added patient to queue, patient: 364
+Added patient to queue, patient: 365
+Added patient to queue, patient: 366
+Added patient to queue, patient: 367
+Added patient to queue, patient: 368
+Added patient to queue, patient: 369
+Trying to move to intensive care unit..., patient: 352
+DailyProbability time: 73.0
+Patient moved to intensive care unit successfully, patient: 352
+Patient died in queue, patient: 354
+Patient died in queue, patient: 355
+Patient died in queue, patient: 356
+Added patient to queue, patient: 370
+Added patient to queue, patient: 371
+Added patient to queue, patient: 372
+Trying to move to basic care unit..., patient: 346
+Added patient to queue, patient: 373
+Added patient to queue, patient: 374
+Added patient to queue, patient: 375
+Added patient to queue, patient: 376
+Trying to move to basic care unit..., patient: 319
+Added patient to queue, patient: 377
+Trying to move to intensive care unit..., patient: 325
+Trying to move to intensive care unit..., patient: 344
+Trying to move to intensive care unit..., patient: 357
+DailyProbability time: 74.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 325
+Patient moved back to basic care, patient: 346
+Patient died in basic care... (no free bed in intensive care unit), patient: 344
+Patient moved back to basic care, patient: 319
+Patient died in basic care... (no free bed in intensive care unit), patient: 357
+Patient died in queue, patient: 358
+Patient died in queue, patient: 359
+Patient died in queue, patient: 360
+Added patient to queue, patient: 378
+Added patient to queue, patient: 379
+Added patient to queue, patient: 380
+Patient is healthy, patient: 342
+Patient died in queue, patient: 362
+Patient is healthy, patient: 343
+Added patient to queue, patient: 381
+Added patient to queue, patient: 382
+Added patient to queue, patient: 383
+Added patient to queue, patient: 384
+Trying to move to intensive care unit..., patient: 364
+DailyProbability time: 75.0
+Patient moved to intensive care unit successfully, patient: 364
+Patient died in queue, patient: 365
+Patient died in queue, patient: 366
+Patient died in queue, patient: 367
+Patient died in queue, patient: 368
+Patient died in queue, patient: 369
+Added patient to queue, patient: 385
+Added patient to queue, patient: 386
+Added patient to queue, patient: 387
+Added patient to queue, patient: 388
+Patient is healthy, patient: 320
+Patient died in queue, patient: 371
+Patient died in queue, patient: 372
+Patient died in queue, patient: 373
+Patient died in queue, patient: 374
+Patient died in queue, patient: 375
+Trying to move to basic care unit..., patient: 364
+Added patient to queue, patient: 389
+Added patient to queue, patient: 390
+Trying to move to intensive care unit..., patient: 353
+Trying to move to intensive care unit..., patient: 348
+DailyProbability time: 76.0
+Patient moved to intensive care unit successfully, patient: 353
+Patient moved back to basic care, patient: 364
+Patient died in basic care... (no free bed in intensive care unit), patient: 348
+Patient died in queue, patient: 377
+Added patient to queue, patient: 391
+Added patient to queue, patient: 392
+Added patient to queue, patient: 393
+Patient is healthy, patient: 347
+Patient died in queue, patient: 379
+Patient died in queue, patient: 380
+Patient died in queue, patient: 381
+Added patient to queue, patient: 394
+Trying to move to intensive care unit..., patient: 319
+Trying to move to intensive care unit..., patient: 361
+Trying to move to intensive care unit..., patient: 370
+Trying to move to intensive care unit..., patient: 318
+DailyProbability time: 77.0
+Patient moved to intensive care unit successfully, patient: 319
+Patient died in queue, patient: 383
+Patient died in queue, patient: 384
+Patient died in basic care... (no free bed in intensive care unit), patient: 361
+Patient died in basic care... (no free bed in intensive care unit), patient: 370
+Patient died in basic care... (no free bed in intensive care unit), patient: 318
+Trying to move to basic care unit..., patient: 262
+Added patient to queue, patient: 395
+Added patient to queue, patient: 396
+Added patient to queue, patient: 397
+Added patient to queue, patient: 398
+Added patient to queue, patient: 399
+Added patient to queue, patient: 400
+Added patient to queue, patient: 401
+Trying to move to intensive care unit..., patient: 364
+Trying to move to intensive care unit..., patient: 387
+DailyProbability time: 78.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 364
+Patient moved back to basic care, patient: 262
+Patient died in basic care... (no free bed in intensive care unit), patient: 387
+Patient died in queue, patient: 389
+Patient died in queue, patient: 390
+Added patient to queue, patient: 402
+Added patient to queue, patient: 403
+Added patient to queue, patient: 404
+Added patient to queue, patient: 405
+Trying to move to basic care unit..., patient: 319
+Trying to move to intensive care unit..., patient: 262
+DailyProbability time: 79.0
+Patient moved to intensive care unit successfully, patient: 262
+Patient moved back to basic care, patient: 319
+Trying to move to basic care unit..., patient: 262
+Added patient to queue, patient: 406
+Added patient to queue, patient: 407
+Trying to move to intensive care unit..., patient: 319
+Trying to move to intensive care unit..., patient: 378
+Trying to move to intensive care unit..., patient: 388
+DailyProbability time: 80.0
+Patient moved to intensive care unit successfully, patient: 319
+Patient moved back to basic care, patient: 262
+Patient died in basic care... (no free bed in intensive care unit), patient: 378
+Patient died in queue, patient: 392
+Patient died in queue, patient: 393
+Patient died in queue, patient: 394
+Patient died in queue, patient: 395
+Patient died in queue, patient: 396
+Patient died in queue, patient: 397
+Patient died in queue, patient: 398
+Patient died in queue, patient: 399
+Patient died in queue, patient: 400
+Patient died in queue, patient: 401
+Patient died in basic care... (no free bed in intensive care unit), patient: 388
+Trying to move to basic care unit..., patient: 352
+Added patient to queue, patient: 408
+Added patient to queue, patient: 409
+Trying to move to basic care unit..., patient: 319
+Added patient to queue, patient: 410
+Patient is healthy, patient: 346
+Patient moved back to basic care, patient: 352
+Added patient to queue, patient: 411
+Added patient to queue, patient: 412
+Added patient to queue, patient: 413
+Patient is healthy, patient: 363
+Patient moved back to basic care, patient: 319
+Trying to move to intensive care unit..., patient: 386
+Trying to move to intensive care unit..., patient: 382
+Trying to move to intensive care unit..., patient: 403
+DailyProbability time: 81.0
+Patient moved to intensive care unit successfully, patient: 386
+Patient died in queue, patient: 404
+Patient died in queue, patient: 405
+Patient moved to intensive care unit successfully, patient: 382
+Patient moved to intensive care unit successfully, patient: 403
+Trying to move to basic care unit..., patient: 386
+Trying to move to basic care unit..., patient: 382
+Added patient to queue, patient: 414
+Added patient to queue, patient: 415
+Added patient to queue, patient: 416
+Trying to move to basic care unit..., patient: 403
+Trying to move to intensive care unit..., patient: 262
+Trying to move to intensive care unit..., patient: 408
+DailyProbability time: 82.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 262
+Patient moved back to basic care, patient: 386
+Patient died in basic care... (no free bed in intensive care unit), patient: 408
+Patient moved back to basic care, patient: 382
+Added patient to queue, patient: 417
+Added patient to queue, patient: 418
+Added patient to queue, patient: 419
+Patient is healthy, patient: 376
+Patient moved back to basic care, patient: 403
+Added patient to queue, patient: 420
+Trying to move to basic care unit..., patient: 340
+Added patient to queue, patient: 421
+Added patient to queue, patient: 422
+Trying to move to intensive care unit..., patient: 406
+Trying to move to intensive care unit..., patient: 407
+Trying to move to intensive care unit..., patient: 319
+DailyProbability time: 83.0
+Patient moved to intensive care unit successfully, patient: 406
+Patient moved back to basic care, patient: 340
+Patient moved to intensive care unit successfully, patient: 407
+Patient died in queue, patient: 409
+Patient died in queue, patient: 410
+Patient died in queue, patient: 411
+Patient died in queue, patient: 412
+Patient died in queue, patient: 413
+Patient moved to intensive care unit successfully, patient: 319
+Added patient to queue, patient: 423
+Added patient to queue, patient: 424
+Added patient to queue, patient: 425
+Added patient to queue, patient: 426
+Patient is healthy, patient: 385
+Added patient to queue, patient: 427
+Added patient to queue, patient: 428
+Trying to move to intensive care unit..., patient: 416
+Trying to move to intensive care unit..., patient: 402
+DailyProbability time: 84.0
+Patient moved to intensive care unit successfully, patient: 416
+Patient died in basic care... (no free bed in intensive care unit), patient: 402
+Added patient to queue, patient: 429
+Added patient to queue, patient: 430
+Added patient to queue, patient: 431
+Added patient to queue, patient: 432
+Added patient to queue, patient: 433
+Patient is healthy, patient: 391
+Patient died in queue, patient: 419
+Patient died in queue, patient: 420
+Added patient to queue, patient: 434
+Trying to move to intensive care unit..., patient: 340
+Trying to move to intensive care unit..., patient: 414
+Trying to move to intensive care unit..., patient: 382
+DailyProbability time: 85.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 340
+Patient died in queue, patient: 422
+Patient died in basic care... (no free bed in intensive care unit), patient: 414
+Patient died in basic care... (no free bed in intensive care unit), patient: 382
+Added patient to queue, patient: 435
+Added patient to queue, patient: 436
+Added patient to queue, patient: 437
+Added patient to queue, patient: 438
+Trying to move to intensive care unit..., patient: 403
+Trying to move to intensive care unit..., patient: 415
+Trying to move to intensive care unit..., patient: 425
+DailyProbability time: 86.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 403
+Patient died in queue, patient: 426
+Patient died in queue, patient: 427
+Patient died in queue, patient: 428
+Patient died in basic care... (no free bed in intensive care unit), patient: 415
+Patient died in basic care... (no free bed in intensive care unit), patient: 425
+Added patient to queue, patient: 439
+Added patient to queue, patient: 440
+Trying to move to basic care unit..., patient: 406
+Added patient to queue, patient: 441
+Added patient to queue, patient: 442
+Added patient to queue, patient: 443
+Added patient to queue, patient: 444
+Added patient to queue, patient: 445
+Trying to move to intensive care unit..., patient: 417
+Trying to move to intensive care unit..., patient: 418
+DailyProbability time: 87.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 417
+Patient moved back to basic care, patient: 406
+Patient died in basic care... (no free bed in intensive care unit), patient: 418
+Patient died in queue, patient: 432
+Patient died in queue, patient: 433
+Patient died in queue, patient: 434
+Patient is healthy, patient: 352
+Added patient to queue, patient: 446
+Added patient to queue, patient: 447
+Added patient to queue, patient: 448
+Added patient to queue, patient: 449
+Added patient to queue, patient: 450
+Added patient to queue, patient: 451
+Trying to move to intensive care unit..., patient: 386
+DailyProbability time: 88.0
+Patient moved to intensive care unit successfully, patient: 386
+Patient died in queue, patient: 437
+Patient died in queue, patient: 438
+Added patient to queue, patient: 452
+Trying to move to basic care unit..., patient: 407
+Added patient to queue, patient: 453
+Added patient to queue, patient: 454
+Added patient to queue, patient: 455
+Trying to move to basic care unit..., patient: 416
+Trying to move to intensive care unit..., patient: 429
+Trying to move to intensive care unit..., patient: 423
+Trying to move to intensive care unit..., patient: 421
+DailyProbability time: 89.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 429
+Patient moved back to basic care, patient: 407
+Patient died in basic care... (no free bed in intensive care unit), patient: 423
+Patient moved back to basic care, patient: 416
+Patient died in basic care... (no free bed in intensive care unit), patient: 421
+Patient died in queue, patient: 440
+Patient died in queue, patient: 441
+Patient died in queue, patient: 442
+Patient died in queue, patient: 443
+Patient died in queue, patient: 444
+Patient died in queue, patient: 445
+Added patient to queue, patient: 456
+Added patient to queue, patient: 457
+Added patient to queue, patient: 458
+Added patient to queue, patient: 459
+Added patient to queue, patient: 460
+Added patient to queue, patient: 461
+Added patient to queue, patient: 462
+Added patient to queue, patient: 463
+Added patient to queue, patient: 464
+Trying to move to intensive care unit..., patient: 406
+Trying to move to intensive care unit..., patient: 430
+Trying to move to intensive care unit..., patient: 431
+DailyProbability time: 90.0
+Patient moved to intensive care unit successfully, patient: 406
+Patient died in queue, patient: 447
+Patient died in queue, patient: 448
+Patient died in queue, patient: 449
+Patient died in queue, patient: 450
+Patient died in queue, patient: 451
+Patient moved to intensive care unit successfully, patient: 430
+Patient died in basic care... (no free bed in intensive care unit), patient: 431
+Added patient to queue, patient: 465
+Added patient to queue, patient: 466
+Added patient to queue, patient: 467
+Trying to move to intensive care unit..., patient: 436
+DailyProbability time: 91.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 436
+Patient died in queue, patient: 455
+Added patient to queue, patient: 468
+Added patient to queue, patient: 469
+Patient is healthy, patient: 424
+Patient died in queue, patient: 457
+Patient died in queue, patient: 458
+Added patient to queue, patient: 470
+Added patient to queue, patient: 471
+Added patient to queue, patient: 472
+Added patient to queue, patient: 473
+Added patient to queue, patient: 474
+Added patient to queue, patient: 475
+Trying to move to intensive care unit..., patient: 459
+DailyProbability time: 92.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 459
+Patient died in queue, patient: 460
+Patient died in queue, patient: 461
+Patient died in queue, patient: 462
+Patient died in queue, patient: 463
+Patient died in queue, patient: 464
+Trying to move to basic care unit..., patient: 406
+Added patient to queue, patient: 476
+Added patient to queue, patient: 477
+Added patient to queue, patient: 478
+Added patient to queue, patient: 479
+Trying to move to intensive care unit..., patient: 456
+Trying to move to intensive care unit..., patient: 452
+Trying to move to intensive care unit..., patient: 446
+Trying to move to intensive care unit..., patient: 454
+DailyProbability time: 93.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 456
+Patient moved back to basic care, patient: 406
+Patient died in basic care... (no free bed in intensive care unit), patient: 452
+Patient died in queue, patient: 466
+Patient died in queue, patient: 467
+Patient died in basic care... (no free bed in intensive care unit), patient: 446
+Patient died in basic care... (no free bed in intensive care unit), patient: 454
+Added patient to queue, patient: 480
+Added patient to queue, patient: 481
+Added patient to queue, patient: 482
+Added patient to queue, patient: 483
+Patient is healthy, patient: 435
+Trying to move to intensive care unit..., patient: 407
+Trying to move to intensive care unit..., patient: 416
+Trying to move to intensive care unit..., patient: 465
+Trying to move to intensive care unit..., patient: 471
+DailyProbability time: 94.0
+Patient moved to intensive care unit successfully, patient: 407
+Patient died in queue, patient: 472
+Patient died in queue, patient: 473
+Patient died in queue, patient: 474
+Patient died in queue, patient: 475
+Patient died in basic care... (no free bed in intensive care unit), patient: 416
+Patient died in basic care... (no free bed in intensive care unit), patient: 465
+Patient died in basic care... (no free bed in intensive care unit), patient: 471
+Added patient to queue, patient: 484
+Added patient to queue, patient: 485
+Patient is healthy, patient: 439
+Added patient to queue, patient: 486
+Added patient to queue, patient: 487
+Added patient to queue, patient: 488
+Trying to move to intensive care unit..., patient: 476
+DailyProbability time: 95.0
+Patient died in basic care... (no free bed in intensive care unit), patient: 476
+Added patient to queue, patient: 489
+Added patient to queue, patient: 490
+Added patient to queue, patient: 491
+Added patient to queue, patient: 492
+Trying to move to basic care unit..., patient: 407
+Added patient to queue, patient: 493
+Added patient to queue, patient: 494
+Simulation interrupted at time 95.74346468222735
+Application ended: 22:20:19 2020/12/23
