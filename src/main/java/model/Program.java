@@ -163,6 +163,8 @@ public class Program {
             double totalTime = simulation.getCurrentTime();
             simulation.message("Simulation interrupted at time " + totalTime);
             SimulationResults results = Statistics.calculateResults(basicCareUnitServerList, intensiveCareUnitServerList, totalTime, basicCareUnitQueue);
+            Platform.runLater(() -> simulationWindowController.setTextAreaResults(results.toString()));
+
             return results;
         } catch (JSimException e) {
             e.printStackTrace();
@@ -241,7 +243,8 @@ public class Program {
         SimulationResults results = Statistics.calculateResults(basicCareUnitServerList, intensiveCareUnitServerList, totalTime, basicCareUnitQueue);
         simulation.shutdown();
 
-        printResults(results);
+        //printResults(results);
+        Platform.runLater(() -> simulationWindowController.setTextAreaResults(results.toString()));
         Platform.runLater(simulationWindowController::finishStopStepByStep);
     }
 

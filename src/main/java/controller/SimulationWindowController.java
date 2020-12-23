@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -75,6 +76,9 @@ public class SimulationWindowController implements Initializable {
     private TextArea textAreaHealthy;
 
     @FXML
+    private TextArea textAreaResults;
+
+    @FXML
     private Label labelCurrentBedsBasicCare;
 
     @FXML
@@ -133,6 +137,8 @@ public class SimulationWindowController implements Initializable {
 
     @FXML
     private TextField textFieldMaxTimeInQueue;
+
+    boolean runByTime;
 
     public SimulationWindowController() {
         program = new Program(this);
@@ -303,9 +309,11 @@ public class SimulationWindowController implements Initializable {
     @FXML
     public void comboBoxChange() {
         if (comboBox.getValue().equals(LaunchType.STEP_BY_STEP.getValue())) {
+            runByTime = false;
             stepByStepEnable();
         }
         else {
+            runByTime = true;
             runByTimeEnable();
         }
     }
@@ -370,45 +378,67 @@ public class SimulationWindowController implements Initializable {
     }
 
     public void appendTextAreaOutputLog(int b) {
-        textAreaOutputLog.appendText(String.valueOf((char) b));
+        if (!runByTime) {
+            textAreaOutputLog.appendText(String.valueOf((char) b));
+        }
+    }
+
+    public void setTextAreaResults(String text) {
+        textAreaResults.setText(text);
     }
 
     public void appendLineTextAreaQueue(String text) {
-        textAreaQueue.appendText(text + "\n");
+        if (!runByTime) {
+            textAreaQueue.appendText(text + "\n");
+        }
     }
 
     public void removeLineTextAreaQueue(String text) {
-        String areaText = textAreaQueue.getText();
-        String result = areaText.replaceAll(text + "\n", "");
-        textAreaQueue.setText(result);
+        if (!runByTime) {
+            String areaText = textAreaQueue.getText();
+            String result = areaText.replaceAll(text + "\n", "");
+            textAreaQueue.setText(result);
+        }
     }
 
     public void appendLineTextAreaBasicCare(String text) {
-        textAreaBasicCare.appendText(text + "\n");
+        if (!runByTime) {
+            textAreaBasicCare.appendText(text + "\n");
+        }
     }
 
     public void removeLineTextAreaBasicCare(String text) {
-        String areaText = textAreaBasicCare.getText();
-        String result = areaText.replaceAll(text + "\n", "");
-        textAreaBasicCare.setText(result);
+        if (!runByTime) {
+            String areaText = textAreaBasicCare.getText();
+            String result = areaText.replaceAll(text + "\n", "");
+            textAreaBasicCare.setText(result);
+        }
     }
 
     public void appendLineTextAreaIntensiveCare(String text) {
-        textAreaIntensiveCare.appendText(text + "\n");
+        if (!runByTime) {
+            textAreaIntensiveCare.appendText(text + "\n");
+        }
     }
 
     public void removeLineTextAreaIntensiveCare(String text) {
-        String areaText = textAreaIntensiveCare.getText();
-        String result = areaText.replaceAll(text + "\n", "");
-        textAreaIntensiveCare.setText(result);
+        if (!runByTime) {
+            String areaText = textAreaIntensiveCare.getText();
+            String result = areaText.replaceAll(text + "\n", "");
+            textAreaIntensiveCare.setText(result);
+        }
     }
 
     public void appendLineTextAreaDead(String text) {
-        textAreaDead.appendText(text + "\n");
+        if (!runByTime) {
+            textAreaDead.appendText(text + "\n");
+        }
     }
 
     public void appendLineTextAreaHealthy(String text) {
-        textAreaHealthy.appendText(text + "\n");
+        if (!runByTime) {
+            textAreaHealthy.appendText(text + "\n");
+        }
     }
 
 }
