@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import model.Constants;
 import model.Program;
+import model.Utils;
 import model.enums.LaunchType;
 
 import java.net.URL;
@@ -110,12 +111,6 @@ public class SimulationWindowController implements Initializable {
     private Label labelMaxIntensiveServerCount;
 
     @FXML
-    private TextField textFieldBedsBasicCare;
-
-    @FXML
-    private TextField textFieldBedsIntensiveCare;
-
-    @FXML
     private TextField textFieldInputLambda;
 
     @FXML
@@ -173,46 +168,63 @@ public class SimulationWindowController implements Initializable {
     @FXML
     public void updateConfig() {
         String newText;
-
-        newText = textFieldBedsBasicCare.getText();
-        labelCurrentBedsBasicCare.setText(newText);
-        Constants.NUMBER_OF_BED_BASIC_UNIT = Integer.parseInt(newText);
-
-        newText = textFieldBedsIntensiveCare.getText();
-        labelCurrentBedsIntensiveCare.setText(newText);
-        Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT = Integer.parseInt(newText);
+        double newDouble;
 
         newText = textFieldInputLambda.getText();
-        labelCurrentInputLambda.setText(newText);
-        Constants.INPUT_LAMBDA = Double.parseDouble(newText);
+        newDouble = Utils.validateDoublePositive(newText);
+        if (newDouble > 0) {
+            labelCurrentInputLambda.setText(newText);
+            Constants.INPUT_LAMBDA = newDouble;
+        }
 
         newText = textFieldBasicCareMu.getText();
-        labelCurrentBasicCareMu.setText(newText);
-        Constants.BASIC_CARE_UNIT_MU = Double.parseDouble(newText);
+        newDouble = Utils.validateDoublePositive(newText);
+        if (newDouble > 0) {
+            labelCurrentBasicCareMu.setText(newText);
+            Constants.BASIC_CARE_UNIT_MU = newDouble;
+        }
 
         newText = textFieldBasicCareSigma.getText();
-        labelCurrentBasicCareSigma.setText(newText);
-        Constants.BASIC_CARE_UNIT_SIGMA= Double.parseDouble(newText);
+        newDouble = Utils.validateDoublePositive(newText);
+        if (newDouble > 0) {
+            labelCurrentBasicCareSigma.setText(newText);
+            Constants.BASIC_CARE_UNIT_SIGMA = newDouble;
+        }
 
         newText = textFieldIntensiveCareMu.getText();
-        labelCurrentIntensiveCareMu.setText(newText);
-        Constants.INTENSIVE_CARE_UNIT_MU = Double.parseDouble(newText);
+        newDouble = Utils.validateDoublePositive(newText);
+        if (newDouble > 0) {
+            labelCurrentIntensiveCareMu.setText(newText);
+            Constants.INTENSIVE_CARE_UNIT_MU = newDouble;
+        }
 
         newText = textFieldPFromBasicToIntensive.getText();
-        labelCurrentPFromBasicToIntensive.setText(newText);
-        Constants.P_FROM_BASIC_TO_INTENSIVE = Double.parseDouble(newText);
+        newDouble = Utils.validateDoublePositive(newText);
+        if (newDouble > 0) {
+            labelCurrentPFromBasicToIntensive.setText(newText);
+            Constants.P_FROM_BASIC_TO_INTENSIVE = newDouble;
+        }
 
         newText = textFieldPDeathBasicCare.getText();
-        labelCurrentPDeathBasicCare.setText(newText);
-        Constants.P_DEATH_BASIC_CARE_UNIT = Double.parseDouble(newText);
+        newDouble = Utils.validateDoublePositive(newText);
+        if (newDouble > 0) {
+            labelCurrentPDeathBasicCare.setText(newText);
+            Constants.P_DEATH_BASIC_CARE_UNIT = newDouble;
+        }
 
         newText = textFieldPDeathIntensiveCare.getText();
-        labelCurrentPDeathIntensiveCare.setText(newText);
-        Constants.P_DEATH_INTENSIVE_CARE_UNIT = Double.parseDouble(newText);
+        newDouble = Utils.validateDoublePositive(newText);
+        if (newDouble > 0) {
+            labelCurrentPDeathIntensiveCare.setText(newText);
+            Constants.P_DEATH_INTENSIVE_CARE_UNIT = newDouble;
+        }
 
         newText = textFieldMaxTimeInQueue.getText();
-        labelCurrentMaxTimeInQueue.setText(newText);
-        Constants.MAX_TIME_IN_QUEUE = Double.parseDouble(newText);
+        newDouble = Utils.validateDoublePositive(newText);
+        if (newDouble > 0) {
+            labelCurrentMaxTimeInQueue.setText(newText);
+            Constants.MAX_TIME_IN_QUEUE = newDouble;
+        }
     }
 
     public void initStepByStep() {
