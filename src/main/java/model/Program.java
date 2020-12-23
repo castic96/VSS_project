@@ -171,6 +171,7 @@ public class Program {
             e.printComment(System.err);
         } finally {
             simulation.shutdown();
+            Platform.runLater(simulationWindowController::finishRunByTime);
         }
 
         return null;
@@ -219,6 +220,7 @@ public class Program {
             e.printStackTrace();
             e.printComment(System.err);
             simulation.shutdown();
+            Platform.runLater(simulationWindowController::finishStopStepByStep);
         }
 //        finally {
 //            simulation.shutdown();

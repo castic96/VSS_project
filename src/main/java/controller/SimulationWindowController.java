@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -151,6 +150,7 @@ public class SimulationWindowController implements Initializable {
         textAreaIntensiveCare.clear();
         textAreaDead.clear();
         textAreaHealthy.clear();
+        textAreaResults.clear();
     }
 
     public void initConfigurations() {
@@ -375,6 +375,10 @@ public class SimulationWindowController implements Initializable {
 
     public void finishStopStepByStep() {
         stepByStepEnable();
+    }
+
+    public void finishRunByTime () {
+        runByTimeEnable();
     }
 
     public void appendTextAreaOutputLog(int b) {
