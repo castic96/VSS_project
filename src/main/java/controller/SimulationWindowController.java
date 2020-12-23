@@ -11,11 +11,43 @@ import model.enums.LaunchType;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class SimulationWindowController implements Initializable {
 
     private final Program program;
+
+    @FXML
+    private Label labelBedsBasicCare;
+
+    @FXML
+    private Label labelBedsIntensiveCare;
+
+    @FXML
+    private Label labelInputLambda;
+
+    @FXML
+    private Label labelBasicCareUnitMu;
+
+    @FXML
+    private Label labelBasicCareUnitSigma;
+
+    @FXML
+    private Label labelIntesiveCareUnitMu;
+
+    @FXML
+    private Label labelPFromBasicToIntensive;
+
+    @FXML
+    private Label labelPDeathBasicCareUnit;
+
+    @FXML
+    private Label labelPDeathIntensiveCareUnit;
+
+    @FXML
+    private Label labelMaxTimeInQueue;
 
     @FXML
     private ComboBox<String> comboBox;
@@ -175,61 +207,115 @@ public class SimulationWindowController implements Initializable {
     public void updateConfig() {
         String newText;
         double newDouble;
+        Map<String, String> wrongInputs = new HashMap<>();
 
         newText = textFieldInputLambda.getText();
-        newDouble = Utils.validateDoublePositive(newText);
-        if (newDouble > 0) {
-            labelCurrentInputLambda.setText(newText);
-            Constants.INPUT_LAMBDA = newDouble;
+
+        if (!newText.isEmpty()) {
+            newDouble = Utils.validateDoublePositive(newText);
+            if (newDouble >= 0) {
+                labelCurrentInputLambda.setText(newText);
+                Constants.INPUT_LAMBDA = newDouble;
+            }
+            else {
+                wrongInputs.put(labelInputLambda.getText(), newText);
+            }
         }
 
         newText = textFieldBasicCareMu.getText();
-        newDouble = Utils.validateDoublePositive(newText);
-        if (newDouble > 0) {
-            labelCurrentBasicCareMu.setText(newText);
-            Constants.BASIC_CARE_UNIT_MU = newDouble;
+
+        if (!newText.isEmpty()) {
+            newDouble = Utils.validateDoublePositive(newText);
+            if (newDouble >= 0) {
+                labelCurrentBasicCareMu.setText(newText);
+                Constants.BASIC_CARE_UNIT_MU = newDouble;
+            }
+            else {
+                wrongInputs.put(labelBasicCareUnitMu.getText(), newText);
+            }
         }
 
         newText = textFieldBasicCareSigma.getText();
-        newDouble = Utils.validateDoublePositive(newText);
-        if (newDouble > 0) {
-            labelCurrentBasicCareSigma.setText(newText);
-            Constants.BASIC_CARE_UNIT_SIGMA = newDouble;
+
+        if (!newText.isEmpty()) {
+            newDouble = Utils.validateDoublePositive(newText);
+            if (newDouble >= 0) {
+                labelCurrentBasicCareSigma.setText(newText);
+                Constants.BASIC_CARE_UNIT_SIGMA = newDouble;
+            }
+            else {
+                wrongInputs.put(labelBasicCareUnitSigma.getText(), newText);
+            }
         }
 
         newText = textFieldIntensiveCareMu.getText();
-        newDouble = Utils.validateDoublePositive(newText);
-        if (newDouble > 0) {
-            labelCurrentIntensiveCareMu.setText(newText);
-            Constants.INTENSIVE_CARE_UNIT_MU = newDouble;
+
+        if (!newText.isEmpty()) {
+            newDouble = Utils.validateDoublePositive(newText);
+            if (newDouble >= 0) {
+                labelCurrentIntensiveCareMu.setText(newText);
+                Constants.INTENSIVE_CARE_UNIT_MU = newDouble;
+            }
+            else {
+                wrongInputs.put(labelIntesiveCareUnitMu.getText(), newText);
+            }
+
         }
 
         newText = textFieldPFromBasicToIntensive.getText();
-        newDouble = Utils.validateDoublePositive(newText);
-        if (newDouble > 0) {
-            labelCurrentPFromBasicToIntensive.setText(newText);
-            Constants.P_FROM_BASIC_TO_INTENSIVE = newDouble;
+
+        if (!newText.isEmpty()) {
+            newDouble = Utils.validateDoublePositive(newText);
+            if (newDouble >= 0) {
+                labelCurrentPFromBasicToIntensive.setText(newText);
+                Constants.P_FROM_BASIC_TO_INTENSIVE = newDouble;
+            }
+            else {
+                wrongInputs.put(labelPFromBasicToIntensive.getText(), newText);
+            }
         }
 
         newText = textFieldPDeathBasicCare.getText();
-        newDouble = Utils.validateDoublePositive(newText);
-        if (newDouble > 0) {
-            labelCurrentPDeathBasicCare.setText(newText);
-            Constants.P_DEATH_BASIC_CARE_UNIT = newDouble;
+
+        if (!newText.isEmpty()) {
+            newDouble = Utils.validateDoublePositive(newText);
+            if (newDouble >= 0) {
+                labelCurrentPDeathBasicCare.setText(newText);
+                Constants.P_DEATH_BASIC_CARE_UNIT = newDouble;
+            }
+            else {
+                wrongInputs.put(labelPDeathBasicCareUnit.getText(), newText);
+            }
         }
 
         newText = textFieldPDeathIntensiveCare.getText();
-        newDouble = Utils.validateDoublePositive(newText);
-        if (newDouble > 0) {
-            labelCurrentPDeathIntensiveCare.setText(newText);
-            Constants.P_DEATH_INTENSIVE_CARE_UNIT = newDouble;
+
+        if (!newText.isEmpty()) {
+            newDouble = Utils.validateDoublePositive(newText);
+            if (newDouble >= 0) {
+                labelCurrentPDeathIntensiveCare.setText(newText);
+                Constants.P_DEATH_INTENSIVE_CARE_UNIT = newDouble;
+            }
+            else {
+                wrongInputs.put(labelPDeathIntensiveCareUnit.getText(), newText);
+            }
         }
 
         newText = textFieldMaxTimeInQueue.getText();
-        newDouble = Utils.validateDoublePositive(newText);
-        if (newDouble > 0) {
-            labelCurrentMaxTimeInQueue.setText(newText);
-            Constants.MAX_TIME_IN_QUEUE = newDouble;
+
+        if (!newText.isEmpty()) {
+            newDouble = Utils.validateDoublePositive(newText);
+            if (newDouble >= 0) {
+                labelCurrentMaxTimeInQueue.setText(newText);
+                Constants.MAX_TIME_IN_QUEUE = newDouble;
+            }
+            else {
+                wrongInputs.put(labelMaxTimeInQueue.getText(), newText);
+            }
+        }
+
+        if (!wrongInputs.isEmpty()) {
+            parsingAlertError(wrongInputs);
         }
     }
 
@@ -248,10 +334,19 @@ public class SimulationWindowController implements Initializable {
         labelStatus.setText("Status: Running");
         comboBox.setDisable(true);
 
-        double maxTime = tryParseMaxTimeValue(textFieldMaxTime.getText());
+        if (textFieldMaxTime.getText().isEmpty()) {
+            emptyAlertError(labelRunByTimeMaxTime.getText());
+            textFieldMaxTime.setDisable(false);
+            buttonStartRunByTime.setDisable(false);
+            labelStatus.setText("Status: Ready");
+            comboBox.setDisable(false);
+            return;
+        }
 
-        if (Double.isNaN(maxTime)) {
-            parsingAllertError(textFieldMaxTime.getText());
+        double maxTime = Utils.validateDoublePositive(textFieldMaxTime.getText());
+
+        if (maxTime < 0) {
+            parsingAlertError(Map.of(labelRunByTimeMaxTime.getText(), textFieldMaxTime.getText()));
             textFieldMaxTime.setDisable(false);
             buttonStartRunByTime.setDisable(false);
             labelStatus.setText("Status: Ready");
@@ -262,25 +357,37 @@ public class SimulationWindowController implements Initializable {
         new Thread(() -> program.runSimRunByTime(maxTime)).start();
     }
 
-    public static void parsingAllertError(String text) {
+    public static void emptyAlertError(String emptyField) {
+
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
-        alert.setTitle("Parse Error");
-
-        alert.setHeaderText("Parse Error");
-        alert.setContentText("Entered value " + text + " is not convertible to double!");
+        alert.setTitle("Empty Field Error");
+        alert.setHeaderText("Empty Field Error");
+        alert.setContentText("Field " + emptyField + " is empty. Expected value is positive double.");
 
         alert.showAndWait();
     }
 
-    private double tryParseMaxTimeValue(String text) {
-        try {
-            double value = Double.parseDouble(text);
-            return value;
+    public static void parsingAlertError(Map<String, String> wrongInputs) {
+        StringBuilder alertText = new StringBuilder();
+
+        alertText.append("Following entered values are not convertible to positive double:");
+        alertText.append("\n");
+
+        for (Map.Entry<String, String> currentEntry : wrongInputs.entrySet()) {
+            alertText.append(currentEntry.getKey());
+            alertText.append(" ");
+            alertText.append(currentEntry.getValue());
+            alertText.append("\n");
         }
-        catch (NumberFormatException e) {
-            return Double.NaN;
-        }
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        alert.setTitle("Parse Error");
+        alert.setHeaderText("Parse Error");
+        alert.setContentText(alertText.toString());
+
+        alert.showAndWait();
     }
 
     public void finishInitStepByStep() {

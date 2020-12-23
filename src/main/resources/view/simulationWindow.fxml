@@ -146,16 +146,16 @@
                         <Font size="16.0" fx:id="x11" />
                      </font>
                   </Label>
-                  <Label text="Beds - basic care unit:" textFill="#434343" GridPane.rowIndex="1" />
-                  <Label text="Beds - intensive care unit:" textFill="#434343" GridPane.rowIndex="2" />
-                  <Label text="Input lambda:" textFill="#434343" GridPane.rowIndex="3" />
-                  <Label text="Basic care unit - mu:" textFill="#434343" GridPane.rowIndex="4" />
-                  <Label text="Basic care unit - sigma:" textFill="#434343" GridPane.rowIndex="5" />
-                  <Label text="Intensive care unit - mu:" textFill="#434343" GridPane.rowIndex="6" />
-                  <Label text="P - from basic to intensive:" textFill="#434343" GridPane.rowIndex="7" />
-                  <Label text="P - death basic care unit:" textFill="#434343" GridPane.rowIndex="8" />
-                  <Label text="P - death intensive care unit:" textFill="#434343" GridPane.rowIndex="9" />
-                  <Label text="Max time in queue:" textFill="#434343" GridPane.rowIndex="10" />
+                  <Label fx:id="labelBedsBasicCare" text="Beds - basic care unit:" textFill="#434343" GridPane.rowIndex="1" />
+                  <Label fx:id="labelBedsIntensiveCare" text="Beds - intensive care unit:" textFill="#434343" GridPane.rowIndex="2" />
+                  <Label fx:id="labelInputLambda" text="Input lambda:" textFill="#434343" GridPane.rowIndex="3" />
+                  <Label fx:id="labelBasicCareUnitMu" text="Basic care unit - mu:" textFill="#434343" GridPane.rowIndex="4" />
+                  <Label fx:id="labelBasicCareUnitSigma" text="Basic care unit - sigma:" textFill="#434343" GridPane.rowIndex="5" />
+                  <Label fx:id="labelIntesiveCareUnitMu" text="Intensive care unit - mu:" textFill="#434343" GridPane.rowIndex="6" />
+                  <Label fx:id="labelPFromBasicToIntensive" text="P - from basic to intensive:" textFill="#434343" GridPane.rowIndex="7" />
+                  <Label fx:id="labelPDeathBasicCareUnit" text="P - death basic care unit:" textFill="#434343" GridPane.rowIndex="8" />
+                  <Label fx:id="labelPDeathIntensiveCareUnit" text="P - death intensive care unit:" textFill="#434343" GridPane.rowIndex="9" />
+                  <Label fx:id="labelMaxTimeInQueue" text="Max time in queue:" textFill="#434343" GridPane.rowIndex="10" />
                   <Button mnemonicParsing="false" onAction="#updateConfig" prefHeight="26.0" prefWidth="94.0" text="Save" textFill="#434343" GridPane.columnIndex="2" GridPane.rowIndex="11" />
                   <Label fx:id="labelCurrentBedsBasicCare" text="0" textFill="#434343" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label fx:id="labelCurrentBedsIntensiveCare" text="0" textFill="#434343" GridPane.columnIndex="1" GridPane.rowIndex="2" />
