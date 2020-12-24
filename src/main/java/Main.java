@@ -1,12 +1,11 @@
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.io.*;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -28,7 +27,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         primaryStage.setTitle("Hospital Simulation 1.0");
         primaryStage.setScene(getScene());
         primaryStage.setResizable(false);
@@ -46,18 +45,7 @@ public class Main extends Application {
             System.out.println("Application ended: "+ dtf.format(end));
             System.exit(0);
         });
-//
-//        initialize(args);
-//
-//        if (Constants.isScenario) {
-//            ScenarioParams scenarioParams = getScenarioParams();
-//            ScenarioResults results = runScenario(scenarioParams);
-//            printScenarioResults(results);
-//        } else {
-//            SimulationParams simulationParams = getSimulationParams();
-//            SimulationResults simulationResults = run(simulationParams);
-//            printResults(simulationResults);
-//        }
+
     }
 
     private Scene getScene() {
@@ -72,6 +60,5 @@ public class Main extends Application {
 
         return new Scene(root);
     }
-
 
 }

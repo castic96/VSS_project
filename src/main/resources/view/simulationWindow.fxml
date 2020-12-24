@@ -230,6 +230,21 @@
             <TextArea fx:id="textAreaDead" editable="false" layoutX="315.0" layoutY="328.0" prefHeight="73.0" prefWidth="134.0" />
             <TextArea fx:id="textAreaHealthy" editable="false" layoutX="78.0" layoutY="328.0" prefHeight="73.0" prefWidth="134.0" />
             <TextArea fx:id="textAreaQueue" editable="false" layoutX="1.0" layoutY="39.0" prefHeight="118.0" prefWidth="154.0" />
+            <Label alignment="CENTER" layoutX="334.0" layoutY="185.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Basic Care Units" textAlignment="CENTER" textFill="#464646" wrapText="false">
+               <font>
+                  <Font size="14.0" fx:id="x11211" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="334.0" layoutY="505.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Intensive Care Units" textAlignment="CENTER" textFill="#464646" wrapText="false">
+               <font>
+                  <Font size="14.0" fx:id="x112111" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="294.0" layoutY="115.0" prefWidth="-1.0" style="&#10;" text="Queue" textAlignment="CENTER" textFill="#464646" wrapText="false">
+               <font>
+                  <Font size="14.0" fx:id="x112112" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </center>
@@ -238,7 +253,7 @@
          <children>
             <AnchorPane prefHeight="54.0" prefWidth="200.0">
                <children>
-                  <Label alignment="CENTER" layoutY="15.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Output" textAlignment="CENTER" wrapText="false">
+                  <Label alignment="CENTER" layoutY="15.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Console Output" textAlignment="CENTER" wrapText="false">
                      <font>
                         <Font size="16.0" fx:id="x111" />
                      </font>
@@ -251,10 +266,40 @@
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </AnchorPane>
-            <AnchorPane prefHeight="645.0" prefWidth="406.0">
+            <AnchorPane prefHeight="223.0" prefWidth="406.0">
                <children>
-                  <TextArea fx:id="textAreaOutputLog" editable="false" prefHeight="472.0" prefWidth="406.0" AnchorPane.bottomAnchor="174.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextArea fx:id="textAreaResults" editable="false" layoutX="-1.0" layoutY="497.0" prefHeight="149.0" prefWidth="406.0" />
+                  <TextArea fx:id="textAreaOutputLog" editable="false" prefHeight="223.0" prefWidth="406.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </AnchorPane>
+            <AnchorPane prefHeight="54.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" layoutY="15.0" prefWidth="-1.0" style="&#10;" text="Results" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="16.0" fx:id="x1111" />
+                     </font>
+                     <textFill>
+                        <Color blue="0.624" green="0.624" red="0.624" fx:id="x2111" />
+                     </textFill>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" top="5.0" />
+               </VBox.margin>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TextArea fx:id="textAreaResults" editable="false" prefHeight="320.0" prefWidth="406.0" />
+               </children>
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </AnchorPane>
+            <AnchorPane>
+               <children>
+                  <Button fx:id="buttonExportDetailedResults" disable="true" layoutX="264.0" layoutY="13.0" mnemonicParsing="false" onAction="#exportDetailedResults" text="Export detailed results..." />
                </children>
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />

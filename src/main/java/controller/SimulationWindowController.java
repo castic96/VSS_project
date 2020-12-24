@@ -1,13 +1,17 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import model.Constants;
 import model.Program;
 import model.Utils;
 import model.enums.LaunchType;
 
+import java.io.File;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -166,6 +170,10 @@ public class SimulationWindowController implements Initializable {
     @FXML
     private TextField textFieldMaxTimeInQueue;
 
+    @FXML
+    private Button buttonExportDetailedResults;
+
+
     public SimulationWindowController() {
         program = new Program(this);
     }
@@ -320,6 +328,7 @@ public class SimulationWindowController implements Initializable {
     public void initStepByStep() {
         clear();
         buttonStartStepByStep.setDisable(true);
+        buttonExportDetailedResults.setDisable(true);
         labelStatus.setText("Status: Running");
         comboBox.setDisable(true);
         new Thread(program::initSimStepByStep).start();
@@ -331,6 +340,7 @@ public class SimulationWindowController implements Initializable {
         progressBar.setDisable(false);
         textFieldMaxTime.setDisable(true);
         buttonStartRunByTime.setDisable(true);
+        buttonExportDetailedResults.setDisable(true);
         labelStatus.setText("Status: Running");
         comboBox.setDisable(true);
 
@@ -487,10 +497,12 @@ public class SimulationWindowController implements Initializable {
     }
 
     public void finishStopStepByStep() {
+        buttonExportDetailedResults.setDisable(false);
         stepByStepEnable();
     }
 
     public void finishRunByTime () {
+        buttonExportDetailedResults.setDisable(false);
         runByTimeEnable();
     }
 
@@ -564,4 +576,34 @@ public class SimulationWindowController implements Initializable {
     public void setCurrentTimeStepByStep(int value) {
         labelStepByStepCurrTime.setText("Current time: " + value);
     }
+
+    @FXML
+    public void exportDetailedResults(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile;
+
+        fileChooser.setTitle("Export detailed results");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", ".csv"));
+        fileChooser.setInitialFileName("DetailedResults.csv");
+        selectedFile = fileChooser.showSaveDialog(((Node)actionEvent.getSource()).getScene().getWindow());
+
+        if (selectedFile != null) {
+            System.out.println(selectedFile); //TODO: zde zavolat metodu na uložení souboru ;)
+        }
+        else {
+            wrongPathError();
+        }
+
+    }
+
+    public static void wrongPathError() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        alert.setTitle("Wrong Path Error");
+        alert.setHeaderText("Wrong Path");
+        alert.setContentText("Destination to save Detailed Results file is incorrect.");
+
+        alert.showAndWait();
+    }
+
 }
