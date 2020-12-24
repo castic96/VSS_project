@@ -166,8 +166,6 @@ public class SimulationWindowController implements Initializable {
     @FXML
     private TextField textFieldMaxTimeInQueue;
 
-    boolean runByTime;
-
     public SimulationWindowController() {
         program = new Program(this);
     }
@@ -181,6 +179,8 @@ public class SimulationWindowController implements Initializable {
         textAreaHealthy.clear();
         textAreaResults.clear();
         progressBar.setProgress(0);
+        labelRunByTimeCurrTime.setText("Current time: 0");
+        labelStepByStepCurrTime.setText("Current time: 0");
     }
 
     public void initConfigurations() {
@@ -328,7 +328,7 @@ public class SimulationWindowController implements Initializable {
     public void startRunByTime() {
         program.setRunning(true);
         clear();
-        setProgressBarValue(0.05);
+        progressBar.setDisable(false);
         textFieldMaxTime.setDisable(true);
         buttonStartRunByTime.setDisable(true);
         labelStatus.setText("Status: Running");
@@ -410,18 +410,18 @@ public class SimulationWindowController implements Initializable {
     public void exitApplication() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss yyyy/MM/dd");
         LocalDateTime end = LocalDateTime.now();
-        System.out.println("Application ended: "+ dtf.format(end));
+        System.out.println("Application ended: " + dtf.format(end));
         System.exit(0);
     }
 
     @FXML
     public void comboBoxChange() {
         if (comboBox.getValue().equals(LaunchType.STEP_BY_STEP.getValue())) {
-            runByTime = false;
+            Constants.IS_STEP_BY_STEP = true;
             stepByStepEnable();
         }
         else {
-            runByTime = true;
+            Constants.IS_STEP_BY_STEP = false;
             runByTimeEnable();
         }
     }
@@ -442,6 +442,9 @@ public class SimulationWindowController implements Initializable {
         textFieldMaxTime.setDisable(true);
 
         comboBox.setDisable(false);
+
+        progressBar.setProgress(0);
+        progressBar.setDisable(true);
     }
 
     private void runByTimeEnable() {
@@ -460,6 +463,8 @@ public class SimulationWindowController implements Initializable {
         textFieldMaxTime.setDisable(false);
 
         comboBox.setDisable(false);
+        progressBar.setProgress(0);
+        progressBar.setDisable(true);
     }
 
     @FXML
@@ -490,9 +495,7 @@ public class SimulationWindowController implements Initializable {
     }
 
     public void appendTextAreaOutputLog(int b) {
-        if (!runByTime) {
-            textAreaOutputLog.appendText(String.valueOf((char) b));
-        }
+        textAreaOutputLog.appendText(String.valueOf((char) b));
     }
 
     public void setTextAreaResults(String text) {
@@ -500,57 +503,41 @@ public class SimulationWindowController implements Initializable {
     }
 
     public void appendLineTextAreaQueue(String text) {
-        if (!runByTime) {
-            textAreaQueue.appendText(text + "\n");
-        }
+        textAreaQueue.appendText(text + "\n");
     }
 
     public void removeLineTextAreaQueue(String text) {
-        if (!runByTime) {
-            String areaText = textAreaQueue.getText();
-            String result = areaText.replaceAll(text + "\n", "");
-            textAreaQueue.setText(result);
-        }
+        String areaText = textAreaQueue.getText();
+        String result = areaText.replaceAll(text + "\n", "");
+        textAreaQueue.setText(result);
     }
 
     public void appendLineTextAreaBasicCare(String text) {
-        if (!runByTime) {
-            textAreaBasicCare.appendText(text + "\n");
-        }
+        textAreaBasicCare.appendText(text + "\n");
     }
 
     public void removeLineTextAreaBasicCare(String text) {
-        if (!runByTime) {
-            String areaText = textAreaBasicCare.getText();
-            String result = areaText.replaceAll(text + "\n", "");
-            textAreaBasicCare.setText(result);
-        }
+        String areaText = textAreaBasicCare.getText();
+        String result = areaText.replaceAll(text + "\n", "");
+        textAreaBasicCare.setText(result);
     }
 
     public void appendLineTextAreaIntensiveCare(String text) {
-        if (!runByTime) {
-            textAreaIntensiveCare.appendText(text + "\n");
-        }
+        textAreaIntensiveCare.appendText(text + "\n");
     }
 
     public void removeLineTextAreaIntensiveCare(String text) {
-        if (!runByTime) {
-            String areaText = textAreaIntensiveCare.getText();
-            String result = areaText.replaceAll(text + "\n", "");
-            textAreaIntensiveCare.setText(result);
-        }
+        String areaText = textAreaIntensiveCare.getText();
+        String result = areaText.replaceAll(text + "\n", "");
+        textAreaIntensiveCare.setText(result);
     }
 
     public void appendLineTextAreaDead(String text) {
-        if (!runByTime) {
-            textAreaDead.appendText(text + "\n");
-        }
+        textAreaDead.appendText(text + "\n");
     }
 
     public void appendLineTextAreaHealthy(String text) {
-        if (!runByTime) {
-            textAreaHealthy.appendText(text + "\n");
-        }
+        textAreaHealthy.appendText(text + "\n");
     }
 
     public void stopRunByTime() {
@@ -568,5 +555,13 @@ public class SimulationWindowController implements Initializable {
         else {
             progressBar.setProgress(value);
         }
+    }
+
+    public void setCurrentTimeRunByTime(int value) {
+        labelRunByTimeCurrTime.setText("Current time: " + value);
+    }
+
+    public void setCurrentTimeStepByStep(int value) {
+        labelStepByStepCurrTime.setText("Current time: " + value);
     }
 }

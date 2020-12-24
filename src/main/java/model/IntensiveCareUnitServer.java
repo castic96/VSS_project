@@ -71,8 +71,12 @@ public class IntensiveCareUnitServer extends JSimProcess {
 
                 if (patient.isDead()) {
                     message("Patient died on intensive care, patient: " + patient.getPatientNumber());
-                    simulationWindowController.appendLineTextAreaDead(patient.toString());
-                    simulationWindowController.removeLineTextAreaIntensiveCare(patient.toString());
+
+                    if (Constants.IS_STEP_BY_STEP) {
+                        simulationWindowController.appendLineTextAreaDead(patient.toString());
+                        simulationWindowController.removeLineTextAreaIntensiveCare(patient.toString());
+                    }
+
                     deadPatientsCounter.incrementAndGet();
                     setPatientOnBed(null);
 

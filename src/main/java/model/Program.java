@@ -5,6 +5,7 @@ import cz.zcu.fav.kiv.jsim.*;
 import javafx.application.Platform;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,7 @@ public class Program {
     /** Max simulation time. */
     private static double maxTimeGlobal = 5000.0;
 
-    private static double START_VALUE_PROGRESS_BAR = 0.005;
+    private static DecimalFormat df = new DecimalFormat("0.000");
 
     private final SimulationWindowController simulationWindowController;
 
@@ -161,21 +162,18 @@ public class Program {
             // run simulation
             simulation.message("Running the simulation, please wait.");
 
-            double progressBarStep = 0.1;
-            double progressBarValue = 0.1;
-
-            while ((simulation.getCurrentTime() < maxTime) && (simulation.step() == true) && (isRunning())) {
-                if ((simulation.getCurrentTime() / maxTime) >= progressBarValue) {
-                    simulationWindowController.setProgressBarValue(progressBarValue);
-                    progressBarValue += progressBarStep;
-                }
+            while ((simulation.getCurrentTime() < maxTime) && (simulation.step()) && (isRunning())) {
+                Platform.runLater(() -> {
+                    simulationWindowController.setCurrentTimeRunByTime((int)(simulation.getCurrentTime()));
+                    simulationWindowController.setProgressBarValue((simulation.getCurrentTime() / maxTime));
+                });
             }
 
             // results
             double totalTime = simulation.getCurrentTime();
             simulation.message("Simulation interrupted at time " + totalTime);
             SimulationResults results = Statistics.calculateResults(basicCareUnitServerList, intensiveCareUnitServerList, totalTime, basicCareUnitQueue);
-            simulationWindowController.setTextAreaResults(results.toString());
+            Platform.runLater(() -> simulationWindowController.setTextAreaResults(results.toString()));
 
             return results;
         } catch (JSimException e) {
@@ -183,10 +181,7 @@ public class Program {
             e.printComment(System.err);
         } finally {
             simulation.shutdown();
-            Platform.runLater(() -> {
-                simulationWindowController.finishRunByTime();
-                simulationWindowController.setProgressBarValue(0);
-            });
+            Platform.runLater(simulationWindowController::finishRunByTime);
         }
 
         return null;
@@ -221,25 +216,12 @@ public class Program {
 
             Platform.runLater(simulationWindowController::finishInitStepByStep);
 
-            // run simulation
-            simulation.message("Running the simulation, please wait.");
-//            while ((simulation.getCurrentTime() < MAX_TIME) && (simulation.step() == true))
-//                ;
-
-//            // results
-//            double totalTime = simulation.getCurrentTime();
-//            simulation.message("Simulation interrupted at time " + totalTime);
-//            SimulationResults results = Statistics.calculateResults(basicCareUnitServerList, intensiveCareUnitServerList, totalTime, basicCareUnitQueue);
-//            return results;
         } catch (JSimException e) {
             e.printStackTrace();
             e.printComment(System.err);
             simulation.shutdown();
             Platform.runLater(simulationWindowController::finishStopStepByStep);
         }
-//        finally {
-//            simulation.shutdown();
-//        }
     }
 
     public void doStep() {
@@ -248,7 +230,11 @@ public class Program {
             new DailyProbability("Daily probability " + maxTimeGlobal, simulation, basicCareUnitServerList, intensiveCareUnitServerList)
                     .activate(maxTimeGlobal);
             maxTimeGlobal++;
-            Platform.runLater(simulationWindowController::finishDoStep);
+            Platform.runLater(() -> {
+                simulationWindowController.setCurrentTimeStepByStep((int)simulation.getCurrentTime());
+                simulationWindowController.finishDoStep();
+            });
+
         } catch (JSimMethodNotSupportedException | JSimInvalidParametersException | JSimSecurityException | JSimSimulationAlreadyTerminatedException | JSimTooManyProcessesException e) {
             e.printStackTrace();
         }
@@ -316,9 +302,12 @@ public class Program {
                 PrintStream ps = new PrintStream(fos);
 
                 @Override
-                public void write(int b) throws IOException {
+                public void write(int b) {
                     ps.write(b);
-                    Platform.runLater(() -> simulationWindowController.appendTextAreaOutputLog(b));
+
+                    if (Constants.IS_STEP_BY_STEP) {
+                        Platform.runLater(() -> simulationWindowController.appendTextAreaOutputLog(b));
+                    }
                 }
             }));
 
@@ -350,18 +339,6 @@ public class Program {
 
     public SimulationWindowController getSimulationWindowController() {
         return simulationWindowController;
-    }
-
-    public BasicCareUnitQueue getBasicCareUnitQueue() {
-        return basicCareUnitQueue;
-    }
-
-    public List<BasicCareUnitServer> getBasicCareUnitServerList() {
-        return basicCareUnitServerList;
-    }
-
-    public List<IntensiveCareUnitServer> getIntensiveCareUnitServerList() {
-        return intensiveCareUnitServerList;
     }
 
     public boolean isRunning() {

@@ -51,7 +51,11 @@ public class InputGenerator extends JSimProcess {
                 link.into(queue);
                 Patient patient = (Patient) link.getData();
                 message("Added patient to queue, patient: " + patient.getPatientNumber());
-                simulationWindowController.appendLineTextAreaQueue(patient.toString());
+
+                if (Constants.IS_STEP_BY_STEP) {
+                    simulationWindowController.appendLineTextAreaQueue(patient.toString());
+                }
+
                 incomingPatientsCounter.incrementAndGet();
 
                 // find free bed in basic care for patient

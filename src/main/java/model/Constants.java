@@ -21,6 +21,7 @@ public class Constants {
     public static OutputParams OUTPUT_PARAM;
     public static double STEP;
     public static int RUNS_COUNT = -1;
+    public static boolean IS_STEP_BY_STEP = true;
 
     /** Number of beds in basic care unit. */
     public static int NUMBER_OF_BED_BASIC_UNIT;
