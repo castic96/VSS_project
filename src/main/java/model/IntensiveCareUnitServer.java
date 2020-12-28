@@ -169,4 +169,8 @@ public class IntensiveCareUnitServer extends JSimProcess {
     public static int getDeadPatientsCounter() {
         return deadPatientsCounter.get();
     }
+
+    public static void setDeadPatientsCounter(int value) {
+        deadPatientsCounter.set(value);
+    }
 }

@@ -80,4 +80,8 @@ public class Patient {
     public String toString() {
         return "Patient: " + patientNumber;
     }
+
+    public static void setPatientsCounter(int value) {
+        patientsCounter.set(value);
+    }
 }

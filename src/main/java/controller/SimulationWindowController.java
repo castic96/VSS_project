@@ -18,6 +18,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SimulationWindowController implements Initializable {
 
@@ -356,7 +358,15 @@ public class SimulationWindowController implements Initializable {
         double maxTime = Utils.validateDoublePositive(textFieldMaxTime.getText());
 
         if (maxTime < 0) {
-            parsingAlertError(Map.of(labelRunByTimeMaxTime.getText(), textFieldMaxTime.getText()));
+            //parsingAlertError(Map.of(labelRunByTimeMaxTime.getText(), textFieldMaxTime.getText()));
+
+            Map<String, String> map = Stream.of(new String[][] {
+                    { labelRunByTimeMaxTime.getText(), textFieldMaxTime.getText() }
+            }).collect(Collectors.toMap(data -> data[0], data -> data[1]));
+
+            parsingAlertError(map);
+
+
             textFieldMaxTime.setDisable(false);
             buttonStartRunByTime.setDisable(false);
             labelStatus.setText("Status: Ready");

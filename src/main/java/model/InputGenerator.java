@@ -80,4 +80,8 @@ public class InputGenerator extends JSimProcess {
     public static int getIncomingPatientsCounter() {
         return incomingPatientsCounter.get();
     }
+
+    public static void setIncomingPatientsCounter(int value) {
+        incomingPatientsCounter.set(value);
+    }
 }

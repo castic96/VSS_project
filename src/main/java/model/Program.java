@@ -44,7 +44,7 @@ public class Program {
         Constants.init(DEFAULT_CONFIG_PATH);
     }
 
-
+/*
     private ScenarioResults runScenario() {
         Map<Double, Double> scenarioResults = new HashMap<>();
 
@@ -63,6 +63,8 @@ public class Program {
 
         return new ScenarioResults(scenarioResults);
     }
+
+
 
     private static double getResultToSave(SimulationResults results) {
         switch (Constants.OUTPUT_PARAM) {
@@ -128,6 +130,41 @@ public class Program {
 
         return newValue;
     }
+ */
+
+    public void initSimulation(double maxTime) throws JSimException {
+        // null all counters
+        BasicCareUnitServer.setDeadPatientsCounter(0);
+        BasicCareUnitServer.setDeadPatientsNoFreeBedInICUCounter(0);
+        BasicCareUnitServer.setPatientsMovedToICUCounter(0);
+        BasicCareUnitServer.setPatientsMovedBackFromICUCounter(0);
+        BasicCareUnitServer.setHealedPatientsCounter(0);
+        BasicCareUnitServer.setDiedInQueuePatientsCounter(0);
+        InputGenerator.setIncomingPatientsCounter(0);
+        IntensiveCareUnitServer.setDeadPatientsCounter(0);
+        Patient.setPatientsCounter(0);
+
+        // init
+        InputGenerator inputGenerator;
+        System.out.println("Initializing the simulation..");
+        simulation = new JSimSimulation("Hospital simulation");
+        basicCareUnitQueue = new BasicCareUnitQueue("Basic Care Unit Queue", simulation, null);
+
+        intensiveCareUnitServerList = createIntensiveCareUnitServersArray(this, basicCareUnitQueue);
+        basicCareUnitServerList = createBasicCareUnitServersArray(this, basicCareUnitQueue, intensiveCareUnitServerList);
+
+        inputGenerator = new InputGenerator("Input generator", this, basicCareUnitQueue);
+        basicCareUnitQueue.setServerList(basicCareUnitServerList);
+
+        // activate generators
+        simulation.message("Activating generators...");
+        inputGenerator.activate(0.0);
+
+        for (int i = 1; i < maxTime; i++) {
+            new DailyProbability("Daily probability " + i, simulation, basicCareUnitServerList, intensiveCareUnitServerList)
+                    .activate(i);
+        }
+    }
 
     /**
      * Runs simulation with parameters.
@@ -135,33 +172,12 @@ public class Program {
      * @return simulation results or null if some error occurred during simulation
      */
     public SimulationResults runSimRunByTime(double maxTime) {
-
-        InputGenerator inputGenerator;
-
         try {
             // init
-            System.out.println("Initializing the simulation..");
-            simulation = new JSimSimulation("Hospital simulation");
-            basicCareUnitQueue = new BasicCareUnitQueue("Basic Care Unit Queue", simulation, null);
-
-            intensiveCareUnitServerList = createIntensiveCareUnitServersArray(this, basicCareUnitQueue);
-            basicCareUnitServerList = createBasicCareUnitServersArray(this, basicCareUnitQueue, intensiveCareUnitServerList);
-
-            inputGenerator = new InputGenerator("Input generator", this, basicCareUnitQueue);
-            basicCareUnitQueue.setServerList(basicCareUnitServerList);
-
-            // activate generators
-            simulation.message("Activating generators...");
-            inputGenerator.activate(0.0);
-
-            for (int i = 1; i < maxTime; i++) {
-                new DailyProbability("Daily probability " + i, simulation, basicCareUnitServerList, intensiveCareUnitServerList)
-                        .activate(i);
-            }
+            initSimulation(maxTime);
 
             // run simulation
             simulation.message("Running the simulation, please wait.");
-
             while ((simulation.getCurrentTime() < maxTime) && (simulation.step()) && (isRunning())) {
                 Platform.runLater(() -> {
                     simulationWindowController.setCurrentTimeRunByTime((int)(simulation.getCurrentTime()));
@@ -191,28 +207,8 @@ public class Program {
      * Runs simulation with parameters.
      */
     public void initSimStepByStep() {
-        InputGenerator inputGenerator;
-
         try {
-            // init
-            System.out.println("Initializing the simulation..");
-            simulation = new JSimSimulation("Hospital simulation");
-            basicCareUnitQueue = new BasicCareUnitQueue("Basic Care Unit Queue", simulation, null);
-
-            intensiveCareUnitServerList = createIntensiveCareUnitServersArray(this, basicCareUnitQueue);
-            basicCareUnitServerList = createBasicCareUnitServersArray(this, basicCareUnitQueue, intensiveCareUnitServerList);
-
-            inputGenerator = new InputGenerator("Input generator", this, basicCareUnitQueue);
-            basicCareUnitQueue.setServerList(basicCareUnitServerList);
-
-            // activate generators
-            simulation.message("Activating generators...");
-            inputGenerator.activate(0.0);
-
-            for (int i = 1; i < maxTimeGlobal; i++) {
-                new DailyProbability("Daily probability " + i, simulation, basicCareUnitServerList, intensiveCareUnitServerList)
-                        .activate(i);
-            }
+            initSimulation(maxTimeGlobal);
 
             Platform.runLater(simulationWindowController::finishInitStepByStep);
 

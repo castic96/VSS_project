@@ -299,4 +299,28 @@ public class BasicCareUnitServer extends JSimProcess {
         return patientsMovedToICUCounter.get();
     }
 
+    public static void setDeadPatientsCounter(int value) {
+        deadPatientsCounter.set(value);
+    }
+
+    public static void setDeadPatientsNoFreeBedInICUCounter(int value) {
+        deadPatientsNoFreeBedInICUCounter.set(value);
+    }
+
+    public static void setPatientsMovedToICUCounter(int value) {
+        patientsMovedToICUCounter.set(value);
+    }
+
+    public static void setPatientsMovedBackFromICUCounter(int value) {
+        patientsMovedBackFromICUCounter.set(value);
+    }
+
+    public static void setHealedPatientsCounter(int value) {
+        healedPatientsCounter.set(value);
+    }
+
+    public static void setDiedInQueuePatientsCounter(int value) {
+        diedInQueuePatientsCounter.set(value);
+    }
+
 }
