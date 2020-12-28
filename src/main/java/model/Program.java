@@ -140,8 +140,20 @@ public class Program {
         BasicCareUnitServer.setPatientsMovedBackFromICUCounter(0);
         BasicCareUnitServer.setHealedPatientsCounter(0);
         BasicCareUnitServer.setDiedInQueuePatientsCounter(0);
+
+        BasicCareUnitServer.clearDeadPatientsTimes();
+        BasicCareUnitServer.clearDeadPatientsNoFreeBedInICUTimes();
+        BasicCareUnitServer.clearPatientsMovedToICUTimes();
+        BasicCareUnitServer.clearPatientsMovedBackFromICUTimes();
+        BasicCareUnitServer.clearHealedPatientsTimes();
+        BasicCareUnitServer.clearDiedInQueuePatientsTimes();
+
         InputGenerator.setIncomingPatientsCounter(0);
+        InputGenerator.clearIncomingPatientsTimes();
+
         IntensiveCareUnitServer.setDeadPatientsCounter(0);
+        IntensiveCareUnitServer.clearDeadPatientsTimes();
+
         Patient.setPatientsCounter(0);
 
         // init
@@ -347,5 +359,13 @@ public class Program {
 
     public void setRunningFalse() {
         this.running = false;
+    }
+
+    public List<BasicCareUnitServer> getBasicCareUnitServerList() {
+        return basicCareUnitServerList;
+    }
+
+    public List<IntensiveCareUnitServer> getIntensiveCareUnitServerList() {
+        return intensiveCareUnitServerList;
     }
 }

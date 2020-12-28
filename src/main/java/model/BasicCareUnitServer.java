@@ -3,6 +3,7 @@ package model;
 import controller.SimulationWindowController;
 import cz.zcu.fav.kiv.jsim.*;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -23,6 +24,16 @@ public class BasicCareUnitServer extends JSimProcess {
     private static final AtomicInteger healedPatientsCounter = new AtomicInteger(0);
     /** Counter for patients who died in queue. */
     private static final AtomicInteger diedInQueuePatientsCounter = new AtomicInteger(0);
+
+    private static final List<Double> deadPatientsTimes = new LinkedList<>();
+    private static final List<Double> deadPatientsNoFreeBedInICUTimes = new LinkedList<>();
+    private static final List<Double> patientsMovedToICUTimes = new LinkedList<>();
+    private static final List<Double> patientsMovedBackFromICUTimes = new LinkedList<>();
+    private static final List<Double> healedPatientsTimes = new LinkedList<>();
+    private static final List<Double> diedInQueuePatientsTimes = new LinkedList<>();
+
+    private final List<Double> inTimes = new LinkedList<>();
+    private final List<Double> outTimes = new LinkedList<>();
 
     /** patient */
     private Patient patient;
@@ -94,6 +105,7 @@ public class BasicCareUnitServer extends JSimProcess {
                                 simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
                             }
 
+                            diedInQueuePatientsTimes.add(myParent.getCurrentTime());
                             diedInQueuePatientsCounter.incrementAndGet();
                             continue;
                         }
@@ -113,6 +125,7 @@ public class BasicCareUnitServer extends JSimProcess {
                         simulationWindowController.removeLineTextAreaIntensiveCare(patient.toString());
                     }
 
+                    patientsMovedBackFromICUTimes.add(myParent.getCurrentTime());
                     patientsMovedBackFromICUCounter.incrementAndGet();
                 }
 
@@ -122,6 +135,7 @@ public class BasicCareUnitServer extends JSimProcess {
                     simulationWindowController.appendLineTextAreaBasicCare(patient.toString());
                 }
 
+                inTimes.add(myParent.getCurrentTime());
                 setOccupied(true);
 
                 // spend time in basic care
@@ -131,6 +145,7 @@ public class BasicCareUnitServer extends JSimProcess {
                 counter++;
 
                 setOccupied(false);
+                outTimes.add(myParent.getCurrentTime());
 
                 // deciding where to go next
                 if (patient.isDead()) {
@@ -142,6 +157,7 @@ public class BasicCareUnitServer extends JSimProcess {
                             simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
                         }
 
+                        deadPatientsNoFreeBedInICUTimes.add(myParent.getCurrentTime());
                         deadPatientsNoFreeBedInICUCounter.incrementAndGet();
 
                     }
@@ -153,6 +169,7 @@ public class BasicCareUnitServer extends JSimProcess {
                             simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
                         }
 
+                        deadPatientsTimes.add(myParent.getCurrentTime());
                         deadPatientsCounter.incrementAndGet();
                     }
                 }
@@ -165,6 +182,7 @@ public class BasicCareUnitServer extends JSimProcess {
                             simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
                         }
 
+                        patientsMovedToICUTimes.add(myParent.getCurrentTime());
                         patientsMovedToICUCounter.incrementAndGet();
 
                     } else {
@@ -175,6 +193,7 @@ public class BasicCareUnitServer extends JSimProcess {
                             simulationWindowController.removeLineTextAreaBasicCare(patient.toString());
                         }
 
+                        healedPatientsTimes.add(myParent.getCurrentTime());
                         healedPatientsCounter.incrementAndGet();
                     }
                 }
@@ -221,6 +240,7 @@ public class BasicCareUnitServer extends JSimProcess {
 
         firstServerRequest.setPatientOnBed(null);
         firstServerRequest.setOccupied(false);
+        firstServerRequest.addOutTime(myParent.getCurrentTime());
 
         return firstRequestPatientLink;
     }
@@ -323,4 +343,59 @@ public class BasicCareUnitServer extends JSimProcess {
         diedInQueuePatientsCounter.set(value);
     }
 
+    public List<Double> getInTimes() {
+        return inTimes;
+    }
+
+    public List<Double> getOutTimes() {
+        return outTimes;
+    }
+
+    public static void clearDeadPatientsTimes() {
+        deadPatientsTimes.clear();
+    }
+
+    public static void clearDeadPatientsNoFreeBedInICUTimes() {
+        deadPatientsNoFreeBedInICUTimes.clear();
+    }
+
+    public static void clearPatientsMovedToICUTimes() {
+        patientsMovedToICUTimes.clear();
+    }
+
+    public static void clearPatientsMovedBackFromICUTimes() {
+        patientsMovedBackFromICUTimes.clear();
+    }
+
+    public static void clearHealedPatientsTimes() {
+        healedPatientsTimes.clear();
+    }
+
+    public static void clearDiedInQueuePatientsTimes() {
+        diedInQueuePatientsTimes.clear();
+    }
+
+    public static List<Double> getDeadPatientsTimes() {
+        return deadPatientsTimes;
+    }
+
+    public static List<Double> getDeadPatientsNoFreeBedInICUTimes() {
+        return deadPatientsNoFreeBedInICUTimes;
+    }
+
+    public static List<Double> getPatientsMovedToICUTimes() {
+        return patientsMovedToICUTimes;
+    }
+
+    public static List<Double> getPatientsMovedBackFromICUTimes() {
+        return patientsMovedBackFromICUTimes;
+    }
+
+    public static List<Double> getHealedPatientsTimes() {
+        return healedPatientsTimes;
+    }
+
+    public static List<Double> getDiedInQueuePatientsTimes() {
+        return diedInQueuePatientsTimes;
+    }
 }

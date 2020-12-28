@@ -3,6 +3,8 @@ package model;
 import controller.SimulationWindowController;
 import cz.zcu.fav.kiv.jsim.*;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -12,6 +14,11 @@ public class IntensiveCareUnitServer extends JSimProcess {
 
     /** Counter for patients who die in intensive care unit. */
     private static final AtomicInteger deadPatientsCounter = new AtomicInteger(0);
+
+    private static final List<Double> deadPatientsTimes = new LinkedList<>();
+
+    private final List<Double> inTimes = new LinkedList<>();
+    private final List<Double> outTimes = new LinkedList<>();
 
     private SimulationWindowController simulationWindowController;
 
@@ -58,6 +65,7 @@ public class IntensiveCareUnitServer extends JSimProcess {
         {
             while (true) {
 
+                inTimes.add(myParent.getCurrentTime());
                 patient = (Patient) patientOnBed.getData();
                 patient.setInMoveToIntensiveCare(false);
 
@@ -77,6 +85,9 @@ public class IntensiveCareUnitServer extends JSimProcess {
                         simulationWindowController.removeLineTextAreaIntensiveCare(patient.toString());
                     }
 
+                    double time = myParent.getCurrentTime();
+                    outTimes.add(time);
+                    deadPatientsTimes.add(time);
                     deadPatientsCounter.incrementAndGet();
                     setPatientOnBed(null);
 
@@ -172,5 +183,25 @@ public class IntensiveCareUnitServer extends JSimProcess {
 
     public static void setDeadPatientsCounter(int value) {
         deadPatientsCounter.set(value);
+    }
+
+    public void addOutTime(double time) {
+        this.outTimes.add(time);
+    }
+
+    public List<Double> getInTimes() {
+        return inTimes;
+    }
+
+    public List<Double> getOutTimes() {
+        return outTimes;
+    }
+
+    public static void clearDeadPatientsTimes() {
+        deadPatientsTimes.clear();
+    }
+
+    public static List<Double> getDeadPatientsTimes() {
+        return deadPatientsTimes;
     }
 }

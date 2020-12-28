@@ -3,6 +3,8 @@ package model;
 import controller.SimulationWindowController;
 import cz.zcu.fav.kiv.jsim.*;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -12,6 +14,8 @@ public class InputGenerator extends JSimProcess {
 
     /** Counter for incoming patients. */
     private static final AtomicInteger incomingPatientsCounter = new AtomicInteger(0);
+
+    private static final List<Double> incomingPatientsTimes = new LinkedList<>();
 
     /** queue */
     private final BasicCareUnitQueue queue;
@@ -46,17 +50,19 @@ public class InputGenerator extends JSimProcess {
         {
             while (true)
             {
-                // generate patient and put him into queue
-                link = new JSimLink(new Patient(myParent.getCurrentTime()));
+                // generate patient
+                Patient patient = new Patient(myParent.getCurrentTime());
+                link = new JSimLink(patient);
+
+                // put him into queue
                 link.into(queue);
-                Patient patient = (Patient) link.getData();
+                incomingPatientsTimes.add(myParent.getCurrentTime());
+                incomingPatientsCounter.incrementAndGet();
                 message("Added patient to queue, patient: " + patient.getPatientNumber());
 
                 if (Constants.IS_STEP_BY_STEP) {
                     simulationWindowController.appendLineTextAreaQueue(patient.toString());
                 }
-
-                incomingPatientsCounter.incrementAndGet();
 
                 // find free bed in basic care for patient
                 for (JSimProcess currentServer : queue.getServerList()) {
@@ -83,5 +89,13 @@ public class InputGenerator extends JSimProcess {
 
     public static void setIncomingPatientsCounter(int value) {
         incomingPatientsCounter.set(value);
+    }
+
+    public static List<Double> getIncomingPatientsTimes() {
+        return incomingPatientsTimes;
+    }
+
+    public static void clearIncomingPatientsTimes() {
+        incomingPatientsTimes.clear();
     }
 }

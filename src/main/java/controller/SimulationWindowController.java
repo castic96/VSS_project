@@ -598,7 +598,7 @@ public class SimulationWindowController implements Initializable {
         selectedFile = fileChooser.showSaveDialog(((Node)actionEvent.getSource()).getScene().getWindow());
 
         if (selectedFile != null) {
-            System.out.println(selectedFile); //TODO: zde zavolat metodu na uložení souboru ;)
+            Utils.saveNumbers(program, selectedFile);
         }
         else {
             wrongPathError();
