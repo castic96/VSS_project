@@ -8,6 +8,7 @@ import javafx.stage.WindowEvent;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.LogManager;
 
 /**
  * model.Program entry class - has main method which
@@ -17,12 +18,15 @@ import java.time.format.DateTimeFormatter;
 public class Main extends Application {
 
     /**
-     * model.Program entry point.
+     * Program entry point.
      * Arguments can be either empty or one argument as path to configuration file.
      *
      * @param args arguments (empty or first = path to configuration file)
      */
     public static void main(String[] args) {
+        // disable all logging
+        LogManager.getLogManager().reset();
+
         launch(args);
     }
 
