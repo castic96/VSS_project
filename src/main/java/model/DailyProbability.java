@@ -5,13 +5,27 @@ import cz.zcu.fav.kiv.jsim.*;
 import java.util.List;
 
 /**
- * TODO
+ * Takes care of daily events - death in basic or intensive care unit
+ * and moving to intensive care.
  */
 public class DailyProbability extends JSimProcess {
 
+    /** List of basic care servers. */
     List<BasicCareUnitServer> basicCareUnitServerList;
+    /** List of intensive care servers. */
     List<IntensiveCareUnitServer> intensiveCareUnitServerList;
 
+    /**
+     * Creates new daily probability instance.
+     *
+     * @param name name
+     * @param simulation simulation
+     * @param basicCareUnitServerList list of basic care servers
+     * @param intensiveCareUnitServerList list of intensive care servers
+     * @throws JSimSimulationAlreadyTerminatedException if simulation is already terminated
+     * @throws JSimInvalidParametersException parent (simulation) is invalid parameter
+     * @throws JSimTooManyProcessesException process cannot be added to simulation
+     */
     public DailyProbability(String name, JSimSimulation simulation, List<BasicCareUnitServer> basicCareUnitServerList, List<IntensiveCareUnitServer> intensiveCareUnitServerList) throws JSimSimulationAlreadyTerminatedException, JSimInvalidParametersException, JSimTooManyProcessesException
     {
         super(name, simulation);
@@ -20,7 +34,7 @@ public class DailyProbability extends JSimProcess {
     }
 
     /**
-     * Generating.
+     * Daily probability simulation.
      */
     protected void life()
     {

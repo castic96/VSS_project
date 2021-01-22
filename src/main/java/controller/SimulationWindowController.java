@@ -38,7 +38,7 @@ public class SimulationWindowController implements Initializable {
     private Label labelBasicCareUnitSigma;
 
     @FXML
-    private Label labelIntesiveCareUnitMu;
+    private Label labelIntensiveCareUnitMu;
 
     @FXML
     private Label labelPFromBasicToIntensive;
@@ -265,7 +265,7 @@ public class SimulationWindowController implements Initializable {
                 Constants.INTENSIVE_CARE_UNIT_MU = newDouble;
             }
             else {
-                wrongInputs.put(labelIntesiveCareUnitMu.getText(), newText);
+                wrongInputs.put(labelIntensiveCareUnitMu.getText(), newText);
             }
 
         }
@@ -598,7 +598,7 @@ public class SimulationWindowController implements Initializable {
         selectedFile = fileChooser.showSaveDialog(((Node)actionEvent.getSource()).getScene().getWindow());
 
         if (selectedFile != null) {
-            Utils.saveNumbers(program, selectedFile);
+            Utils.saveResultNumbers(program, selectedFile);
         }
         else {
             wrongPathError();

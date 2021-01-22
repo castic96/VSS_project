@@ -61,6 +61,7 @@ public class Statistics {
         double intensiveCareRho = (intensiveCareSum / totalTime) / intensiveCareUnitServerList.size();
         double totalRho = (basicCareRho + intensiveCareRho) / Constants.NUMBER_OF_UNITS;
 
+        // patients totals
         int totalDeadPatients =
                 BasicCareUnitServer.getDeadPatientsCounter() + BasicCareUnitServer.getDeadPatientsNoFreeBedInICUCounter() // died in basic care
                 + BasicCareUnitServer.getDiedInQueuePatientsCounter() // died in queue

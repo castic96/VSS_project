@@ -14,13 +14,14 @@ public class InputGenerator extends JSimProcess {
 
     /** Counter for incoming patients. */
     private static final AtomicInteger incomingPatientsCounter = new AtomicInteger(0);
-
+    /** Arrival times of patients. */
     private static final List<Double> incomingPatientsTimes = new LinkedList<>();
 
-    /** queue */
+    /** Queue for basic care. */
     private final BasicCareUnitQueue queue;
 
-    private SimulationWindowController simulationWindowController;
+    /** Simulation window controller. */
+    private final SimulationWindowController simulationWindowController;
 
     /**
      * Creates new generator.
@@ -83,18 +84,36 @@ public class InputGenerator extends JSimProcess {
         }
     }
 
+    /**
+     * Returns counter for incoming patients.
+     *
+     * @return incoming patients counter
+     */
     public static int getIncomingPatientsCounter() {
         return incomingPatientsCounter.get();
     }
 
+    /**
+     * Sets counter for incoming patients.
+     *
+     * @param value new value
+     */
     public static void setIncomingPatientsCounter(int value) {
         incomingPatientsCounter.set(value);
     }
 
+    /**
+     * Returns arrival times of patients.
+     *
+     * @return incoming patients times
+     */
     public static List<Double> getIncomingPatientsTimes() {
         return incomingPatientsTimes;
     }
 
+    /**
+     * Clears list of arrival times of patients.
+     */
     public static void clearIncomingPatientsTimes() {
         incomingPatientsTimes.clear();
     }

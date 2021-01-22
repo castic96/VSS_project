@@ -12,27 +12,38 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class IntensiveCareUnitServer extends JSimProcess {
 
+    // ----- STATIC FINAL VARIABLES -----
+
     /** Counter for patients who die in intensive care unit. */
     private static final AtomicInteger deadPatientsCounter = new AtomicInteger(0);
-
+    /** Death times of patients who died in intensive care unit. */
     private static final List<Double> deadPatientsTimes = new LinkedList<>();
 
+    // ----- INSTANCE FINAL VARIABLES -----
+
+    /** Arrival times of patients. */
     private final List<Double> inTimes = new LinkedList<>();
+    /** Leaving times of patients. */
     private final List<Double> outTimes = new LinkedList<>();
 
-    private SimulationWindowController simulationWindowController;
+    /** Queue to basic care. */
+    private final BasicCareUnitQueue queue;
 
-    /** patient */
+    /** Simulation window controller. */
+    private final SimulationWindowController simulationWindowController;
+
+    // ----- INSTANCE VARIABLES -----
+
+    /** Patient */
     private JSimLink patientOnBed;
-    /** if server (bed) is occupied */
+    /** If server (bed) is occupied. */
     private boolean occupied;
 
-    /** counter for patients on this server (bed) */
+    /** Counter for patients on this server (bed). */
     private int counter;
-    /** time spent on this server (bed) */
+    /** Time spent on this server (bed). */
     private double transTq;
-    /** queue to basic care */
-    private final BasicCareUnitQueue queue;
+
 
     /**
      * Creates new server in intensive care unit.
@@ -177,30 +188,63 @@ public class IntensiveCareUnitServer extends JSimProcess {
         return transTq;
     }
 
+    /**
+     * Returns counter for patients who die in intensive care unit.
+     *
+     * @return dead patients counter
+     */
     public static int getDeadPatientsCounter() {
         return deadPatientsCounter.get();
     }
 
+    /**
+     * Sets counter for patients who die in intensive care unit.
+     *
+     * @param value new number value
+     */
     public static void setDeadPatientsCounter(int value) {
         deadPatientsCounter.set(value);
     }
 
+    /**
+     * Adds time to leaving times of patients.
+     *
+     * @param time time when patients left intensive care
+     */
     public void addOutTime(double time) {
         this.outTimes.add(time);
     }
 
+    /**
+     * Returns arrival times of patients.
+     *
+     * @return arrival times
+     */
     public List<Double> getInTimes() {
         return inTimes;
     }
 
+    /**
+     * Returns leaving times of patients.
+     *
+     * @return leaving times
+     */
     public List<Double> getOutTimes() {
         return outTimes;
     }
 
+    /**
+     * Clears list with death times of patients who died in intensive care unit.
+     */
     public static void clearDeadPatientsTimes() {
         deadPatientsTimes.clear();
     }
 
+    /**
+     * Returns death times of patients who died in intensive care unit.
+     *
+     * @return dead patients times
+     */
     public static List<Double> getDeadPatientsTimes() {
         return deadPatientsTimes;
     }

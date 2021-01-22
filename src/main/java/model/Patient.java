@@ -15,8 +15,11 @@ public class Patient {
     /** Time when patient requested to transfer back to basic care unit. */
     private double timeOfRequestToBasicCare;
 
+    /** If patient is dead. */
     private boolean dead = false;
+    /** If patient is moving to intensive care unit. */
     private boolean inMoveToIntensiveCare = false;
+    /** Patient's number. */
     private final int patientNumber;
 
     /**
@@ -56,31 +59,66 @@ public class Patient {
         return timeOfRequestToBasicCare;
     }
 
+    /**
+     * Returns whether patient is dead.
+     *
+     * @return true if patient is dead; false otherwise
+     */
     public boolean isDead() {
         return dead;
     }
 
+    /**
+     * Sets whether is patient dead.
+     *
+     * @param dead new death status
+     */
     public void setDead(boolean dead) {
         this.dead = dead;
     }
 
+    /**
+     * Returns if patient is moving to intensive care unit.
+     *
+     * @return if patient is moving to ICU
+     */
     public boolean isInMoveToIntensiveCare() {
         return inMoveToIntensiveCare;
     }
 
+    /**
+     * Sets whether patient is moving to intensive care unit.
+     *
+     * @return sets if patient is moving to ICU
+     */
     public void setInMoveToIntensiveCare(boolean inMoveToIntensiveCare) {
         this.inMoveToIntensiveCare = inMoveToIntensiveCare;
     }
 
+    /**
+     * Returns patient's number.
+     *
+     * @return number
+     */
     public int getPatientNumber() {
         return patientNumber;
     }
 
+    /**
+     * Returns string representation of patient.
+     *
+     * @return patient as string
+     */
     @Override
     public String toString() {
         return "Patient: " + patientNumber;
     }
 
+    /**
+     * Sets new value to patients counter.
+     *
+     * @param value new value
+     */
     public static void setPatientsCounter(int value) {
         patientsCounter.set(value);
     }

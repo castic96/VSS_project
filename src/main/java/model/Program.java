@@ -5,36 +5,43 @@ import cz.zcu.fav.kiv.jsim.*;
 import javafx.application.Platform;
 
 import java.io.*;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * Instance of program - takes care of starting simulations.
+ */
 public class Program {
-
 
     /** Default path to configuration file (properties). */
     private static final String DEFAULT_CONFIG_PATH = "config.properties";
 
     /** Max simulation time. */
     private static double maxTimeGlobal = 5000.0;
-
-    private static DecimalFormat df = new DecimalFormat("0.000");
-
+    /** Simulation window controller. */
     private final SimulationWindowController simulationWindowController;
 
+    /** Simulation. */
     private JSimSimulation simulation;
 
+    /** Queue to basic care. */
     private BasicCareUnitQueue basicCareUnitQueue;
+    /** List of basic care servers. */
     private List<BasicCareUnitServer> basicCareUnitServerList;
+    /** List of intensive care servers. */
     private List<IntensiveCareUnitServer> intensiveCareUnitServerList;
 
+    /** If simulation is running. */
     private boolean running = true;
 
+    /**
+     * Creates new instance.
+     *
+     * @param simulationWindowController simulation window controller
+     */
     public Program(SimulationWindowController simulationWindowController) {
         this.simulationWindowController = simulationWindowController;
-        initializeLogging();
+        initLogging();
     }
 
     /**
@@ -44,94 +51,12 @@ public class Program {
         Constants.init(DEFAULT_CONFIG_PATH);
     }
 
-/*
-    private ScenarioResults runScenario() {
-        Map<Double, Double> scenarioResults = new HashMap<>();
-
-        double newValue = updateSimulationParam(0); // step == 0 -> no update, just getting value
-        for (int i = 0; i < Constants.RUNS_COUNT; i++) {
-            // run simulation
-            SimulationResults results = runSimRunByTime(10000); //TODO: hodnota 10000 jen aby to fungovalo
-
-            // save result
-            double result = getResultToSave(results);
-            scenarioResults.put(newValue, result);
-
-            // update simulation parameter
-            newValue = updateSimulationParam(Constants.STEP);
-        }
-
-        return new ScenarioResults(scenarioResults);
-    }
-
-
-
-    private static double getResultToSave(SimulationResults results) {
-        switch (Constants.OUTPUT_PARAM) {
-            case HEALED_PATIENTS:
-                return results.getHealedPatients();
-            case DEAD_PATIENTS:
-                return results.getDeadPatients();
-            case TOTAL_RHO:
-                return results.getTotalRho();
-        }
-
-        return 0;
-    }
-
-    private static double updateSimulationParam(double step) {
-        double newValue = 0;
-
-        switch (Constants.INPUT_PARAM) {
-            case NUMBER_OF_BED_BASIC_UNIT:
-                newValue = Constants.NUMBER_OF_BED_BASIC_UNIT + (int) step;
-                Constants.NUMBER_OF_BED_BASIC_UNIT = (int) newValue;
-                break;
-            case NUMBER_OF_BED_INTENSIVE_CARE_UNIT:
-                newValue = Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT + (int) step;
-                Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT = (int) newValue;
-                break;
-            case INPUT_LAMBDA:
-                newValue = Constants.INPUT_LAMBDA + step;
-                Constants.INPUT_LAMBDA = newValue;
-                break;
-
-            case BASIC_CARE_UNIT_MU:
-                newValue = Constants.BASIC_CARE_UNIT_MU + step;
-                Constants.BASIC_CARE_UNIT_MU = newValue;
-                break;
-            case BASIC_CARE_UNIT_SIGMA:
-                newValue = Constants.BASIC_CARE_UNIT_SIGMA + step;
-                Constants.BASIC_CARE_UNIT_SIGMA = newValue;
-                break;
-            case INTENSIVE_CARE_UNIT_MU:
-                newValue = Constants.INTENSIVE_CARE_UNIT_MU + step;
-                Constants.INTENSIVE_CARE_UNIT_MU = newValue;
-                break;
-
-            case P_FROM_BASIC_TO_INTENSIVE:
-                newValue = Constants.P_FROM_BASIC_TO_INTENSIVE + step;
-                Constants.P_FROM_BASIC_TO_INTENSIVE = newValue;
-                break;
-            case P_DEATH_BASIC_CARE_UNIT:
-                newValue = Constants.P_DEATH_BASIC_CARE_UNIT + step;
-                Constants.P_DEATH_BASIC_CARE_UNIT = newValue;
-                break;
-            case P_DEATH_INTENSIVE_CARE_UNIT:
-                newValue = Constants.P_DEATH_INTENSIVE_CARE_UNIT + step;
-                Constants.P_DEATH_INTENSIVE_CARE_UNIT = newValue;
-                break;
-
-            case MAX_TIME_IN_QUEUE:
-                newValue = Constants.MAX_TIME_IN_QUEUE + step;
-                Constants.MAX_TIME_IN_QUEUE = newValue;
-                break;
-        }
-
-        return newValue;
-    }
- */
-
+    /**
+     * Initializes simulation.
+     *
+     * @param maxTime max time of simulation
+     * @throws JSimException if problem in simulation initialization occurs
+     */
     public void initSimulation(double maxTime) throws JSimException {
         // null all counters
         BasicCareUnitServer.setDeadPatientsCounter(0);
@@ -180,10 +105,8 @@ public class Program {
 
     /**
      * Runs simulation with parameters.
-     *
-     * @return simulation results or null if some error occurred during simulation
      */
-    public SimulationResults runSimRunByTime(double maxTime) {
+    public void runSimRunByTime(double maxTime) {
         try {
             // init
             initSimulation(maxTime);
@@ -203,7 +126,6 @@ public class Program {
             SimulationResults results = Statistics.calculateResults(basicCareUnitServerList, intensiveCareUnitServerList, totalTime, basicCareUnitQueue);
             Platform.runLater(() -> simulationWindowController.setTextAreaResults(results.toString()));
 
-            return results;
         } catch (JSimException e) {
             e.printStackTrace();
             e.printComment(System.err);
@@ -212,7 +134,6 @@ public class Program {
             Platform.runLater(simulationWindowController::finishRunByTime);
         }
 
-        return null;
     }
 
     /**
@@ -232,6 +153,9 @@ public class Program {
         }
     }
 
+    /**
+     * Does one step of simulation.
+     */
     public void doStep() {
         try {
             simulation.step();
@@ -248,6 +172,9 @@ public class Program {
         }
     }
 
+    /**
+     * Stops step by step simulation.
+     */
     public void stopSimStepByStep() {
         double totalTime = simulation.getCurrentTime();
         simulation.message("Simulation interrupted at time " + totalTime);
@@ -299,7 +226,10 @@ public class Program {
         return servers;
     }
 
-    public void initializeLogging() {
+    /**
+     * Initializes logging.
+     */
+    public void initLogging() {
         try {
             // creating log file
             File file = new File("simulation.log");
@@ -325,46 +255,62 @@ public class Program {
     }
 
     /**
-     * Prints simulation results.
+     * Returns simulation.
      *
-     * @param results simulation results
+     * @return simulation
      */
-    private static void printResults(SimulationResults results) {
-        if (results == null) return;
-
-        System.out.println(results);
-    }
-
-    private static void printScenarioResults(ScenarioResults results) {
-        if (results == null) return;
-
-        System.out.println(results);
-    }
-
     public JSimSimulation getSimulation() {
         return simulation;
     }
 
+    /**
+     * Returns simulation window controller.
+     *
+     * @return simulation window controller
+     */
     public SimulationWindowController getSimulationWindowController() {
         return simulationWindowController;
     }
 
+    /**
+     * Returns if simulation is running.
+     *
+     * @return true if simulation is running; false otherwise
+     */
     public boolean isRunning() {
         return running;
     }
 
+    /**
+     * Sets if simulation is running.
+     *
+     * @param running new value
+     */
     public void setRunning(boolean running) {
         this.running = running;
     }
 
+    /**
+     * Sets that simulation is not running.
+     */
     public void setRunningFalse() {
         this.running = false;
     }
 
+    /**
+     * Returns list of basic care servers.
+     *
+     * @return list of basic care servers
+     */
     public List<BasicCareUnitServer> getBasicCareUnitServerList() {
         return basicCareUnitServerList;
     }
 
+    /**
+     * Returns list of intensive care servers.
+     *
+     * @return list of intensive care servers
+     */
     public List<IntensiveCareUnitServer> getIntensiveCareUnitServerList() {
         return intensiveCareUnitServerList;
     }

@@ -1,11 +1,9 @@
 package model.enums;
 
+/**
+ * Types of input parameters (name is the same as in configuration file).
+ */
 public enum InputParams {
-
-    INPUT_PARAM,
-    OUTPUT_PARAM,
-    STEP,
-    RUNS_COUNT,
 
     NUMBER_OF_BED_BASIC_UNIT,
     NUMBER_OF_BED_INTENSIVE_CARE_UNIT,

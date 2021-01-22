@@ -52,63 +52,74 @@ public class Utils {
         return d;
     }
 
-    public static void saveNumbers(Program program, File fileName) {
+    /**
+     * Saves all result numbers to file.
+     *
+     * @param program program
+     * @param fileName filename where to save numbers
+     */
+    public static void saveResultNumbers(Program program, File fileName) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
 
             List<Double> incomingPatientsTimes = InputGenerator.getIncomingPatientsTimes();
-            writer.append(printListDouble(incomingPatientsTimes) + "\n");
+            writer.append(printListDouble(incomingPatientsTimes)).append("\n");
 
             List<Double> deadPatientsTimesBasicCare = BasicCareUnitServer.getDeadPatientsTimes();
-            writer.append(printListDouble(deadPatientsTimesBasicCare) + "\n");
+            writer.append(printListDouble(deadPatientsTimesBasicCare)).append("\n");
 
             List<Double> deadPatientsNoFreeBedInICUTimes = BasicCareUnitServer.getDeadPatientsNoFreeBedInICUTimes();
-            writer.append(printListDouble(deadPatientsNoFreeBedInICUTimes) + "\n");
+            writer.append(printListDouble(deadPatientsNoFreeBedInICUTimes)).append("\n");
 
             List<Double> patientsMovedToICUTimes = BasicCareUnitServer.getPatientsMovedToICUTimes();
-            writer.append(printListDouble(patientsMovedToICUTimes) + "\n");
+            writer.append(printListDouble(patientsMovedToICUTimes)).append("\n");
 
             List<Double> patientsMovedBackFromICUTimes = BasicCareUnitServer.getPatientsMovedBackFromICUTimes();
-            writer.append(printListDouble(patientsMovedBackFromICUTimes) + "\n");
+            writer.append(printListDouble(patientsMovedBackFromICUTimes)).append("\n");
 
             List<Double> healedPatientsTimes = BasicCareUnitServer.getHealedPatientsTimes();
-            writer.append(printListDouble(healedPatientsTimes) + "\n");
+            writer.append(printListDouble(healedPatientsTimes)).append("\n");
 
             List<Double> diedInQueuePatientsTimes = BasicCareUnitServer.getDiedInQueuePatientsTimes();
-            writer.append(printListDouble(diedInQueuePatientsTimes) + "\n");
+            writer.append(printListDouble(diedInQueuePatientsTimes)).append("\n");
 
             List<Double> deadPatientsTimesIntensiveCare = IntensiveCareUnitServer.getDeadPatientsTimes();
-            writer.append(printListDouble(deadPatientsTimesIntensiveCare) + "\n");
+            writer.append(printListDouble(deadPatientsTimesIntensiveCare)).append("\n");
 
             for (BasicCareUnitServer basicCareUnitServer : program.getBasicCareUnitServerList()) {
                 List<Double> inTimes = basicCareUnitServer.getInTimes();
-                writer.append(printListDouble(inTimes) + "\n");
+                writer.append(printListDouble(inTimes)).append("\n");
                 List<Double> outTimes = basicCareUnitServer.getOutTimes();
-                writer.append(printListDouble(outTimes) + "\n");
+                writer.append(printListDouble(outTimes)).append("\n");
             }
 
             for (IntensiveCareUnitServer intensiveCareUnitServer : program.getIntensiveCareUnitServerList()) {
                 List<Double> inTimes = intensiveCareUnitServer.getInTimes();
-                writer.append(printListDouble(inTimes) + "\n");
+                writer.append(printListDouble(inTimes)).append("\n");
                 List<Double> outTimes = intensiveCareUnitServer.getOutTimes();
-                writer.append(printListDouble(outTimes) + "\n");
+                writer.append(printListDouble(outTimes)).append("\n");
             }
 
             writer.close();
 
         } catch (IOException e) {
-            // todo
-            System.out.println("error");
+            e.printStackTrace();
         }
     }
 
+    /**
+     * Prints list of doubles to string.
+     *
+     * @param list list of doubles
+     * @return string
+     */
     private static String printListDouble(List<Double> list) {
-        String s = "";
+        StringBuilder s = new StringBuilder();
 
         for (Double d : list) {
-            s += d + ",";
+            s.append(d).append(",");
         }
 
-        return s;
+        return s.toString();
     }
 }

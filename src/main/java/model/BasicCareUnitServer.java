@@ -12,6 +12,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class BasicCareUnitServer extends JSimProcess {
 
+    // ----- STATIC FINAL VARIABLES -----
+
     /** Counter for patients who die in basic care unit. */
     private static final AtomicInteger deadPatientsCounter = new AtomicInteger(0);
     /** Counter for patients who die in basic care unit because they needed to move to ICU but there was no free bed. */
@@ -25,33 +27,47 @@ public class BasicCareUnitServer extends JSimProcess {
     /** Counter for patients who died in queue. */
     private static final AtomicInteger diedInQueuePatientsCounter = new AtomicInteger(0);
 
+    /** Death times of patients who died in basic care unit. */
     private static final List<Double> deadPatientsTimes = new LinkedList<>();
+    /** Death times of patients who died in basic care unit (no free bed in ICU). */
     private static final List<Double> deadPatientsNoFreeBedInICUTimes = new LinkedList<>();
+    /** Moving times of patients who moved to ICU. */
     private static final List<Double> patientsMovedToICUTimes = new LinkedList<>();
+    /** Moving times of patients who moved back from ICU. */
     private static final List<Double> patientsMovedBackFromICUTimes = new LinkedList<>();
+    /** Healing times of patients. */
     private static final List<Double> healedPatientsTimes = new LinkedList<>();
+    /** Death times of patients who died in queue. */
     private static final List<Double> diedInQueuePatientsTimes = new LinkedList<>();
 
+    // ----- INSTANCE FINAL VARIABLES -----
+
+    /** Queue to basic care. */
+    private final BasicCareUnitQueue queue;
+    /** List of intensive care servers. */
+    private final List<IntensiveCareUnitServer> intensiveCareUnitServerList;
+
+    /** Arrival times of patients. */
     private final List<Double> inTimes = new LinkedList<>();
+    /** Leaving times of patients. */
     private final List<Double> outTimes = new LinkedList<>();
 
-    /** patient */
-    private Patient patient;
+    /** Simulation window controller. */
+    private final SimulationWindowController simulationWindowController;
 
+    // ----- INSTANCE VARIABLES -----
+
+    /** Patient */
+    private Patient patient;
+    /** Link. */
     private JSimLink link;
 
-    private SimulationWindowController simulationWindowController;
-
-    /** queue to basic care */
-    private final BasicCareUnitQueue queue;
-    /** list of intensive care servers */
-    private final List<IntensiveCareUnitServer> intensiveCareUnitServerList;
-    /** if server (bed) is occupied */
+    /** If server (bed) is occupied. */
     private boolean occupied;
 
-    /** counter for patients on this server (bed) */
+    /** Counter for patients on this server (bed). */
     private int counter;
-    /** time spent on this server (bed) */
+    /** Time spent on this server (bed). */
     private double transTq;
 
     /**
@@ -236,7 +252,6 @@ public class BasicCareUnitServer extends JSimProcess {
         }
 
         firstRequestPatientLink = firstServerRequest.getPatientOnBed();
-        //((Patient)firstRequestPatientLink.getData()).setInMoveToIntensiveCare(false);
 
         firstServerRequest.setPatientOnBed(null);
         firstServerRequest.setOccupied(false);
@@ -283,118 +298,253 @@ public class BasicCareUnitServer extends JSimProcess {
         return transTq;
     }
 
+    /**
+     * Returns patient.
+     *
+     * @return patient
+     */
     public Patient getPatient() {
         return patient;
     }
 
+    /**
+     * Sets patient.
+     *
+     * @param patient patient
+     */
     public void setPatient(Patient patient) {
         this.patient = patient;
     }
 
+    /**
+     * Returns link.
+     *
+     * @return link
+     */
     public JSimLink getLink() {
         return link;
     }
 
+    /**
+     * Returns counter for patients who die in basic care unit.
+     *
+     * @return dead patients counter
+     */
     public static int getDeadPatientsCounter() {
         return deadPatientsCounter.get();
     }
 
+    /**
+     * Returns counter for patients who die in basic care unit
+     * because they needed to move to ICU but there was no free bed.
+     *
+     * @return dead patients (no free bed in ICU) counter
+     */
     public static int getDeadPatientsNoFreeBedInICUCounter() {
         return deadPatientsNoFreeBedInICUCounter.get();
     }
 
+    /**
+     * Returns counter for patients who died in queue.
+     *
+     * @return died in queue patients counter
+     */
     public static int getDiedInQueuePatientsCounter() {
         return diedInQueuePatientsCounter.get();
     }
 
+    /**
+     * Returns counter for patients who are leaving hospital as healthy.
+     *
+     * @return healthy patients counter
+     */
     public static int getHealedPatientsCounter() {
         return healedPatientsCounter.get();
     }
 
+    /**
+     * Returns counter for patients who moved back from ICU.
+     *
+     * @return patients moved back from ICU counter
+     */
     public static int getPatientsMovedBackFromICUCounter() {
         return patientsMovedBackFromICUCounter.get();
     }
 
+    /**
+     * Returns counter for patients who moved to ICU.
+     *
+     * @return patients moved to ICU counter
+     */
     public static int getPatientsMovedToICUCounter() {
         return patientsMovedToICUCounter.get();
     }
 
+    /**
+     * Sets counter for patients who die in basic care unit.
+     *
+     * @param value new number value
+     */
     public static void setDeadPatientsCounter(int value) {
         deadPatientsCounter.set(value);
     }
 
+    /**
+     * Sets counter for patients who die in basic care unit
+     * because they needed to move to ICU but there was no free bed.
+     *
+     * @param value new number value
+     */
     public static void setDeadPatientsNoFreeBedInICUCounter(int value) {
         deadPatientsNoFreeBedInICUCounter.set(value);
     }
 
+    /**
+     * Sets counter for patients who moved to ICU.
+     *
+     * @param value new number value
+     */
     public static void setPatientsMovedToICUCounter(int value) {
         patientsMovedToICUCounter.set(value);
     }
 
+    /**
+     * Sets counter for patients who moved back from ICU.
+     *
+     * @param value new number value
+     */
     public static void setPatientsMovedBackFromICUCounter(int value) {
         patientsMovedBackFromICUCounter.set(value);
     }
 
+    /**
+     * Sets counter for patients who are leaving hospital as healthy.
+     *
+     * @param value new number value
+     */
     public static void setHealedPatientsCounter(int value) {
         healedPatientsCounter.set(value);
     }
 
+    /**
+     * Sets counter for patients who died in queue.
+     *
+     * @param value new number value
+     */
     public static void setDiedInQueuePatientsCounter(int value) {
         diedInQueuePatientsCounter.set(value);
     }
 
+    /**
+     * Returns arrival times of patients.
+     *
+     * @return arrival times
+     */
     public List<Double> getInTimes() {
         return inTimes;
     }
 
+    /**
+     * Returns leaving times of patients.
+     *
+     * @return leaving times
+     */
     public List<Double> getOutTimes() {
         return outTimes;
     }
 
+    /**
+     * Clears list with death times of patients who died in basic care unit.
+     */
     public static void clearDeadPatientsTimes() {
         deadPatientsTimes.clear();
     }
 
+    /**
+     * Clears list with death times of patients who died in basic care unit (no free bed in ICU).
+     */
     public static void clearDeadPatientsNoFreeBedInICUTimes() {
         deadPatientsNoFreeBedInICUTimes.clear();
     }
 
+    /**
+     * Clears list with moving times of patients who moved to ICU.
+     */
     public static void clearPatientsMovedToICUTimes() {
         patientsMovedToICUTimes.clear();
     }
 
+    /**
+     * Clears list with moving times of patients who moved back from ICU.
+     */
     public static void clearPatientsMovedBackFromICUTimes() {
         patientsMovedBackFromICUTimes.clear();
     }
 
+    /**
+     * Clears list with healing times of patients.
+     */
     public static void clearHealedPatientsTimes() {
         healedPatientsTimes.clear();
     }
 
+    /**
+     * Clears list with death times of patients who died in queue.
+     */
     public static void clearDiedInQueuePatientsTimes() {
         diedInQueuePatientsTimes.clear();
     }
 
+    /**
+     * Returns death times of patients who died in basic care unit.
+     *
+     * @return dead patients times
+     */
     public static List<Double> getDeadPatientsTimes() {
         return deadPatientsTimes;
     }
 
+    /**
+     * Returns death times of patients who died in basic care unit (no free bed in ICU).
+     *
+     * @return dead patients (no free bed in ICU) times
+     */
     public static List<Double> getDeadPatientsNoFreeBedInICUTimes() {
         return deadPatientsNoFreeBedInICUTimes;
     }
 
+    /**
+     * Returns moving times of patients who moved to ICU.
+     *
+     * @return patients moved to ICU times
+     */
     public static List<Double> getPatientsMovedToICUTimes() {
         return patientsMovedToICUTimes;
     }
 
+    /**
+     * Returns moving times of patients who moved back from ICU.
+     *
+     * @return patients moved back from ICU times
+     */
     public static List<Double> getPatientsMovedBackFromICUTimes() {
         return patientsMovedBackFromICUTimes;
     }
 
+    /**
+     * Returns healing times of patients.
+     *
+     * @return healed patients times
+     */
     public static List<Double> getHealedPatientsTimes() {
         return healedPatientsTimes;
     }
 
+    /**
+     * Returns death times of patients who died in queue.
+     *
+     * @return died in queue patients times
+     */
     public static List<Double> getDiedInQueuePatientsTimes() {
         return diedInQueuePatientsTimes;
     }

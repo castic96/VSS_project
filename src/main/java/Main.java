@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.logging.LogManager;
 
 /**
- * model.Program entry class - has main method which
+ * Program entry class - has main method which
  * initializes simulation parameters, runs simulation
  * and prints results.
  */
@@ -30,6 +30,11 @@ public class Main extends Application {
         launch(args);
     }
 
+    /**
+     * Starts application.
+     *
+     * @param primaryStage primary stage
+     */
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Hospital Simulation 1.0");
@@ -52,6 +57,11 @@ public class Main extends Application {
 
     }
 
+    /**
+     * Returns scene.
+     *
+     * @return scene
+     */
     private Scene getScene() {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/simulationWindow.fxml"));
         Parent root = null;
