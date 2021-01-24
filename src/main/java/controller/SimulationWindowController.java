@@ -13,177 +13,237 @@ import model.enums.LaunchType;
 
 import java.io.File;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Controller for GUI window.
+ */
 public class SimulationWindowController implements Initializable {
 
+    // ----- INSTANCE VARIABLES -----
+
+    /** Instance of created program. */
     private final Program program;
 
+    /** Label for chosen mode. */
     @FXML
     private Label modeLbl;
 
+    /** Instance of progress bar. */
     @FXML
     private ProgressBar progressBar;
 
+    /** Label 'Input lambda'. */
     @FXML
     private Label labelInputLambda;
 
+    /** Label 'Basic care unit - mu'. */
     @FXML
     private Label labelBasicCareUnitMu;
 
+    /** Label 'Basic care unit - sigma'. */
     @FXML
     private Label labelBasicCareUnitSigma;
 
+    /** Label 'Intensive care unit - mu'. */
     @FXML
     private Label labelIntensiveCareUnitMu;
 
+    /** Label 'P - from basic to intensive'. */
     @FXML
     private Label labelPFromBasicToIntensive;
 
+    /** Label 'P - death basic care unit'. */
     @FXML
     private Label labelPDeathBasicCareUnit;
 
+    /** Label 'P - death intensive care unit'. */
     @FXML
     private Label labelPDeathIntensiveCareUnit;
 
+    /** Label 'Max time in queue'. */
     @FXML
     private Label labelMaxTimeInQueue;
 
+    /** Combo box for choose the mode. */
     @FXML
     private ComboBox<String> comboBox;
 
+    /** Label 'Step by step'. */
     @FXML
     private Label labelStepByStep;
 
+    /** Label 'Run by time'. */
     @FXML
     private Label labelRunByTime;
 
+    /** Label 'Current time' in Step by step section. */
     @FXML
     private Label labelStepByStepCurrTime;
 
+    /** Label 'Current time' in Run by time section. */
     @FXML
     private Label labelRunByTimeCurrTime;
 
+    /** Label 'Max time' in Run by time section. */
     @FXML
     private Label labelRunByTimeMaxTime;
 
+    /** Label for the status of the application. */
     @FXML
     private Label labelStatus;
 
+    /** Button 'Step'. */
     @FXML
     private Button buttonStep;
 
+    /** Button 'Start' in Step by step section. */
     @FXML
     private Button buttonStartStepByStep;
 
+    /** Button 'Stop' in Step by step section. */
     @FXML
     private Button buttonStopStepByStep;
 
+    /** Button 'Start' in Run by time section. */
     @FXML
     private Button buttonStartRunByTime;
 
+    /** Button 'Stop' in Run by time section. */
     @FXML
     private Button buttonStopRunByTime;
 
+    /** Text field 'Max time'. */
     @FXML
     private TextField textFieldMaxTime;
 
+    /** Text area for output log. */
     @FXML
     private TextArea textAreaOutputLog;
 
+    /** Text area for patients in queue. */
     @FXML
     private TextArea textAreaQueue;
 
+    /** Text area for patients in basic care. */
     @FXML
     private TextArea textAreaBasicCare;
 
+    /** Text area for patients in intensive care. */
     @FXML
     private TextArea textAreaIntensiveCare;
 
+    /** Text area for dead patients. */
     @FXML
     private TextArea textAreaDead;
 
+    /** Text area for healthy patients. */
     @FXML
     private TextArea textAreaHealthy;
 
+    /** Text area for results of the simulation. */
     @FXML
     private TextArea textAreaResults;
 
+    /** Label for count of beds in basic care unit. */
     @FXML
     private Label labelCurrentBedsBasicCare;
 
+    /** Label for count of beds in intensive care unit. */
     @FXML
     private Label labelCurrentBedsIntensiveCare;
 
+    /** Label for current value of lambda. */
     @FXML
     private Label labelCurrentInputLambda;
 
+    /** Label for current value of mu on basic care unit. */
     @FXML
     private Label labelCurrentBasicCareMu;
 
+    /** Label for current value of sigma on basic care unit. */
     @FXML
     private Label labelCurrentBasicCareSigma;
 
+    /** Label for current value of mu on intensive care unit. */
     @FXML
     private Label labelCurrentIntensiveCareMu;
 
+    /** Label for current probability to move from basic to intensive care. */
     @FXML
     private Label labelCurrentPFromBasicToIntensive;
 
+    /** Label for current probability to die on basic care. */
     @FXML
     private Label labelCurrentPDeathBasicCare;
 
+    /** Label for current probability to die on intensive care. */
     @FXML
     private Label labelCurrentPDeathIntensiveCare;
 
+    /** Label for current value of max time in queue. */
     @FXML
     private Label labelCurrentMaxTimeInQueue;
 
+    /** Label for current basic server count. */
     @FXML
     private Label labelMaxBasicServerCount;
 
+    /** Label for current intensive server count. */
     @FXML
     private Label labelMaxIntensiveServerCount;
 
+    /** Text field for input lambda value. */
     @FXML
     private TextField textFieldInputLambda;
 
+    /** Text field for basic care unit mu. */
     @FXML
     private TextField textFieldBasicCareMu;
 
+    /** Text field for basic care unit sigma. */
     @FXML
     private TextField textFieldBasicCareSigma;
 
+    /** Text field for intensive care unit mu. */
     @FXML
     private TextField textFieldIntensiveCareMu;
 
+    /** Text field for probability to move from basic to intensive care. */
     @FXML
     private TextField textFieldPFromBasicToIntensive;
 
+    /** Text field for probability to die on basic care. */
     @FXML
     private TextField textFieldPDeathBasicCare;
 
+    /** Text field for probability to die on intensive care. */
     @FXML
     private TextField textFieldPDeathIntensiveCare;
 
+    /** Text field for max time in queue. */
     @FXML
     private TextField textFieldMaxTimeInQueue;
 
+    /** Button for export results as CSV file. */
     @FXML
     private Button buttonExportDetailedResults;
 
-
+    /**
+     * Creates new instance of SimulationWindowController.
+     */
     public SimulationWindowController() {
         program = new Program(this);
     }
 
-    public void clear() {
+    /**
+     * Sets all elements to default values.
+     */
+    private void clear() {
         textAreaOutputLog.clear();
         textAreaQueue.clear();
         textAreaBasicCare.clear();
@@ -196,7 +256,10 @@ public class SimulationWindowController implements Initializable {
         labelStepByStepCurrTime.setText("Current time: 0");
     }
 
-    public void initConfigurations() {
+    /**
+     * Initializes simulation configuration.
+     */
+    private void initConfigurations() {
         program.loadConfigurationFile();
 
         labelCurrentBedsBasicCare.setText(String.valueOf(Constants.NUMBER_OF_BED_BASIC_UNIT));
@@ -214,6 +277,9 @@ public class SimulationWindowController implements Initializable {
         labelMaxIntensiveServerCount.setText(String.valueOf(Constants.NUMBER_OF_BED_INTENSIVE_CARE_UNIT));
     }
 
+    /**
+     * Updates simulation configuration.
+     */
     @FXML
     public void updateConfig() {
         String newText;
@@ -330,6 +396,9 @@ public class SimulationWindowController implements Initializable {
         }
     }
 
+    /**
+     * Initializes step by step simulation.
+     */
     public void initStepByStep() {
         clear();
         buttonStartStepByStep.setDisable(true);
@@ -339,6 +408,9 @@ public class SimulationWindowController implements Initializable {
         new Thread(program::initSimStepByStep).start();
     }
 
+    /**
+     * Starts run by time simulation.
+     */
     public void startRunByTime() {
         program.setRunning(true);
         clear();
@@ -361,7 +433,6 @@ public class SimulationWindowController implements Initializable {
         double maxTime = Utils.validateDoublePositive(textFieldMaxTime.getText());
 
         if (maxTime < 0) {
-            //parsingAlertError(Map.of(labelRunByTimeMaxTime.getText(), textFieldMaxTime.getText()));
 
             Map<String, String> map = Stream.of(new String[][] {
                     { labelRunByTimeMaxTime.getText(), textFieldMaxTime.getText() }
@@ -381,7 +452,11 @@ public class SimulationWindowController implements Initializable {
         buttonStopRunByTime.setDisable(false);
     }
 
-    public static void emptyAlertError(String emptyField) {
+    /**
+     * Shows error alert, if a field is empty.
+     * @param emptyField Empty field.
+     */
+    private static void emptyAlertError(String emptyField) {
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
@@ -392,7 +467,11 @@ public class SimulationWindowController implements Initializable {
         alert.showAndWait();
     }
 
-    public static void parsingAlertError(Map<String, String> wrongInputs) {
+    /**
+     * Shows error alert, if there is some problem with parsing inputs.
+     * @param wrongInputs Map with wrong inputs.
+     */
+    private static void parsingAlertError(Map<String, String> wrongInputs) {
         StringBuilder alertText = new StringBuilder();
 
         alertText.append("Following entered values are not convertible to positive double:");
@@ -414,12 +493,20 @@ public class SimulationWindowController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Finishes initialization part of step by step simulation.
+     */
     public void finishInitStepByStep() {
         buttonStep.setDisable(false);
         buttonStopStepByStep.setDisable(false);
         labelStatus.setText("Status: Ready");
     }
 
+    /**
+     * Initializes GUI.
+     * @param url URL.
+     * @param resourceBundle Resource.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         comboBox.getItems().addAll(LaunchType.STEP_BY_STEP.getValue(), LaunchType.RUN_BY_TIME.getValue());
@@ -429,14 +516,9 @@ public class SimulationWindowController implements Initializable {
         stepByStepEnable();
     }
 
-    @FXML
-    public void exitApplication() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss yyyy/MM/dd");
-        LocalDateTime end = LocalDateTime.now();
-        System.out.println("Application ended: " + dtf.format(end));
-        System.exit(0);
-    }
-
+    /**
+     * Changes mode of simulation, if the combo box is changed.
+     */
     @FXML
     public void comboBoxChange() {
         if (comboBox.getValue().equals(LaunchType.STEP_BY_STEP.getValue())) {
@@ -449,6 +531,9 @@ public class SimulationWindowController implements Initializable {
         }
     }
 
+    /**
+     * Enables all fields for step by step simulation.
+     */
     private void stepByStepEnable() {
         labelStatus.setText("Status: Ready");
         labelStepByStep.setDisable(false);
@@ -472,6 +557,9 @@ public class SimulationWindowController implements Initializable {
         modeLbl.setText("Mode: Step by step");
     }
 
+    /**
+     * Enables all fields for run by time simulation.
+     */
     private void runByTimeEnable() {
         labelStatus.setText("Status: Ready");
         labelStepByStep.setDisable(true);
@@ -494,6 +582,9 @@ public class SimulationWindowController implements Initializable {
         modeLbl.setText("Mode: Run by time");
     }
 
+    /**
+     * Realize one step (in Step by step mode).
+     */
     @FXML
     public void doStep() {
         buttonStep.setDisable(true);
@@ -502,10 +593,16 @@ public class SimulationWindowController implements Initializable {
         new Thread(program::doStep).start();
     }
 
+    /**
+     * Finishes step part of step by step simulation.
+     */
     public void finishDoStep() {
         finishInitStepByStep();
     }
 
+    /**
+     * Stops step by step simulation.
+     */
     public void stopStepByStep() {
         buttonStep.setDisable(true);
         buttonStopStepByStep.setDisable(true);
@@ -513,67 +610,120 @@ public class SimulationWindowController implements Initializable {
         new Thread(program::stopSimStepByStep).start();
     }
 
+    /**
+     * Finishes stop part of step by step simulation.
+     */
     public void finishStopStepByStep() {
         buttonExportDetailedResults.setDisable(false);
         stepByStepEnable();
     }
 
-    public void finishRunByTime () {
+    /**
+     * Finishes run by time simulation.
+     */
+    public void finishRunByTime() {
         buttonExportDetailedResults.setDisable(false);
         runByTimeEnable();
     }
 
+    /**
+     * Appends text to output log.
+     * @param b Text to append.
+     */
     public void appendTextAreaOutputLog(int b) {
         textAreaOutputLog.appendText(String.valueOf((char) b));
     }
 
+    /**
+     * Sets results to text area.
+     * @param text Text to set.
+     */
     public void setTextAreaResults(String text) {
         textAreaResults.setText(text);
     }
 
+    /**
+     * Appends text line to text area for queue.
+     * @param text Text line.
+     */
     public void appendLineTextAreaQueue(String text) {
         textAreaQueue.appendText(text + "\n");
     }
 
+    /**
+     * Removes text line from text area for queue.
+     * @param text Text line.
+     */
     public void removeLineTextAreaQueue(String text) {
         String areaText = textAreaQueue.getText();
         String result = areaText.replaceAll(text + "\n", "");
         textAreaQueue.setText(result);
     }
 
+    /**
+     * Appends text line to text area for basic care.
+     * @param text Text line.
+     */
     public void appendLineTextAreaBasicCare(String text) {
         textAreaBasicCare.appendText(text + "\n");
     }
 
+    /**
+     * Removes text line from text area for basic care.
+     * @param text Text line.
+     */
     public void removeLineTextAreaBasicCare(String text) {
         String areaText = textAreaBasicCare.getText();
         String result = areaText.replaceAll(text + "\n", "");
         textAreaBasicCare.setText(result);
     }
 
+    /**
+     * Appends text line to text area for intensive care.
+     * @param text Text line.
+     */
     public void appendLineTextAreaIntensiveCare(String text) {
         textAreaIntensiveCare.appendText(text + "\n");
     }
 
+    /**
+     * Removes text line from text area for intensive care.
+     * @param text Text line.
+     */
     public void removeLineTextAreaIntensiveCare(String text) {
         String areaText = textAreaIntensiveCare.getText();
         String result = areaText.replaceAll(text + "\n", "");
         textAreaIntensiveCare.setText(result);
     }
 
+    /**
+     * Appends text line to text area for dead patients.
+     * @param text Text line.
+     */
     public void appendLineTextAreaDead(String text) {
         textAreaDead.appendText(text + "\n");
     }
 
+    /**
+     * Appends text line to text area for healthy patients.
+     * @param text Text line.
+     */
     public void appendLineTextAreaHealthy(String text) {
         textAreaHealthy.appendText(text + "\n");
     }
 
+    /**
+     * Stops run by time simulation.
+     */
     public void stopRunByTime() {
         buttonStopRunByTime.setDisable(true);
         new Thread(program::setRunningFalse).start();
     }
 
+    /**
+     * Sets progress bar value.
+     * @param value Set value.
+     */
     public void setProgressBarValue(double value) {
         if (value < 0) {
             progressBar.setProgress(0);
@@ -586,14 +736,26 @@ public class SimulationWindowController implements Initializable {
         }
     }
 
+    /**
+     * Sets current time to 'Current time' field in Run by time section.
+     * @param value Value of current time.
+     */
     public void setCurrentTimeRunByTime(int value) {
         labelRunByTimeCurrTime.setText("Current time: " + value);
     }
 
+    /**
+     * Sets current time to 'Current time' field in Step by step section.
+     * @param value Value of current time.
+     */
     public void setCurrentTimeStepByStep(int value) {
         labelStepByStepCurrTime.setText("Current time: " + value);
     }
 
+    /**
+     * Exports results of the simulation to CSV file.
+     * @param actionEvent Handler to action event.
+     */
     @FXML
     public void exportDetailedResults(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -613,7 +775,10 @@ public class SimulationWindowController implements Initializable {
 
     }
 
-    public static void wrongPathError() {
+    /**
+     * Shows error alert for wrong path to file.
+     */
+    private static void wrongPathError() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
         alert.setTitle("Wrong Path Error");
