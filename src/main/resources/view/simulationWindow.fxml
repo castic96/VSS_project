@@ -4,11 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -25,30 +21,6 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="mainPane" maxHeight="770.0" maxWidth="1300.0" minHeight="770.0" minWidth="1300.0" prefHeight="770.0" prefWidth="1300.0" stylesheets="@simulationWindow.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SimulationWindowController">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Switch Mode" />
-                  <MenuItem mnemonicParsing="false" text="Load Scenario" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#exitApplication" text="Quit" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Options" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
    <bottom>
       <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
          <children>
@@ -67,7 +39,7 @@
                <children>
                   <ProgressBar fx:id="progressBar" prefHeight="18.0" prefWidth="998.0" progress="0.0" />
                </children></Pane>
-            <Label font="$x3" maxWidth="-1.0" text="Mode: Manual Simulation" textFill="$x4" HBox.hgrow="NEVER">
+            <Label fx:id="modeLbl" font="$x3" maxWidth="-1.0" text="Mode: Step by step" textFill="$x4" HBox.hgrow="NEVER">
                <HBox.margin>
                   <Insets bottom="5.0" left="15.0" right="15.0" />
                </HBox.margin></Label>

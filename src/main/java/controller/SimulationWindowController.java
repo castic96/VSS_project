@@ -26,6 +26,9 @@ public class SimulationWindowController implements Initializable {
     private final Program program;
 
     @FXML
+    private Label modeLbl;
+
+    @FXML
     private ProgressBar progressBar;
 
     @FXML
@@ -465,6 +468,8 @@ public class SimulationWindowController implements Initializable {
 
         progressBar.setProgress(0);
         progressBar.setDisable(true);
+
+        modeLbl.setText("Mode: Step by step");
     }
 
     private void runByTimeEnable() {
@@ -485,6 +490,8 @@ public class SimulationWindowController implements Initializable {
         comboBox.setDisable(false);
         progressBar.setProgress(0);
         progressBar.setDisable(true);
+
+        modeLbl.setText("Mode: Run by time");
     }
 
     @FXML
