@@ -136,9 +136,10 @@ public class SimulationResults {
                 "\ndead patients = " + deadPatients + " (" + getDeadPatientsPercent() + " %)" +
                 "\npatients leaving hospital (dead or alive) = " + leavingPatients +
                 "\npatients still lying in hospital = " + getPatientsInHospital() +
+                "\npatients still waiting in queue = " + getPatientsInQueue() +
 
-                "\n\npatients moved to ICU = " + patientsMovedToICU + " (" + getPatientsMovedToICUPercent() + " %)" +
-                "\npatients moved back from ICU = " + patientsMovedBackFromICU +
+                "\n\ntransfers of patients to ICU = " + patientsMovedToICU + " (" + getPatientsMovedToICUPercent() + " %)" +
+                "\ntransfers of patients back from ICU = " + patientsMovedBackFromICU +
 
                 "\n\npatients died in queue = " + patientsDiedInQueue +
                 "\npatients died in basic care = " + patientsDiedInBasicCare + " (" + getDeadPatientsInBasicCarePercent() + " %)" +
@@ -170,12 +171,21 @@ public class SimulationResults {
     }
 
     /**
+     * Returns patients in queue.
+     *
+     * @return patients in queue
+     */
+    private int getPatientsInQueue() {
+        return incomingPatients - leavingPatients - getPatientsInHospital();
+    }
+
+    /**
      * Returns healed patients percentage of all incoming patients.
      *
      * @return healed patients percentage
      */
     private String getHealedPatientsPercent() {
-        double p = ((double) healedPatients / incomingPatients);
+        double p = ((double) healedPatients / incomingPatients) * 100;
         return String.format(DOUBLE_FORMAT, p);
     }
 
@@ -185,7 +195,7 @@ public class SimulationResults {
      * @return dead patients percentage
      */
     private String getDeadPatientsPercent() {
-        double p = ((double) deadPatients / incomingPatients);
+        double p = ((double) deadPatients / incomingPatients) * 100;
         return String.format(DOUBLE_FORMAT, p);
     }
 
@@ -195,7 +205,7 @@ public class SimulationResults {
      * @return patients moved to intensive care percentage
      */
     private String getPatientsMovedToICUPercent() {
-        double p = ((double) patientsMovedToICU / incomingPatients);
+        double p = ((double) patientsMovedToICU / incomingPatients) * 100;
         return String.format(DOUBLE_FORMAT, p);
     }
 
@@ -205,7 +215,7 @@ public class SimulationResults {
      * @return patients died in basic care percentage
      */
     private String getDeadPatientsInBasicCarePercent() {
-        double p = ((double) patientsDiedInBasicCare / incomingPatients);
+        double p = ((double) patientsDiedInBasicCare / incomingPatients) * 100;
         return String.format(DOUBLE_FORMAT, p);
     }
 
@@ -215,7 +225,7 @@ public class SimulationResults {
      * @return patients died in basic care (no free bed in ICU) percentage
      */
     private String getDeadPatientsInBasicCareNoFreeBedPercent() {
-        double p = ((double) patientsDiedInBasicCareNoFreeBedInICU / incomingPatients);
+        double p = ((double) patientsDiedInBasicCareNoFreeBedInICU / incomingPatients) * 100;
         return String.format(DOUBLE_FORMAT, p);
     }
 
@@ -225,7 +235,7 @@ public class SimulationResults {
      * @return patients died in intensive care percentage
      */
     private String getDeadPatientsInICUPercent() {
-        double p = ((double) patientsDiedInIntensiveCare / patientsMovedToICU);
+        double p = ((double) patientsDiedInIntensiveCare / patientsMovedToICU) * 100;
         return String.format(DOUBLE_FORMAT, p);
     }
 
